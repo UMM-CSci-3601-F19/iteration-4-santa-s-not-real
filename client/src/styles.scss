@@ -42,40 +42,26 @@
 
   @if $is-dark {
 
-    .roomHeading, .topMenu {
-      background-color: mat-color($background, app-bar) !important;
-    }
-
     .mat-toolbar.mat-primary {
       background: mat-color($background, app-bar);
       color: mat-color($foreground, text);
     }
-
-    mat-sidenav-content {
-      background: mat-color($background, app-bar);
-    }
-
-    .indicator {
-      color: $light-secondary-text !important;
-      bottom: 10px;
-    }
-
-    .vacant {
-      color: #00ee55 !important;
-    }
-
-    .inUse {
-      color: #ffc520 !important;
-    }
-
-    .unavailable {
-      color: #aaaaaa !important;
-    }
-
-    .roomHeading {
-      background-color: mat-color($background, app-bar) !important;
+  }
+  .drawer-list-item-active {
+    background-color: mat-color($background, hover) !important;
+    color: mat-color($primary) !important;
+    .mat-list-icon {
+      color: mat-color($primary) !important;
     }
   }
+
+  .sidenav-list {
+    .mat-list-icon {
+      color: mat-color($foreground, icon);
+      margin-right: 16px;
+    }
+  }
+}
 
   .roomHeading {
     padding-top: 5px !important;
@@ -96,23 +82,6 @@
     padding-right: 5px;
     padding-bottom: 25px;
   }
-
-  .drawer-list-item-active {
-    background-color: mat-color($background, hover) !important;
-    color: mat-color($primary) !important;
-    .mat-list-icon {
-      color: mat-color($primary) !important;
-    }
-  }
-
-  .sidenav-list {
-    .mat-list-icon {
-      color: mat-color($foreground, icon);
-      margin-right: 16px;
-    }
-  }
-}
-
 
 // Sets up the theming for built in material components with the light theme
 @include angular-material-theme($light-theme);
@@ -141,7 +110,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .indicator {
   font-size: 14px;
   margin-left: 38px;
-  color: $dark-secondary-text;
+
 }
 
 .roomName {
@@ -197,17 +166,6 @@ mat-icon {
   margin-left: 9px;
 }
 
-.vacant {
-  color: #007700;
-}
-
-.inUse {
-  color: #999900;
-}
-
-.unavailable {
-  color: #555555;
-}
 
 .map.mat-card {
   margin-left: auto !important;
@@ -247,7 +205,7 @@ mat-grid-tile mat-card {
 }
 .cardType {
   font-style: italic;
-  color: #999;
+
 }
 
 #predictionGraphTitle {
