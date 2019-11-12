@@ -17,6 +17,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material';
+import {AuthService} from './auth.service';
 
 
 // import {MDCRipple} from '@material/ripple';
@@ -51,6 +52,7 @@ import {MatProgressBarModule} from '@angular/material';
     HttpClient,
     UserListService,
     HomeService,
+    AuthService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],
   entryComponents: [

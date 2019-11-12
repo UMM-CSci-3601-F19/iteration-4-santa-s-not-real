@@ -6,12 +6,17 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.utils.IOUtils;
+import umm3601.admin.AdminController;
+import umm3601.admin.AdminRequestHandler;
 import umm3601.history.HistoryController;
 import umm3601.history.HistoryRequestHandler;
 import umm3601.laundry.LaundryController;
 import umm3601.laundry.LaundryRequestHandler;
 import umm3601.user.UserController;
 import umm3601.user.UserRequestHandler;
+import umm3601.admin.AdminController;
+import umm3601.admin.AdminRequestHandler;
+
 
 import static spark.Spark.*;
 import java.io.InputStream;
@@ -26,6 +31,7 @@ public class Server {
   private static final String roomDatabaseName = "dev";
   private static final String roomPollingDatabaseName = "dev";
   private static final String roomHistoryDatabaseName = "dev";
+  private static final String adminDatabaseName = "dev";
   private static final int serverPort = 4567;
 
   public static void main(String[] args) {
@@ -38,6 +44,9 @@ public class Server {
     MongoDatabase roomDatabase = mongoClient.getDatabase(roomDatabaseName);
     MongoDatabase roomPollingDatabase = mongoClient.getDatabase(roomPollingDatabaseName);
     MongoDatabase roomsHistoryDatabase = mongoClient.getDatabase(roomHistoryDatabaseName);
+    MongoDatabase adminDatabase = mongoClient.getDatabase(adminDatabaseName);
+
+    GoogleAuth gauth = new GoogleAuth(userDatabase);
 
     UserController userController = new UserController(userDatabase);
     UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
@@ -45,6 +54,9 @@ public class Server {
     LaundryRequestHandler laundryRequestHandler = new LaundryRequestHandler(laundryController);
     HistoryController historyController = new HistoryController(roomDatabase, machineDatabase, roomsHistoryDatabase);
     HistoryRequestHandler historyRequestHandler = new HistoryRequestHandler(historyController);
+    AdminController adminController = new AdminController(adminDatabase);
+    AdminRequestHandler adminRequestHandler = new AdminRequestHandler(adminController, gauth);
+
 
     final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     executorService.scheduleAtFixedRate(() -> new PollingService(mongoClient), 0, 1, TimeUnit.MINUTES);
@@ -109,11 +121,15 @@ public class Server {
     get("api/users/:id", userRequestHandler::getUserJSON);
     post("api/users/new", userRequestHandler::addNewUser);
 
+    get("api/admin", adminRequestHandler::getAdmins);
+    get("api/admin/:id", adminRequestHandler::getAdminJSON);
+
     // An example of throwing an unhandled exception so you can see how the
     // Java Spark debugger displays errors like this.
     get("api/error", (req, res) -> {
       throw new RuntimeException("A demonstration error");
     });
+    post("api/login", adminRequestHandler::login);
 
     // Called after each request to insert the GZIP header into the response.
     // This causes the response to be compressed _if_ the client specified
