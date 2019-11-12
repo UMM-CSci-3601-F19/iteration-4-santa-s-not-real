@@ -8,6 +8,8 @@ import {HomeService} from './home.service';
 import * as Chart from 'chart.js';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
+import {CookieService} from 'ngx-cookie-service';
+
 
 @Component({
   templateUrl: 'home.component.html',
@@ -23,6 +25,8 @@ export class HomeComponent implements OnInit {
    * back to true in order to make
    * the functionality works.
    */
+  private cookieValue: string;
+
   private autoRefresh = true;
 
   public machineListTitle: string;
@@ -75,7 +79,7 @@ export class HomeComponent implements OnInit {
   public pineHistory: History;
   public theApartmentsHistory: History;
 */
-  constructor(public homeService: HomeService, public dialog: MatDialog) {
+  constructor(public homeService: HomeService, public dialog: MatDialog, private cookieService: CookieService) {
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
   }
