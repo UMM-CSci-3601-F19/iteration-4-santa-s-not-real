@@ -25,8 +25,6 @@ export class HomeComponent implements OnInit {
    * back to true in order to make
    * the functionality works.
    */
-  private cookieValue: string;
-
   private autoRefresh = true;
 
   public machineListTitle: string;
@@ -111,6 +109,10 @@ export class HomeComponent implements OnInit {
     this.selectorState = state;
   }
 
+  public updateCookies(newId: string, newName: string): void{
+    this.cookieService.set('room_id', newId);
+    this.cookieService.set('room_name', newName);
+  }
   public updateRoom(newId: string, newName: string): void {
     this.roomId = newId;
     this.roomName = newName;
@@ -132,7 +134,6 @@ export class HomeComponent implements OnInit {
     this.setSelector(1);
     // document.getElementById('allMachineList').style.display = 'unset';
     document.getElementById('all-rooms').style.bottom = '2%';
-    this.scroll('mainBody');
   }
 
   private updateMachines(): void {
@@ -451,6 +452,7 @@ export class HomeComponent implements OnInit {
       await this.delay(500); // wait 0.5s for loading data
 
       // this.myChart.destroy();
+      this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
       this.updateMachines();
       this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
       this.updateCounter();
