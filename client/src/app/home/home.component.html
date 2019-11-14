@@ -7,6 +7,13 @@
 
     <div id="scrollBox" style="display: block; position: relative; top: -1000px"></div>
 
+    <mat-card *ngIf="this.roomId == ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
+      <mat-card-title style="font-weight: 100; font-size: 35px; margin-bottom: 10px; margin-left: 8px; line-height: 1.15">Greetings!</mat-card-title>
+      <mat-card-content style="height: 20px; margin-left: 10px; font-size: 18px;">
+        Welcome to Morris Laundry Facilities!
+      </mat-card-content>
+    </mat-card>
+
     <div class="topMenu">
     <mat-expansion-panel class="roomSelector" [expanded]="selectorState === 0" (opened)="setSelector(0); hideSelector()">
 
@@ -36,12 +43,14 @@
 
           </mat-accordion>
           <ng-template #roomsError>
-            <div class="noRoomFoundMessage" style="padding-top: 10px; padding-bottom: 20px; color:#999">Cannot find any room currently. Please try again later.</div>
+            <div class="noRoomFoundMessage" style="padding-top: 10px; padding-bottom: 20px; ">Cannot find any room currently. Please try again later.</div>
           </ng-template>
         </mat-card>
       </mat-panel-description>
 
     </mat-expansion-panel>
+
+
 
     </div>
     <mat-card *ngIf="this.roomId != ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
@@ -53,12 +62,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card *ngIf="this.roomId == ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
-      <mat-card-title style="font-weight: 100; font-size: 35px; margin-bottom: 10px; margin-left: 8px; line-height: 1.15">Greetings!</mat-card-title>
-      <mat-card-content style="height: 20px; margin-left: 10px; font-size: 18px;">
-        Welcome to Morris Laundry Facilities!
-      </mat-card-content>
-    </mat-card>
+
 
     <mat-grid-list cols="{{this.getGraphCols()}}" rowHeight="280px">
 
