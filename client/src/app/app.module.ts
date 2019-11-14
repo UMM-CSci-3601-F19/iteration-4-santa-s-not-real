@@ -17,6 +17,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material';
+import {AuthService} from './auth.service';
 
 import {CookieService} from 'ngx-cookie-service';
 
@@ -54,6 +55,7 @@ import {CookieService} from 'ngx-cookie-service';
     UserListService,
     HomeService,
     CookieService,
+    AuthService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],
   entryComponents: [

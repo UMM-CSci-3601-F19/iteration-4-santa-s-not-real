@@ -4,12 +4,14 @@ import {History} from './history';
 import {Machine} from './machine';
 import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
+import {AuthService} from '../auth.service';
 
 import * as Chart from 'chart.js';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import {CookieService} from 'ngx-cookie-service';
 
+  declare let gapi: any;
 
 @Component({
   templateUrl: 'home.component.html',
@@ -26,6 +28,7 @@ export class HomeComponent implements OnInit {
    * the functionality works.
    */
   private autoRefresh = true;
+  public auth: AuthService;
 
   public machineListTitle: string;
   public brokenMachineListTitle: string;
@@ -77,9 +80,13 @@ export class HomeComponent implements OnInit {
   public pineHistory: History;
   public theApartmentsHistory: History;
 */
-  constructor(public homeService: HomeService, public dialog: MatDialog, private cookieService: CookieService) {
+
+  constructor(public homeService: HomeService, public dialog: MatDialog,
+              private authService: AuthService, private cookieService: CookieService) {
+
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
+    this.auth = authService;
   }
 
   openDialog(theMachine: Machine) {
@@ -481,6 +488,7 @@ export class HomeComponent implements OnInit {
         this.updateTime();
       }
     })();
+    this.initGapi();
   }
 
   updateCounter(): void {
@@ -574,7 +582,11 @@ export class HomeComponent implements OnInit {
   getGraphCols() {
     return Math.min(window.innerWidth / 680, 2);
   }
+  initGapi(): void {
+    this.authService.loadClient();
+  }
 }
+
 
 
 @Component({
