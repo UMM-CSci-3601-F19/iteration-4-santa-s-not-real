@@ -3,9 +3,9 @@
 
 
 chart.js@^2.9.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.9.1.tgz#e98893a810d40d1c0a016e6872a13fa5faedcdf8"
-  integrity sha512-DA5dFt0Bz79oz56ezmrwmZqj0hXGs+i9VbCFOcHqbwrHIGv7RI4YqninJKNIAC0qa29WBI9qYTN7LzULlOeunA==
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.9.2.tgz#5f7397f2fc33ca406836dbaed3cc39943bbb9f80"
+  integrity sha512-AagP9h27gU7hhx8F64BOFpNZGV0R1Pz1nhsi0M1+KLhtniX6ElqLl0z0obKSiuGMl9tcRe6ZhruCGCJWmH6snQ==
   dependencies:
     chartjs-color "^2.1.0"
     moment "^2.10.2"
@@ -46,3 +46,8 @@ moment@^2.10.2:
   version "2.24.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
   integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
+
+ngx-cookie-service@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ngx-cookie-service/-/ngx-cookie-service-2.2.0.tgz#79fe67863b3b93ee226c9ea8d60e1542c7115a58"
+  integrity sha512-2kaC1itlEMxiMAPJ320hOpcwU9vhvjbKQCZ1Go6bGhYjJtqG7eYvhNP7mM9IhFz1/afG2tBryJPySWmFUGhRpA==

@@ -23,7 +23,7 @@
           <mat-accordion *ngIf="rooms; else roomsError">
 
             <button id="roomSelector" mat-button style="width: 200px; height: 80px"
-                     *ngFor="let room of this.rooms" (click)="updateRoom(room.id, room.name)">
+                     *ngFor="let room of this.rooms" (click)="updateRoom(room.id, room.name)" >
               <mat-icon style="width: 20px; height: 20px">store_mall_directory</mat-icon>
               <a class="roomName" [id]="room.id">
                 <a id="{{room.id + 'Id'}}">{{room.name}}</a><br>
@@ -50,10 +50,15 @@
     </div>
     <mat-card *ngIf="this.roomId != ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
       <mat-card-title style="font-weight: 100; font-size: 30px; margin-bottom: 10px; margin-left: 8px; line-height: 1.15">{{this.roomName}}</mat-card-title>
+
       <mat-card-content style="height: 20px; margin-left: 10px">
         <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.roomVacant}} vacant</a>
         <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.roomRunning}} running</a>
         <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.roomBroken}} broken</a>
+        <button mat-button id="defaultRoomButton"
+                (click)="updateCookies(roomId, roomName)">
+          Set Default
+        </button>
       </mat-card-content>
     </mat-card>
 

@@ -19,6 +19,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material';
 import {AuthService} from './auth.service';
 
+import {CookieService} from 'ngx-cookie-service';
+
 
 // import {MDCRipple} from '@material/ripple';
 
@@ -52,6 +54,7 @@ import {AuthService} from './auth.service';
     HttpClient,
     UserListService,
     HomeService,
+    CookieService,
     AuthService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],
