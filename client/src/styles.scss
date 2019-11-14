@@ -32,14 +32,6 @@
 
   // Define any styles affected by the theme.
 
-  mat-sidenav-content {
-    background-color: mat-color($primary, 200 );
-  }
-
-  .roomHeading, .topMenu {
-    background-color: mat-color($primary) !important;
-  }
-
   @if $is-dark {
 
     .mat-toolbar.mat-primary {
