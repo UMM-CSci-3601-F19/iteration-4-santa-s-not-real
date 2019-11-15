@@ -8,6 +8,8 @@ import {Machine} from './machine';
 import {Room} from './room';
 import {History} from './history';
 import {Observable} from 'rxjs';
+import {of} from 'rxjs';
+
 
 describe('Home page', () => {
 
@@ -32,7 +34,7 @@ describe('Home page', () => {
   // @ts-ignore
   beforeEach(() => {
     homeServiceStub = {
-      getMachines: () => Observable.of([
+      getMachines: () => of([
         {
           id: 'id_1',
           name: '',
@@ -61,7 +63,7 @@ describe('Home page', () => {
           vacantTime: -1,
         },
       ]),
-      getRooms: () => Observable.of([
+      getRooms: () => of([
         {
           id: 'gay',
           name: 'A',
@@ -76,7 +78,7 @@ describe('Home page', () => {
           numberOfAvailableMachines: 0,
         },
       ]),
-      getAllHistory: () => Observable.of([
+      getAllHistory: () => of([
         {
           1: {
             0: 10,
