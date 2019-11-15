@@ -155,9 +155,9 @@
       </mat-grid-tile>
     </mat-grid-list>
 
-      <mat-expansion-panel class="allMachinesPanel" style="background: none; padding: 0" [expanded]="true">
+      <mat-expansion-panel class="washerPanel" style="background: none; padding: 0" [expanded]="true">
         <mat-expansion-panel-header style="background: initial">
-          <mat-panel-title id="machines-grid"  style="font-size: 20px; font-style: italic; line-height: 1">Machines within {{this.roomName}}</mat-panel-title>
+          <mat-panel-title id="washer-grid"  style="font-size: 20px; font-style: italic; line-height: 1">Washers Within {{this.roomName}}</mat-panel-title>
         </mat-expansion-panel-header>
         <mat-panel-description style="padding: 0 !important;">
           <mat-accordion *ngIf="machines && numOfWashers > 0; else machinesError" style="width: 100%">
@@ -231,6 +231,19 @@
                 </mat-grid-tile>
               </mat-accordion>
 
+            </mat-grid-list>
+          </mat-accordion>
+        </mat-panel-description>
+      </mat-expansion-panel>
+
+    <mat-expansion-panel class="dryerPanel" style="background: none; padding: 0" [expanded]="true">
+      <mat-expansion-panel-header style="background: initial">
+        <mat-panel-title id="dryer-grid"  style="font-size: 20px; font-style: italic; line-height: 1">Dryers Within {{this.roomName}}</mat-panel-title>
+      </mat-expansion-panel-header>
+        <mat-panel-description style="padding: 0 !important;">
+          <mat-accordion *ngIf="machines && numOfDryers > 0; else machinesError" style="width: 100%">
+            <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="165px">
+
               <mat-accordion *ngFor="let machine of this.filteredMachines">
                 <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==false">
                   <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
@@ -299,11 +312,10 @@
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
-
             </mat-grid-list>
           </mat-accordion>
-        </mat-panel-description>
-      </mat-expansion-panel>
+      </mat-panel-description>
+    </mat-expansion-panel>
 
     <ng-template #machinesError>
       <div class="noMachineFoundMessage" style="padding: 20px 20px; color: #999">There is no machine to display within the section currently.</div>

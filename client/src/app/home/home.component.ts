@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
   public roomBroken: number;
 
   public roomId = '';
-  public roomName = 'All rooms';
+  public roomName = 'All Rooms';
   public selectorState: number;
   public numOfVacant: number;
   public numOfAll: number;
