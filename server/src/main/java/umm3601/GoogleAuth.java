@@ -28,7 +28,7 @@ public class GoogleAuth {
   private final MongoCollection<Document> adminCollection;
 
   public GoogleAuth(MongoDatabase database) {
-    this.adminCollection = database.getCollection("Admins");
+    this.adminCollection = database.getCollection("Students");
   }
 
   public GoogleIdToken auth(Request req){
@@ -61,21 +61,21 @@ public class GoogleAuth {
     return (String) auth(token).getPayload().get("name");
   }
 
-  public String getAdminId(String token){
+  public String getStudentId(String token){
     return (String) auth(token).getPayload().getSubject();
   }
   public String getPicture(String token){
     return (String) auth(token).getPayload().get("picture");
   }
 
-  public String getAdminMongoId(GoogleIdToken token){
-    return getAdminMongoId(token.getPayload().getSubject());
+  public String getStudentMongoId(GoogleIdToken token){
+    return getStudentMongoId(token.getPayload().getSubject());
   }
 
-  public String getAdminMongoId(String googleSubjectId) {
+  public String getStudentMongoId(String googleSubjectId) {
     Document filterDoc = new Document("adminId", googleSubjectId);
-    FindIterable<Document> matchingAdmin = adminCollection.find(filterDoc);
-    Iterator<Document> iterator = matchingAdmin.iterator();
+    FindIterable<Document> matchingStudent = adminCollection.find(filterDoc);
+    Iterator<Document> iterator = matchingStudent.iterator();
     if (iterator.hasNext()) {
       Document admin = iterator.next();
       String adminMongoId = admin.getObjectId("_id").toHexString();

@@ -1,7 +1,7 @@
 <div layout-gt-sm="row" class="home">
   <div flex-gt-sm="80" flex-offset-gt-sm="10"  id="mainBody" style="margin-bottom: 70px">
 
-    <button id="signIn" class="g-signin2" data-onsuccess="onSignIn" *ngIf="!auth.isSignedIn()" (click)="auth.signIn()"></button>
+    <div id="signIn" class="g-signin2" data-onsuccess="onSignIn" *ngIf="!auth.isSignedIn()" (click)="auth.signIn()"></div>
     <button mat-raised-button id="signOut" *ngIf="auth.isSignedIn()" (click)="auth.signOut()">Sign out</button>
 
 

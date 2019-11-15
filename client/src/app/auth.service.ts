@@ -28,11 +28,11 @@ export class AuthService implements CanActivate, OnInit {
     this.signedInFlag = false;
   }
 
-  getAdminName(): string {
+  getStudentName(): string {
     return gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName();
   }
 
-  getAdminId(): string {
+  getStudentId(): string {
     return gapi.auth2.getAuthInstance().currentUser.get().getId();
   }
 
