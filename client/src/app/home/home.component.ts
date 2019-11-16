@@ -11,7 +11,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 
 import {CookieService} from 'ngx-cookie-service';
 
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSnackBar} from '@angular/material';
 
 declare let gapi: any;
 
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
 */
 
   constructor(public homeService: HomeService, public dialog: MatDialog,
-              private authService: AuthService, private cookieService: CookieService, private _snackBar: MatSnackBar) {
+              private authService: AuthService, private cookieService: CookieService, public _snackBar: MatSnackBar) {
 
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
@@ -179,8 +179,9 @@ export class HomeComponent implements OnInit {
   // }
 
   openSnackBar(room: string){
-    this._snackBar.open(room + ' has been set as default', '',{
+    this._snackBar.open(room + ' has been set as your default!', '',{
       duration: 2000,
+      horizontalPosition: 'center'
     });
   }
 

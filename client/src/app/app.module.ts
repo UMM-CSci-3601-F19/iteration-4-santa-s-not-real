@@ -21,6 +21,8 @@ import {AuthService} from './auth.service';
 
 import {CookieService} from 'ngx-cookie-service';
 
+import {MatSnackBarModule} from '@angular/material';
+
 
 // import {MDCRipple} from '@material/ripple';
 
@@ -39,6 +41,7 @@ import {CookieService} from 'ngx-cookie-service';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatSnackBarModule,
     // MDCRipple,
     // ScrollDispatchModule,
     // CdkStepperModule,
