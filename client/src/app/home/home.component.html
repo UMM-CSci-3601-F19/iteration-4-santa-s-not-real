@@ -56,7 +56,7 @@
         <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.roomRunning}} running</a>
         <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.roomBroken}} broken</a>
         <button mat-button id="defaultRoomButton"
-                (click)="updateCookies(roomId, roomName)">
+                (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)">
           Set Default
         </button>
       </mat-card-content>
