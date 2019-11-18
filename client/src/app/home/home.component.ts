@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
 
 import * as Chart from 'chart.js';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
 @Component({
   selector: "your-dialog",
@@ -96,11 +96,23 @@ export class HomeComponent implements OnInit {
     const dialogRef = this.dialog.open(HomeMachineDialog, {
       width: '330px',
       data: {machine: thisMachine},
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+
+  openRoomDialog() {
+    const dialogRef = this.dialog.open(RoomDialogPage, {
+      data: this.rooms,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result: ${result}');
     });
   }
 
@@ -616,55 +628,19 @@ export class HomeMachineDialog {
   }
 }
 
-// @Component({
-//   selector: 'RoomDialog',
-//   templateUrl: 'home.room.dialog.html',
-//   styleUrls:['./home.component.css']
-//
-// })
-//
-// export class RoomDialog {
-//
-//   private autoRefresh = true;
-//
-//   public machineListTitle: string;
-//   public brokenMachineListTitle: string;
-//   public rooms: Room[];
-//   public machines: Machine[];
-//   public filteredMachines: Machine[];
-//   public numOfBroken: number;
-//   public numOfWashers: number;
-//   public numOfDryers: number;
-//
-//   public roomVacant: number;
-//   public roomRunning: number;
-//   public roomBroken: number;
-//
-//   public roomId = '';
-//   public roomName = 'All Rooms';
-//   public selectorState: number;
-//   public numOfVacant: number;
-//   public numOfAll: number;
-//
-//   constructor(public dialog: MatDialog) {}
-//
-//   openRoomDialog() {
-//     const dialogRef = this.dialog.open(RoomDialogPage);
-//
-//     dialogRef.afterClosed().subscribe(result => {
-//       console.log('Dialog result: ${result}');
-//     });
-//   }
-// }
-//
-// export class RoomDialogPage {
-//
-//   constructor(
-//     public dialogRef: MatDialogRef<RoomDialogPage>,
-//     @Inject(MAT_DIALOG_DATA) public data: any
-//   ){}
-//
-//   onNoClick(): void {
-//     this.dialogRef.close();
-//   }
-// }
+@Component({
+  templateUrl: 'home.room.dialog.html',
+})
+
+export class RoomDialogPage {
+
+  constructor(
+    public dialogRef: MatDialogRef<RoomDialogPage>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
