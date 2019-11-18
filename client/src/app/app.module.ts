@@ -4,10 +4,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
-//import {RoomDialogPage, RoomDialog} from "./home/home.component";
+import {RoomDialogPage} from "./home/home.component";
 import {HomeService} from './home/home.service';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from "@angular/material/dialog";
 
 import {CustomModule} from './custom.module';
 
@@ -43,17 +44,17 @@ import {MatProgressBarModule} from '@angular/material';
     AppComponent,
     HomeComponent,
     HomeMachineDialog,
-    //RoomDialog,
+    RoomDialogPage,
   ],
   providers: [
     HttpClient,
     HomeService,
     {provide: APP_BASE_HREF, useValue: '/'},
-    //{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
   ],
   entryComponents: [
     HomeMachineDialog,
-    //RoomDialog,
+    RoomDialogPage,
   ],
   bootstrap: [AppComponent]
 })
