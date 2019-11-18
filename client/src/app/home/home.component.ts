@@ -450,7 +450,7 @@ export class HomeComponent implements OnInit {
                 fontColor: 'rgb(150, 150, 150)',
               },
               position: 'right',
-              display: window.innerWidth > 500,
+              display: true,
             }
           },
         });
