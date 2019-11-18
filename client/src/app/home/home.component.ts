@@ -270,10 +270,6 @@ export class HomeComponent implements OnInit {
   //   this.charT
   // }
 
-  changeType(type: string){
-    this.buildChart(type);
-  }
-
   buildChart(lType: string) {
     if (this.myChart != null) {
       this.myChart.destroy();
@@ -350,7 +346,7 @@ export class HomeComponent implements OnInit {
         });
       } else {
         this.myChart = new Chart(this.ctx, {
-          type: 'line',
+          type: lType,
           data: {
             labels: xlabel2,
             datasets: [

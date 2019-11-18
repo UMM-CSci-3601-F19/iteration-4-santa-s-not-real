@@ -195,10 +195,14 @@
         <mat-card style="max-width: 100% !important; width: 100% !important; height: 80%">
           <mat-card-title id="predictionGraphTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px">Busy Time on
             <p style="display: unset; float: bottom">
-              <mat-select id="day-selector" [(value)]="inputDay" style="width: 150px" (selectionChange)="updateDayBySelector($event.value)">
+              <mat-select id="day-selector" [(value)]="inputDay" style="width: 130px" (selectionChange)="updateDayBySelector($event.value)">
                 <mat-option *ngFor="let day of Days" [value]="day.value">{{day.name}}</mat-option>
               </mat-select>
             </p>
+            <div style="display: unset; position: absolute; right: 0; padding-right: 20px; top: 3%">
+            <button mat-icon-button (click)="buildChart('line')" style="margin-right: 5px" class="graphBut"><i class="material-icons">show_chart</i></button>
+            <button mat-icon-button (click)="buildChart('bar')" class="graphBut"><i class="material-icons">bar_chart</i></button>
+            </div>
           </mat-card-title>
 
           <mat-accordion *ngIf="history; else graphError">
@@ -279,8 +283,7 @@
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
-    <button mat-button (click)="changeType('line')">line</button>
-    <button mat-button (click)="changeType('bar')">bar</button>
+
 
     <ng-template #machinesError>
       <div class="noMachineFoundMessage" style="padding: 20px 20px; color: #999">There is no machine to display within the section currently.</div>
