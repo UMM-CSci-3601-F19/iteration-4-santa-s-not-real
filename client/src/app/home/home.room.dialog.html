@@ -1,43 +1,21 @@
-<div class="topMenu">
+<mat-card style="padding: 0 !important; margin: 0 !important; width: 98% !important; box-shadow: none !important">
+  <h1 id="dTitle" mat-dialog-title Style="text-align: left; margin-bottom: 24px">Select a Room</h1>
+  <button mat-icon-button id="closeDialog2" (click)="onNoClick()" style="position: absolute; top: -5px; right: -10px">
+    <mat-icon style="padding: 0 0; margin: 0 0 0 0;">close</mat-icon>
+  </button>
+
+<div class="greeting">
   <mat-dialog-content>
-
-      <mat-expansion-panel-header>
-        <mat-panel-title id="home-rooms-card" style="font-size: 120%">Please select a laundry room here
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <mat-panel-description style="font-weight: 400;">
-        <mat-card class="room">
-          <mat-accordion *ngIf="rooms; else roomsError">
-
-            <button id="roomSelector" mat-button style="width: 200px; height: 80px"
-                    *ngFor="let room of this.rooms" (click)="updateRoom(room.id, room.name)">
-              <mat-icon style="width: 20px; height: 20px">store_mall_directory</mat-icon>
-              <a class="roomName" [id]="room.id">
-                <a id="{{room.id + 'Id'}}">{{room.name}}</a><br>
-                <a class="indicator" id="{{room.id + 'Availability'}}">{{room.numberOfAvailableMachines}}
-                  / {{room.numberOfAllMachines}} vacant</a>
-              </a>
-            </button>
-
-            <button id="allRooms" mat-button style="width: 200px; height: 80px" class="rooms"
-                    (click)="updateRoom('', 'All Rooms')">
-              <mat-icon>store_mall_directory</mat-icon>
-              <a class="roomName" [id]="'empty'">All Rooms</a><br>
-              <a class="indicator" id="{{'allRoomsAvailability'}}">{{this.numOfVacant}} / {{this.numOfAll}} vacant</a>
-            </button>
-
-          </mat-accordion>
-          <ng-template #roomsError>
-            <div class="noRoomFoundMessage" style="padding-top: 10px; padding-bottom: 20px; ">Cannot find any room
-              currently. Please try again later.
-            </div>
-          </ng-template>
-        </mat-card>
-      </mat-panel-description>
-
-
+    Hello There!
   </mat-dialog-content>
-
-
 </div>
+
+
+
+
+
+
+
+
+
+
