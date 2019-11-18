@@ -51,13 +51,13 @@
     <mat-card *ngIf="this.roomId != ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
       <mat-card-title style="font-weight: 100; font-size: 30px; margin-bottom: 10px; margin-left: 8px; line-height: 1.15">{{this.roomName}}</mat-card-title>
 
-      <mat-card-content style="height: 20px; margin-left: 10px">
+      <mat-card-content style="height: 20px; margin-left: 10px;">
         <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.roomVacant}} vacant</a>
         <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.roomRunning}} running</a>
         <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.roomBroken}} broken</a>
-        <button mat-button id="defaultRoomButton"
+        <button mat-raised-button color='warn' class="defaultRoomButton"
                 (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)">
-          Set Default
+          Set Default Room
         </button>
       </mat-card-content>
     </mat-card>
@@ -72,7 +72,7 @@
     <mat-grid-list cols="{{this.getGraphCols()}}" rowHeight="280px">
 
       <mat-grid-tile>
-        <mat-card style="max-width: 100% !important; width: 100% !important; height: 80%">
+        <mat-card style="max-width: 100% !important; width: 100% !important; height: 80%; margin-top: 35px">
           <mat-card-title id="predictionGraphTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px">Busy Time on
             <p style="display: unset; float: bottom">
               <mat-select id="day-selector" [(value)]="inputDay" style="width: 150px" (selectionChange)="updateDayBySelector($event.value)">
