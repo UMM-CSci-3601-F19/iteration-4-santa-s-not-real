@@ -123,7 +123,7 @@ export class HomeComponent implements OnInit {
     this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
     this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
     this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
-    this.buildChart();
+    this.buildChart('bar');
     this.fakePositions();
     this.setSelector(1);
     // document.getElementById('allMachineList').style.display = 'unset';
@@ -170,13 +170,13 @@ export class HomeComponent implements OnInit {
     if (this.inputDay === 0) {
       this.inputDay = 7;
     }
-    this.buildChart();
+    this.buildChart('bar');
   }
 
 
   updateDayBySelector(num: number) {
     this.inputDay = +num;
-    this.buildChart();
+    this.buildChart('bar');
   }
 
   getWeekDayByRoom(room, wekd, addition?): number[] {
@@ -255,7 +255,25 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  buildChart() {
+  // init(){
+  //   this.myChart = new Chart(this.ctx, {
+  //     type: chartType,
+  //     data: data,
+  //
+  //
+  //   })
+  // }
+  //
+  // toggleChart(){
+  //   this.myChart.destroy();
+  //   this.charT
+  // }
+
+  changeType(type: string){
+    this.buildChart(type);
+  }
+
+  buildChart(lType: string) {
     if (this.myChart != null) {
       this.myChart.destroy();
     }
@@ -274,12 +292,15 @@ export class HomeComponent implements OnInit {
 
       if (this.inputRoom !== 'all') {
         this.myChart = new Chart(this.ctx, {
-          type: 'bar',
+          type: lType,
           data: {
             labels: xlabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              backgroundColor: 'rgb(176,94,193)'
+              borderColor: 'rgb(50, 25, 69)',
+              backgroundColor: 'rgb(176,94,193)',
+              fill: false,
+              lineTension: .2
             }]
           },
           options: {
@@ -296,6 +317,11 @@ export class HomeComponent implements OnInit {
               //     return tooltipItem.yLabel;
               //   }
               // }
+            },
+            elements: {
+              point: {
+                radius: 0
+              }
             },
             scales: {
               xAxes: [{
