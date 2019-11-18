@@ -53,16 +53,20 @@
       margin-right: 16px;
     }
   }
+  .graphBut{
+    background-color: mat-color($warn);
+  }
+
 }
 
   .roomHeading {
     padding-top: 5px !important;
     margin: 0 -5px 10px -5px !important;
     font-style: italic;
-    border-radius: 0 !important;
-    position: sticky !important;
-    top: 59px;
-    z-index: 1;
+    border-radius: 10px !important;
+    //position: sticky !important;
+    top: 0px;
+    //z-index: 1;
     box-shadow: none !important;
   }
 
@@ -74,6 +78,7 @@
     padding-right: 5px;
     padding-bottom: 25px;
   }
+
 
 // Sets up the theming for built in material components with the light theme
 @include angular-material-theme($light-theme);
