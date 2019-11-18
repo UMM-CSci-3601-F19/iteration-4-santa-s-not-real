@@ -8,11 +8,12 @@ import {HomeService} from './home.service';
 import * as Chart from 'chart.js';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-
 @Component({
+  selector: "your-dialog",
   templateUrl: 'home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
 
   /*
@@ -80,7 +81,7 @@ export class HomeComponent implements OnInit {
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
   }
 
-  openDialog(theMachine: Machine) {
+  openMachineDialog(theMachine: Machine) {
     const thisMachine: Machine = {
       id: theMachine.id,
       name: this.translateMachineName(theMachine.name),
@@ -92,7 +93,7 @@ export class HomeComponent implements OnInit {
       remainingTime: theMachine.remainingTime,
       vacantTime: theMachine.vacantTime
     };
-    const dialogRef = this.dialog.open(HomeDialog, {
+    const dialogRef = this.dialog.open(HomeMachineDialog, {
       width: '330px',
       data: {machine: thisMachine},
       autoFocus: false
@@ -575,10 +576,10 @@ export class HomeComponent implements OnInit {
   templateUrl: 'home.dialog.html',
 })
 // tslint:disable-next-line:component-class-suffix
-export class HomeDialog {
+export class HomeMachineDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<HomeDialog>,
+    public dialogRef: MatDialogRef<HomeMachineDialog>,
     @Inject(MAT_DIALOG_DATA) public data: { machine: Machine }) {
   }
 
@@ -614,3 +615,56 @@ export class HomeDialog {
     }
   }
 }
+
+// @Component({
+//   selector: 'RoomDialog',
+//   templateUrl: 'home.room.dialog.html',
+//   styleUrls:['./home.component.css']
+//
+// })
+//
+// export class RoomDialog {
+//
+//   private autoRefresh = true;
+//
+//   public machineListTitle: string;
+//   public brokenMachineListTitle: string;
+//   public rooms: Room[];
+//   public machines: Machine[];
+//   public filteredMachines: Machine[];
+//   public numOfBroken: number;
+//   public numOfWashers: number;
+//   public numOfDryers: number;
+//
+//   public roomVacant: number;
+//   public roomRunning: number;
+//   public roomBroken: number;
+//
+//   public roomId = '';
+//   public roomName = 'All Rooms';
+//   public selectorState: number;
+//   public numOfVacant: number;
+//   public numOfAll: number;
+//
+//   constructor(public dialog: MatDialog) {}
+//
+//   openRoomDialog() {
+//     const dialogRef = this.dialog.open(RoomDialogPage);
+//
+//     dialogRef.afterClosed().subscribe(result => {
+//       console.log('Dialog result: ${result}');
+//     });
+//   }
+// }
+//
+// export class RoomDialogPage {
+//
+//   constructor(
+//     public dialogRef: MatDialogRef<RoomDialogPage>,
+//     @Inject(MAT_DIALOG_DATA) public data: any
+//   ){}
+//
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
+// }
