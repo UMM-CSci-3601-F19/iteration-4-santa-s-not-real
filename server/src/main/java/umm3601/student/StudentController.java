@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 //Todo: Maybe find something not deprecated.
 import com.mongodb.util.JSON;
+import umm3601.GoogleAuth;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -146,9 +147,12 @@ public class StudentController {
       Document filter = new Document("studentId", studentId);
       Document getName = new Document();
 
+
       getName.append("name", name);
 
+
       Document setName = new Document("$set", getName);
+
       try {
         studentCollection.updateOne(filter, setName);
         System.out.println("Updating a student [studentId: " + studentId + " | name: " + name + " was successful");
@@ -158,5 +162,16 @@ public class StudentController {
         return "Error trying to log in a returning student";
       }
     }
+  }
+  String getEmailAddress(String email){
+    System.out.println("Checking database for student");
+    FindIterable<Document> matchingStudent = studentCollection.find(eq("email", email));
+    if (serializeIterable(matchingStudent).equals("[]")){
+      return null;
+    }
+    else {
+      return email;
+    }
+
   }
 }

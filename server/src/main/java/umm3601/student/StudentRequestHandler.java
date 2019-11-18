@@ -93,4 +93,20 @@ public class StudentRequestHandler {
       return null;
     }
   }
+
+  public String getEmailAddress(Request req, Response res){
+    res.type("application/json");
+
+    Document body = Document.parse(req.body());
+    GoogleIdToken idToken = gauth.auth(body);
+
+    if(idToken != null){
+      GoogleIdToken.Payload payload = idToken.getPayload();
+      String email = payload.getEmail();
+      return studentController.getEmailAddress(email);
+    }
+    else{
+      return null;
+    }
+  }
 }

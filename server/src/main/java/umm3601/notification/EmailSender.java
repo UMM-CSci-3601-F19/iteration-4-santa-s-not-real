@@ -1,12 +1,5 @@
 package umm3601.notification;
 import com.google.common.base.Joiner;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.SimpleEmail;
-import org.rowla070.billing.plugin.notification.exception.EmailNotificationException;
-import org.rowla070.billing.plugin.notification.setup.EmailNotificationConfiguration;
-import org.osgi.service.log.LogService;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,11 +7,6 @@ import java.util.List;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
-import static org.rowla070.billing.plugin.notification.exception.EmailNotificationErrorCode.EMAIL_ADDRESS_INVALID;
-import static org.rowla070.billing.plugin.notification.exception.EmailNotificationErrorCode.RECIPIENT_EMAIL_ADDRESS_REQUIRED;
-import static org.rowla070.billing.plugin.notification.exception.EmailNotificationErrorCode.SENDER_EMAIL_ADDRESS_REQUIRED;
-import static org.rowla070.billing.plugin.notification.exception.EmailNotificationErrorCode.SMTP_AUTHENTICATION_REQUIRED;
-import static org.rowla070.billing.plugin.notification.exception.EmailNotificationErrorCode.SMTP_HOSTNAME_REQUIRED;
 
 public class EmailSender {
 
