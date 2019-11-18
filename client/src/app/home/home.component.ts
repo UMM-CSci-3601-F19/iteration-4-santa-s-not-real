@@ -485,7 +485,7 @@ export class HomeComponent implements OnInit {
         this.ngOnInit();
       } else {
         document.getElementById('loadCover').style.display = 'none';
-        this.buildChart();
+        this.buildChart('bar');
       }
     })();
   }
