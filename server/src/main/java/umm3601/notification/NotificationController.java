@@ -14,8 +14,5 @@ public class NotificationController {
     studentCollection = database.getCollection("Students");
 
   }
-  public String getEmail(){
 
-    return "email";
-  }
 }
