@@ -462,9 +462,10 @@ export class HomeComponent implements OnInit {
               labels: {
                 fontSize: 12,
                 fontColor: 'rgb(150, 150, 150)',
+                boxWidth: 2,
               },
               position: 'right',
-              display: window.innerWidth > 500,
+              display: true,
             }
           },
         });
