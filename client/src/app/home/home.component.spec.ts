@@ -8,7 +8,7 @@ import {Machine} from './machine';
 import {Room} from './room';
 import {History} from './history';
 import {Observable} from 'rxjs';
-import {of} from 'rxjs';
+import {AuthService} from "../auth.service";
 
 
 describe('Home page', () => {
@@ -30,11 +30,17 @@ describe('Home page', () => {
     getAllHistory: () => Observable<History[]>;
     updateRunningStatus;
   };
+  let authServiceStub = {
+    getAdminId: () => 'MI6007',
+    getAdminName: () => 'James Bond',
+    isSignedIn: () => true,
+    loadClient: () => null,
+  };
 
   // @ts-ignore
   beforeEach(() => {
     homeServiceStub = {
-      getMachines: () => of([
+      getMachines: () => Observable.of([
         {
           id: 'id_1',
           name: '',
@@ -63,7 +69,7 @@ describe('Home page', () => {
           vacantTime: -1,
         },
       ]),
-      getRooms: () => of([
+      getRooms: () => Observable.of([
         {
           id: 'gay',
           name: 'A',
@@ -78,7 +84,7 @@ describe('Home page', () => {
           numberOfAvailableMachines: 0,
         },
       ]),
-      getAllHistory: () => of([
+      getAllHistory: () => Observable.of([
         {
           1: {
             0: 10,
@@ -436,12 +442,19 @@ describe('Home page', () => {
       ]),
       updateRunningStatus: () => null,
     };
+    authServiceStub = {
+      getAdminId: () => 'MI6007',
+      getAdminName: () => 'James Bond',
+      isSignedIn: () => true,
+      loadClient: () => null,
+    };
 
     TestBed.configureTestingModule({
       imports: [CustomModule],
       declarations: [HomeComponent], // declare the test component
-      providers: [{provide: HomeService, useValue: homeServiceStub}]
-    });
+      providers: [{provide: HomeService, useValue: homeServiceStub},
+        {provide: AuthService, useValue: authServiceStub}
+      ]});
 
     fixture = TestBed.createComponent(HomeComponent);
 
@@ -540,10 +553,10 @@ describe('Home page', () => {
       machines => {
         component.machines = machines;
       });
-      expect(component.generateCustomLink('the_apartments', 'dryer', 'the_id'))
-      // tslint:disable-next-line:max-line-length
-        .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Apartment Community Building (Cube)&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-    });
+    expect(component.generateCustomLink('the_apartments', 'dryer', 'the_id'))
+    // tslint:disable-next-line:max-line-length
+      .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Apartment Community Building (Cube)&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
+  });
 
   it('should generate a custom link corresponding to the machine being reported', () => {
     const machines: Observable<Machine[]> = homeServiceStub.getMachines();
@@ -618,7 +631,7 @@ describe('Home page', () => {
     expect(component.generateCustomLink('blakely', 'dryer', 'the_id'))
     // tslint:disable-next-line:max-line-length
       .toBe('https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000002=Blakely&entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with dryer the_id: ');
-    });
+  });
 
   it('should generate a custom link corresponding to the machine being reported', () => {
     const machines: Observable<Machine[]> = homeServiceStub.getMachines();
@@ -670,12 +683,4 @@ describe('Home page', () => {
     expect(component.filteredMachines.length).toEqual(2);
   });
 
-  it('should modify array', () => {
-    component.loadAllRooms();
-    component.loadAllMachines();
-    component.updateRoom('gay', 'A');
-    component.buildChart();
-    component.modifyArray([], 2);
-    expect(component.filteredMachines.length).toEqual(1);
-  });
 });
