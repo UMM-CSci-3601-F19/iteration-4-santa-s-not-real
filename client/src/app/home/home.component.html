@@ -27,7 +27,7 @@
 
 
 
-      <mat-expansion-panel class="washerPanel" style="background: none; padding: 0" [expanded]="true">
+      <mat-expansion-panel class="washerPanel" style="background: none; padding: 0" [expanded]="false">
         <mat-expansion-panel-header style="background: initial">
           <mat-panel-title id="washer-grid"  style="font-size: 20px; font-style: italic; line-height: 1">Washers Within {{this.roomName}}</mat-panel-title>
         </mat-expansion-panel-header>
@@ -72,7 +72,7 @@
                       <p style="bottom: 20px; top: auto; text-align: right">
                         Time remaining <a class="time" style="font-size: 300%; font-weight: lighter">{{machine.remainingTime}}</a> min
                       </p>
-                      <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
+                      <mat-progress-bar color="accent" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                     </div>
                     <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
                     <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
@@ -108,7 +108,7 @@
         </mat-panel-description>
       </mat-expansion-panel>
 
-    <mat-expansion-panel class="dryerPanel" style="background: none; padding: 0" [expanded]="true">
+    <mat-expansion-panel class="dryerPanel" style="background: none; padding: 0" [expanded]="false">
       <mat-expansion-panel-header style="background: initial">
         <mat-panel-title id="dryer-grid"  style="font-size: 20px; font-style: italic; line-height: 1">Dryers Within {{this.roomName}}</mat-panel-title>
       </mat-expansion-panel-header>
@@ -154,7 +154,7 @@
                       <p style="bottom: 20px; top: auto; text-align: right">
                         Time remaining <a class="time" style="font-size: 300%; font-weight: lighter">{{machine.remainingTime}}</a> min
                       </p>
-                      <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
+                      <mat-progress-bar color="accent" mode="determinate" value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
                     </div>
                     <a id="reportId" class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
                     <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
@@ -177,7 +177,7 @@
                       <p style="bottom: 20px; top: auto; text-align: right">
                         <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
                       </p>
-                      <mat-progress-bar color="warn" mode="determinate" bufferValue="100" value="0"></mat-progress-bar>
+                      <mat-progress-bar color="dark-red" mode="determinate" bufferValue="100" value="0"></mat-progress-bar>
                     </div>
                     <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
                     <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
@@ -271,7 +271,7 @@
                     <button mat-button [id]="machine.name" class="unavailable" style="padding: 10px; min-width: unset; display: unset; position: absolute"
                             [ngStyle]="{'left': machine.position.x + 'px', 'top': machine.position.y + 'px'}" (click)="openMachineDialog(machine)">
                       <mat-icon style="margin-right: 0 ">fireplace</mat-icon>
-                      <mat-icon color="warn" style="position: absolute; left: 2px; top: 8px; font-weight: bolder">close</mat-icon>
+                      <mat-icon color="red" style="position: absolute; left: 2px; top: 8px; font-weight: bolder">close</mat-icon>
                     </button>
                   </mat-accordion>
 

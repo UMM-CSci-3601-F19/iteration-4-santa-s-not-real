@@ -37,7 +37,11 @@
     .mat-toolbar.mat-primary {
       background: mat-color($background, app-bar);
       color: mat-color($foreground, text);
-    }
+    }.i.material-icons {
+    background: mat-color($foreground);
+    color: mat-color($background, text);
+         }
+
   }
   .drawer-list-item-active {
     background-color: mat-color($background, hover) !important;
@@ -47,16 +51,23 @@
     }
   }
 
+  .mat-icon.vacant {
+    color: mat-color($warn);
+  }
+
+  .mat-icon.inUse {
+    color: mat-color($accent)
+  }
   .sidenav-list {
     .mat-list-icon {
       color: mat-color($foreground, icon);
       margin-right: 16px;
     }
   }
-  .graphBut{
-    background-color: mat-color($warn);
-  }
 
+  .graphBut{
+    background-color: mat-color($accent);
+  }
 }
 
   .roomHeading {
