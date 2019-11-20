@@ -122,6 +122,12 @@ export class HomeComponent implements OnInit {
     this.cookieService.set('room_id', newId);
     this.cookieService.set('room_name', newName);
   }
+
+  public updateGraphType(type: string): void{
+    this.cookieService.set('graph_type', type);
+    this.buildChart(type);
+  }
+
   public updateRoom(newId: string, newName: string): void {
     this.roomId = newId;
     this.roomName = newName;
@@ -138,7 +144,11 @@ export class HomeComponent implements OnInit {
     this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
     this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
     this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
-    this.buildChart();
+    if(this.cookieService.check('graph_type') === false){
+      this.buildChart('bar');
+    }else{
+      this.buildChart(this.cookieService.get('graph_type'));
+    }
     this.fakePositions();
     this.setSelector(1);
     // document.getElementById('allMachineList').style.display = 'unset';
@@ -191,13 +201,13 @@ export class HomeComponent implements OnInit {
     if (this.inputDay === 0) {
       this.inputDay = 7;
     }
-    this.buildChart();
+    this.buildChart(this.cookieService.get('graph_type'));
   }
 
 
   updateDayBySelector(num: number) {
     this.inputDay = +num;
-    this.buildChart();
+    this.buildChart(this.cookieService.get('graph_type'));
   }
 
   getWeekDayByRoom(room, wekd, addition?): number[] {
@@ -276,9 +286,12 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  buildChart() {
+  buildChart(gType: string) {
     if (this.myChart != null) {
       this.myChart.destroy();
+    }
+    if(this.cookieService.check('graph_type') === false){
+      gType = 'bar'
     }
     if (this.history !== undefined) {
       this.canvas = document.getElementById(this.chart);
@@ -295,12 +308,15 @@ export class HomeComponent implements OnInit {
 
       if (this.inputRoom !== 'all') {
         this.myChart = new Chart(this.ctx, {
-          type: 'bar',
+          type: gType,
           data: {
             labels: xlabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              backgroundColor: 'rgb(176,94,193)'
+              borderColor: 'rgb(176, 94, 193)',
+              backgroundColor: 'rgb(176,94,193)',
+              fill: false,
+              lineTension: .2
             }]
           },
           options: {
@@ -317,6 +333,11 @@ export class HomeComponent implements OnInit {
               //     return tooltipItem.yLabel;
               //   }
               // }
+            },
+            elements: {
+              point: {
+                radius: 0
+              }
             },
             scales: {
               xAxes: [{
@@ -344,7 +365,7 @@ export class HomeComponent implements OnInit {
         });
       } else {
         this.myChart = new Chart(this.ctx, {
-          type: 'line',
+          type: gType,
           data: {
             labels: xlabel2,
             datasets: [
@@ -448,6 +469,7 @@ export class HomeComponent implements OnInit {
               labels: {
                 fontSize: 12,
                 fontColor: 'rgb(150, 150, 150)',
+                boxWidth: 2,
               },
               position: 'right',
               display: true,
@@ -479,8 +501,11 @@ export class HomeComponent implements OnInit {
         console.log('Retry');
         this.ngOnInit();
       } else {
+        if (this.cookieService.check('graph_type') === false){
+          this.buildChart('bar')
+        }
         document.getElementById('loadCover').style.display = 'none';
-        this.buildChart();
+        this.buildChart(this.cookieService.get('graph_type'));
       }
     })();
   }
