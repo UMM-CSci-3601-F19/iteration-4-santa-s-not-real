@@ -37,11 +37,7 @@
     .mat-toolbar.mat-primary {
       background: mat-color($background, app-bar);
       color: mat-color($foreground, text);
-    }.i.material-icons {
-    background: mat-color($foreground);
-    color: mat-color($background, text);
-         }
-
+    }
   }
   .drawer-list-item-active {
     background-color: mat-color($background, hover) !important;

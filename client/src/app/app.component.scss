@@ -25,5 +25,12 @@
   @media (max-width: 599px) {
     margin: 16px;
   }
+}
 
+.spacer {
+  flex: 1 1 auto;
+}
+
+.toolButtons {
+  padding:0 14px;
 }
