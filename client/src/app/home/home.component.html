@@ -1,7 +1,7 @@
 <div layout-gt-sm="row" class="home">
   <div flex-gt-sm="80" flex-offset-gt-sm="10"  id="mainBody" style="margin-bottom: 70px">
 
-    <button mat-raised-button color="warn" id="all-rooms" (click)="hideSelector(); scroll('scrollBox'); setSelector(0);">
+    <button mat-raised-button color="primary" id="all-rooms" (click)="hideSelector(); scroll('scrollBox'); setSelector(0);">
       <i class="material-icons" style="margin-right: 10px !important;">store_mall_directory</i>Select Rooms
     </button>
 
@@ -51,7 +51,7 @@
         <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.roomVacant}} vacant</a>
         <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.roomRunning}} running</a>
         <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.roomBroken}} broken</a>
-        <button mat-raised-button color='warn' class="defaultRoomButton"
+        <button mat-raised-button color='primary' class="defaultRoomButton"
                 (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)">
           Set Default Room
         </button>
