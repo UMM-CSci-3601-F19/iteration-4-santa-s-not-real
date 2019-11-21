@@ -263,7 +263,7 @@
                     <mat-progress-bar color="warn" mode="determinate" value="100"></mat-progress-bar>
                   </div>
                   <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
-                  <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
+                  <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
                 </mat-card>
               </mat-grid-tile>
             </mat-accordion>
@@ -285,7 +285,7 @@
                     <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.6}}"></mat-progress-bar>
                   </div>
                   <a id="reportId" class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
-                  <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
+                  <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
                 </mat-card>
               </mat-grid-tile>
             </mat-accordion>
@@ -307,7 +307,7 @@
                     <mat-progress-bar color="warn" mode="determinate" bufferValue="100" value="0"></mat-progress-bar>
                   </div>
                   <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
-                  <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
+                  <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
                 </mat-card>
               </mat-grid-tile>
             </mat-accordion>
