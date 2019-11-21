@@ -46,7 +46,7 @@
         Time remaining <a class="time" style="font-size: 300%; font-weight: lighter">{{data.machine.remainingTime}}</a>
         min
       </p>
-      <mat-progress-bar color="warn" mode="buffer" value="{{100-data.machine.remainingTime / 0.35}}"></mat-progress-bar>
+      <mat-progress-bar color="accent" mode="determinate" value="{{100-data.machine.remainingTime / 0.35}}"></mat-progress-bar>
     </div>
     <a class="reportButton" mat-button
        href="{{generateCustomLink(data.machine.room_id, data.machine.type, data.machine.name)}}">Report an issue</a>
@@ -69,7 +69,7 @@
       <p style="bottom: 50px; top: auto; text-align: right">
         <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
       </p>
-      <mat-progress-bar color="warn" mode="buffer" value="100"></mat-progress-bar>
+      <mat-progress-bar color="warn" mode="determinate" value="100"></mat-progress-bar>
     </div>
     <a class="reportButton" mat-button
        href="{{generateCustomLink(data.machine.room_id, data.machine.type, data.machine.name)}}">Report an issue</a>
@@ -116,7 +116,7 @@
         Time remaining <a class="time" style="font-size: 300%; font-weight: lighter">{{data.machine.remainingTime}}</a>
         min
       </p>
-      <mat-progress-bar color="warn" mode="buffer" value="{{100-data.machine.remainingTime / 0.6}}"></mat-progress-bar>
+      <mat-progress-bar color="accent" mode="determinate" value="{{100-data.machine.remainingTime / 0.6}}"></mat-progress-bar>
     </div>
     <a class="reportButton" mat-button
        href="{{generateCustomLink(data.machine.room_id, data.machine.type, data.machine.name)}}">Report an issue</a>
@@ -138,7 +138,7 @@
       <p style="bottom: 50px; top: auto; text-align: right">
         <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
       </p>
-      <mat-progress-bar color="warn" mode="buffer" value="100"></mat-progress-bar>
+      <mat-progress-bar color="warn" mode="determinate" value="100"></mat-progress-bar>
     </div>
     <a class="reportButton" mat-button
        href="{{generateCustomLink(data.machine.room_id, data.machine.type, data.machine.name)}}">Report an issue</a>
