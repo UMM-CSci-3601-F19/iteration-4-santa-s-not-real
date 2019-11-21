@@ -1,11 +1,7 @@
 <div layout-gt-sm="row" class="home">
   <div flex-gt-sm="80" flex-offset-gt-sm="10"  id="mainBody" style="margin-bottom: 70px">
 
-    <div id="signIn" class="g-signin2" data-onsuccess="onSignIn" *ngIf="!auth.isSignedIn()" (click)="auth.signIn()"></div>
-    <button mat-raised-button id="signOut" *ngIf="auth.isSignedIn()" (click)="auth.signOut()">Sign out</button>
-
-
-    <button mat-raised-button color="warn" id="all-rooms" (click)="hideSelector(); scroll('scrollBox'); setSelector(0);">
+    <button mat-raised-button color="primary" id="all-rooms" (click)="hideSelector(); scroll('scrollBox'); setSelector(0);">
       <i class="material-icons" style="margin-right: 10px !important;">store_mall_directory</i>Select Rooms
     </button>
 
@@ -55,7 +51,7 @@
         <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.roomVacant}} vacant</a>
         <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.roomRunning}} running</a>
         <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.roomBroken}} broken</a>
-        <button mat-raised-button color='warn' class="defaultRoomButton"
+        <button mat-raised-button color='primary' class="defaultRoomButton"
                 (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)">
           Set Default Room
         </button>
@@ -101,7 +97,7 @@
       </mat-grid-tile>
 
       <mat-grid-tile>
-      <mat-card id="roomMap" style="width: 100%; height: 80%; ">
+      <mat-card id="roomMap" style="width: 100%; height: 80%; margin-top: 35px">
         <mat-accordion *ngIf="this.roomId != ''; else mapError">
           <mat-card-title id="roomMapTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px !important;">Machines' Map</mat-card-title>
             <mat-accordion *ngIf="numOfAll > 0; else machinesError">

@@ -11,6 +11,10 @@ export class AppComponent {
   public profileID = localStorage.getItem('userID');
   public auth: AuthService;
 
-  constructor(private authService: AuthService) {}
-
+  constructor(private authService: AuthService) {
+    this.auth =authService;
+  }
+  initGapi(): void {
+    this.authService.loadClient();
+  }
 }
