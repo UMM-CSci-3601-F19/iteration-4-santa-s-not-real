@@ -38,6 +38,7 @@ public class GmailQuickstart {
    * Global instance of the scopes required by this quickstart.
    * If modifying these scopes, delete your previously saved tokens/ folder.
    */
+  //private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_LABELS);
   private static final List<String> SCOPES = Arrays.asList(GmailScopes.MAIL_GOOGLE_COM);
   private static final String CREDENTIALS_FILE_PATH = "./../../../resources/credentials.json";
 
@@ -123,6 +124,7 @@ public class GmailQuickstart {
         System.out.printf("- %s\n", label.getName());
       }
     }
-    sendMessage(service,"rowla070",createEmail("rowla070@morris.umn.edu", "trow016@gmail.com", "Hi", "hello"));
+    sendMessage(service,"rowla070@morris.umn.edu",createEmail("rowla070@morris.umn.edu",
+      "trow016@gmail.com", "Laundry Notification", "There is a machine open in gay Hall"));
   }
 }

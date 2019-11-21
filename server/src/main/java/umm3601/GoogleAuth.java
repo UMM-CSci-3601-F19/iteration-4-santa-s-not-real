@@ -10,19 +10,21 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import spark.Request;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
 public class GoogleAuth {
-  private static final String CLIENT_ID = "824632109956-7oc5g0ereu6rqhqoikqsg2nu92g48v4e.apps.googleadmincontent.com";
+  private static final String CLIENT_ID_1 = "824632109956-7oc5g0ereu6rqhqoikqsg2nu92g48v4e.apps.googleadmincontent.com";
+  private static final String CLIENT_ID_2 = "646997870845-cqjbmpgorru612mqkjh15t6bjla53r62.apps.googleusercontent.com";
 
   private static final NetHttpTransport transport = new NetHttpTransport();
 
   private static final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, JacksonFactory.getDefaultInstance())
     // Specify the CLIENT_ID of the app that accesses the backend:
-    .setAudience(Collections.singletonList(CLIENT_ID))
+    //.setAudience(Collections.singletonList(CLIENT_ID))
     // Or, if multiple clients access the backend:
-    //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+    .setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2))
     .build();
 
   private final MongoCollection<Document> adminCollection;
