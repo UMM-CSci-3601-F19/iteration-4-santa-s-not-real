@@ -41,7 +41,10 @@
     right: 40px;
     bottom: 25px;
   }
-}
-.defaultRoomButton{
 
+  .mat-card.roomHeading {
+    padding-bottom: 50px;
+  }
 }
+
+
