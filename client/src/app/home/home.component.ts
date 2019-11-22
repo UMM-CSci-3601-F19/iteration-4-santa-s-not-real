@@ -503,7 +503,11 @@ export class HomeComponent implements OnInit {
       await this.delay(500); // wait 0.5s for loading data
 
       // this.myChart.destroy();
+      if (this.cookieService.check('room_id') === false) {
+        this.updateCookies('', 'All Rooms');
+      }
       this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
+
       this.updateMachines();
       this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
       this.updateCounter();
