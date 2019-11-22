@@ -48,11 +48,11 @@
   }
 
   .mat-icon.vacant {
-    color: mat-color($warn);
+    color: mat-color($accent);
   }
 
   .mat-icon.inUse {
-    color: mat-color($accent)
+    color: mat-color($warn)
   }
   .sidenav-list {
     .mat-list-icon {
@@ -64,7 +64,6 @@
   .graphBut{
     background-color: mat-color($accent);
   }
-}
 
   .roomHeading {
     padding-top: 5px !important;

@@ -79,12 +79,12 @@ $light-primary: mat-palette($mat-umn-maroon, 500); // 500 is the base hue of a M
 // See: https://material.io/design/color/dark-theme.html
 $dark-primary: mat-palette($mat-umn-maroon, 200);
 
-$light-accent: mat-palette($mat-umn-gold, 900);
-$dark-accent: mat-palette($mat-umn-gold, 500);
+$light-accent: mat-palette($mat-green, 700);
+$dark-accent: mat-palette($mat-green, 400);
 
 // The warn palette is optional (defaults to red).
-$light-warn: mat-palette($mat-green, 700); // Without a hue given, it defaults to 500
-$dark-warn: mat-palette($mat-green, 400);
+$light-warn: mat-palette($mat-umn-gold, 900); // Without a hue given, it defaults to 500
+$dark-warn: mat-palette($mat-umn-gold, 500);
 
 // Create the theme object for a light theme (a Sass map containing all of the palettes).
 $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
