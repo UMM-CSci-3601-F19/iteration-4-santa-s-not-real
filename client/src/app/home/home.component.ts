@@ -7,15 +7,16 @@ import {HomeService} from './home.service';
 import {AuthService} from '../auth.service';
 
 import * as Chart from 'chart.js';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 import {CookieService} from 'ngx-cookie-service';
 
 import {MatSnackBar} from '@angular/material';
 
 declare let gapi: any;
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 
 @Component({
+  selector: "your-dialog",
   templateUrl: 'home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -46,7 +47,7 @@ export class HomeComponent implements OnInit {
   public roomBroken: number;
 
   public roomId = '';
-  public roomName = 'All rooms';
+  public roomName = 'All Rooms';
   public selectorState: number;
   public numOfVacant: number;
   public numOfAll: number;
@@ -91,7 +92,7 @@ export class HomeComponent implements OnInit {
     this.auth = authService;
   }
 
-  openDialog(theMachine: Machine) {
+  openMachineDialog(theMachine: Machine) {
     const thisMachine: Machine = {
       id: theMachine.id,
       name: this.translateMachineName(theMachine.name),
@@ -103,14 +104,26 @@ export class HomeComponent implements OnInit {
       remainingTime: theMachine.remainingTime,
       vacantTime: theMachine.vacantTime
     };
-    const dialogRef = this.dialog.open(HomeDialog, {
+    const dialogRef = this.dialog.open(HomeMachineDialog, {
       width: '330px',
       data: {machine: thisMachine},
-      autoFocus: false
+      autoFocus: false,
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+
+  openRoomDialog() {
+    const dialogRef = this.dialog.open(RoomDialogPage, {
+      data: this.rooms,
+      autoFocus: false,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result: ${result}');
     });
   }
 
@@ -490,7 +503,11 @@ export class HomeComponent implements OnInit {
       await this.delay(500); // wait 0.5s for loading data
 
       // this.myChart.destroy();
+      if (this.cookieService.check('room_id') === false) {
+        this.updateCookies('', 'All Rooms');
+      }
       this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
+
       this.updateMachines();
       this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
       this.updateCounter();
@@ -622,15 +639,14 @@ export class HomeComponent implements OnInit {
 }
 
 
-
 @Component({
   templateUrl: 'home.dialog.html',
 })
 // tslint:disable-next-line:component-class-suffix
-export class HomeDialog {
+export class HomeMachineDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<HomeDialog>,
+    public dialogRef: MatDialogRef<HomeMachineDialog>,
     @Inject(MAT_DIALOG_DATA) public data: { machine: Machine }) {
   }
 
@@ -664,5 +680,22 @@ export class HomeDialog {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
     }
+  }
+}
+
+@Component({
+  templateUrl: 'home.room.dialog.html',
+})
+
+export class RoomDialogPage {
+
+  constructor(
+    public dialogRef: MatDialogRef<RoomDialogPage>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

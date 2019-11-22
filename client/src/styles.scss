@@ -32,59 +32,47 @@
 
   // Define any styles affected by the theme.
 
-  mat-sidenav-content {
-    background-color: mat-color($primary, 200 );
-  }
-
-  .roomHeading, .topMenu {
-    background-color: mat-color($primary) !important;
-  }
-
   @if $is-dark {
-
-    .roomHeading, .topMenu {
-      background-color: mat-color($background, app-bar) !important;
-    }
 
     .mat-toolbar.mat-primary {
       background: mat-color($background, app-bar);
       color: mat-color($foreground, text);
     }
-
-    mat-sidenav-content {
-      background: mat-color($background, app-bar);
+  }
+  .drawer-list-item-active {
+    background-color: mat-color($background, hover) !important;
+    color: mat-color($primary) !important;
+    .mat-list-icon {
+      color: mat-color($primary) !important;
     }
+  }
 
-    .indicator {
-      color: $light-secondary-text !important;
-      bottom: 10px;
-    }
+  .mat-icon.vacant {
+    color: mat-color($accent);
+  }
 
-    .vacant {
-      color: #00ee55 !important;
+  .mat-icon.inUse {
+    color: mat-color($warn)
+  }
+  .sidenav-list {
+    .mat-list-icon {
+      color: mat-color($foreground, icon);
+      margin-right: 16px;
     }
+  }
 
-    .inUse {
-      color: #ffc520 !important;
-    }
-
-    .unavailable {
-      color: #aaaaaa !important;
-    }
-
-    .roomHeading {
-      background-color: mat-color($background, app-bar) !important;
-    }
+  .graphBut{
+    background-color: mat-color($accent);
   }
 
   .roomHeading {
     padding-top: 5px !important;
     margin: 0 -5px 10px -5px !important;
     font-style: italic;
-    border-radius: 0 !important;
-    position: sticky !important;
-    top: 59px;
-    z-index: 1;
+    border-radius: 10px !important;
+    //position: sticky !important;
+    top: 0px;
+    //z-index: 1;
     box-shadow: none !important;
   }
 
@@ -145,7 +133,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .indicator {
   font-size: 14px;
   margin-left: 38px;
-  color: $dark-secondary-text;
+
 }
 
 .roomName {
@@ -201,17 +189,6 @@ mat-icon {
   margin-left: 9px;
 }
 
-.vacant {
-  color: #007700;
-}
-
-.inUse {
-  color: #999900;
-}
-
-.unavailable {
-  color: #555555;
-}
 
 .map.mat-card {
   margin-left: auto !important;
@@ -251,7 +228,7 @@ mat-grid-tile mat-card {
 }
 .cardType {
   font-style: italic;
-  color: #999;
+
 }
 
 #predictionGraphTitle {

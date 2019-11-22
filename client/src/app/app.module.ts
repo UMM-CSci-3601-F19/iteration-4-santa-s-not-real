@@ -4,15 +4,15 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
-import {UserListComponent} from './users/user-list.component';
-import {UserListService} from './users/user-list.service';
+import {RoomDialogPage} from "./home/home.component";
 import {HomeService} from './home/home.service';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
+import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogConfig} from "@angular/material/dialog";
 
 import {CustomModule} from './custom.module';
-import {AddUserComponent} from './users/add-user.component';
-import {HomeDialog} from './home/home.component';
+
+import {HomeMachineDialog} from './home/home.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -49,21 +49,20 @@ import {MatSnackBarModule} from '@angular/material';
   declarations: [
     AppComponent,
     HomeComponent,
-    UserListComponent,
-    AddUserComponent,
-    HomeDialog,
+    HomeMachineDialog,
+    RoomDialogPage,
   ],
   providers: [
     HttpClient,
-    UserListService,
     HomeService,
     CookieService,
     AuthService,
     {provide: APP_BASE_HREF, useValue: '/'},
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
   ],
   entryComponents: [
-    AddUserComponent,
-    HomeDialog,
+    HomeMachineDialog,
+    RoomDialogPage,
   ],
   bootstrap: [AppComponent]
 })
