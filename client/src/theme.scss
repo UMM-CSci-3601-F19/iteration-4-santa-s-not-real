@@ -92,10 +92,3 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 // Create the theme object for a dark theme (a Sass map containing all of the palettes).
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
-.dark-theme {
-  @include angular-material-theme($dark-theme)
-}
-
-.light-theme {
-  @include angular-material-theme($light-theme)
-}
