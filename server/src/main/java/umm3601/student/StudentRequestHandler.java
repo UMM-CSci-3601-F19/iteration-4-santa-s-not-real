@@ -77,7 +77,7 @@ public class StudentRequestHandler {
       return null;
     }
   }
-  public String signup(Request req, Response res) {
+  public String signUp(Request req, Response res) {
     res.type("application/json");
 
     Document body = Document.parse(req.body());
