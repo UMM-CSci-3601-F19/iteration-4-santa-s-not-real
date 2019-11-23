@@ -1,0 +1,101 @@
+import {Injectable, OnInit} from "@angular/core";
+import {CanActivate, Router} from "@angular/router";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../environments/environment";
+
+declare let gapi: any;
+
+// Basic descriptions about some of the objects we work with
+// Gapi: The google api thing
+// Auth2: Has to be initialized first (done in index.html), then contains a lot of useful things.
+// gapi.auth2.getAuthInstance(). Type: gapi.auth2.GoogleAuth object. This is what is used to call most of the methods.
+// authInstance.currentUser.get(). Type: GoogleUser. Gets all of the user's information as well as authenticating info.
+
+// The google oauth bible (Where this information comes from) https://developers.google.com/identity/sign-in/web/reference
+// Documentation written by students in a hopefully easier to apply form can be found in the documentation folder.
+
+@Injectable()
+export class NotiService implements CanActivate, OnInit {
+  private http: HttpClient;
+  private signedInFlag: boolean;
+  private fullRoom: boolean;
+
+
+  constructor(private client: HttpClient, public router: Router) {
+    this.http = client;
+    this.signedInFlag = false;
+    this.fullRoom = true;
+  }
+
+  getStudentName(): string {
+    return gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getName();
+  }
+
+  getStudentId(): string {
+    return gapi.auth2.getAuthInstance().currentUser.get().getId();
+  }
+
+  getIdToken(): string {
+    return gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().id_token;
+  }
+
+  setRedirect(): string {
+    return gapi.auth2.SigninOptionsBuilder().setRedirect();
+  }
+
+  signIn() {
+    const authInstance = gapi.auth2.getAuthInstance();
+    authInstance.signIn()
+      .then((data) => {
+        const idtoken = data.getAuthResponse().id_token;
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+          }),
+          responseType: 'text' as 'json'
+        };
+        // If the user doesn't log in (ie closes the dialog box), we think they're logged in right now.
+
+        this.http.post<string>(environment.API_URL + 'login', {idtoken: idtoken}, httpOptions)
+          .subscribe((data) => {
+          });
+        this.signedInFlag = true;
+      });
+  }
+  notification(){
+    if(this.fullRoom == true){
+
+    }
+  }
+
+
+
+  signOut() {
+    console.log('Signing out');
+    const authInstance = gapi.auth2.getAuthInstance();
+    authInstance.signOut();
+    this.signedInFlag = false;
+  }
+
+  isSignedIn(): boolean {
+    return this.signedInFlag;
+  }
+
+  canActivate(): boolean {
+    if (!this.isSignedIn()) {
+      this.router.navigate(['']);
+      return false;
+    }
+    return true;
+  }
+  loadClient() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init({
+        'clientId': '824632109956-7oc5g0ereu6rqhqoikqsg2nu92g48v4e.apps.googleusercontent.com'
+      });
+    });
+  }
+
+  ngOnInit() {
+  }
+}
