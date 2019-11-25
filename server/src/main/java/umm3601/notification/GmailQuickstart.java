@@ -4,6 +4,7 @@ import umm3601.GoogleAuth;
 import umm3601.student.*;
 
 
+
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
 import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
@@ -32,8 +33,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import org.bson.Document;
+import com.mongodb.MongoException;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 public class GmailQuickstart {
+
   private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
   private static final String TOKENS_DIRECTORY_PATH = "tokens";
@@ -76,6 +83,7 @@ public class GmailQuickstart {
     this.studentRequestHandler = studentRequestHandler;
     this.gauth = gauth;
   }
+  //create email content
   public static MimeMessage createEmail(String to,
                                         String from,
                                         String subject,
@@ -93,6 +101,7 @@ public class GmailQuickstart {
     email.setText(bodyText);
     return email;
   }
+
   public static Message createMessageWithEmail(MimeMessage emailContent)
     throws MessagingException, IOException {
     ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -104,6 +113,9 @@ public class GmailQuickstart {
     return message;
   }
 
+
+
+  //Send message
   public static Message sendMessage(Gmail service,
                                     String userId,
                                     MimeMessage emailContent)
@@ -135,6 +147,6 @@ public class GmailQuickstart {
         System.out.printf("- %s\n", label.getName());
       }
     }
-    sendMessage(service,"rowla070@morris.umn.edu",createEmail("trow016@gmail.com","trow016@gmail.com", "Laundry Notification", ("There is a machine open in" )));
+    sendMessage(service,"rowla070@morris.umn.edu",createEmail("trow016@gmail.com","trow016@gmail.com", "Laundry Notification", ("There is a machine open in"  )));
   }
 }
