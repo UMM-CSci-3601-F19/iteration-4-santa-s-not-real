@@ -1,22 +1,15 @@
 package umm3601;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.gmail.Gmail;
+
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.utils.IOUtils;
+import umm3601.notification.NotificationRequestHandler;
 import umm3601.student.StudentController;
 import umm3601.student.StudentRequestHandler;
 import umm3601.history.HistoryController;
@@ -26,15 +19,14 @@ import umm3601.laundry.LaundryRequestHandler;
 import umm3601.user.UserController;
 import umm3601.user.UserRequestHandler;
 import umm3601.notification.GmailQuickstart;
-import umm3601.notification.NotificationRequestHandler;
+
 import javax.mail.MessagingException;
 
 import static spark.Spark.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import java.security.GeneralSecurityException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -44,6 +36,7 @@ public class Server {
   private static final String userDatabaseName = "dev";
   private static final String machineDatabaseName = "dev";
   private static final String machinePollingDatabaseName = "dev";
+  private static final String notificationDatabaseName = "dev";
   private static final String roomDatabaseName = "dev";
   private static final String roomPollingDatabaseName = "dev";
   private static final String roomHistoryDatabaseName = "dev";
@@ -53,7 +46,8 @@ public class Server {
   private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws MessagingException, GeneralSecurityException {
+
 
     MongoClient mongoClient = new MongoClient();
 
@@ -64,6 +58,7 @@ public class Server {
     MongoDatabase roomPollingDatabase = mongoClient.getDatabase(roomPollingDatabaseName);
     MongoDatabase roomsHistoryDatabase = mongoClient.getDatabase(roomHistoryDatabaseName);
     MongoDatabase studentDatabase = mongoClient.getDatabase(studentDatabaseName);
+    MongoDatabase notificationDatabase = mongoClient.getDatabase(notificationDatabaseName);
 
     GoogleAuth gauth = new GoogleAuth(userDatabase);
 
@@ -75,6 +70,8 @@ public class Server {
     HistoryRequestHandler historyRequestHandler = new HistoryRequestHandler(historyController);
     StudentController studentController = new StudentController(studentDatabase);
     StudentRequestHandler studentRequestHandler = new StudentRequestHandler(studentController, gauth);
+    GmailQuickstart gmailquickstart = new GmailQuickstart(gauth, notificationDatabase, roomDatabase);
+    NotificationRequestHandler notificationRequestHandler = new NotificationRequestHandler(gmailquickstart);
 
 
     final ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
@@ -89,9 +86,14 @@ public class Server {
 
     executorService.scheduleAtFixedRate(() -> {
         try {
-          GmailQuickstart.checkMachines();
+          gmailquickstart.checkMachines();
         } catch (IOException e) {
           System.out.println(e.toString());
+        } catch (MessagingException m){
+          System.out.println(m.toString());
+        }
+        catch (GeneralSecurityException g){
+          System.out.println(g.toString());
         }
       },  0, 5, TimeUnit.MINUTES);
 
@@ -153,6 +155,8 @@ public class Server {
     get("api/student/:id", studentRequestHandler::getStudentJSON);
 
     get("api/student/:email", studentRequestHandler ::getEmailAddress);
+
+    post("api/subscribe/new", notificationRequestHandler::subscribe);
 
     // An example of throwing an unhandled exception so you can see how the
     // Java Spark debugger displays errors like this.

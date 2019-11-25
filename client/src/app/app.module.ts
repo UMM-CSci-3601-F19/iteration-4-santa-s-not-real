@@ -16,8 +16,11 @@ import {HomeDialog} from './home/home.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatProgressBarModule} from '@angular/material';
+import {MatProgressBarModule, MatRadioModule} from '@angular/material';
 import {AuthService} from './auth.service';
+import {SubscriptionComponent, SubscriptionDialog} from "./Subscripton/Subscription.component";
+
+
 
 
 // import {MDCRipple} from '@material/ripple';
@@ -37,6 +40,7 @@ import {AuthService} from './auth.service';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
+    MatRadioModule,
     // MDCRipple,
     // ScrollDispatchModule,
     // CdkStepperModule,
@@ -47,6 +51,8 @@ import {AuthService} from './auth.service';
     UserListComponent,
     AddUserComponent,
     HomeDialog,
+    SubscriptionComponent,
+    SubscriptionDialog
   ],
   providers: [
     HttpClient,

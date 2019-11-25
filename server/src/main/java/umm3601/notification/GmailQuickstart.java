@@ -84,7 +84,7 @@ public class GmailQuickstart {
     LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
-  public GmailQuickstart(StudentRequestHandler studentRequestHandler, GoogleAuth gauth, MongoDatabase subscriptionDatabase, MongoDatabase machineDatabase){
+  public GmailQuickstart(GoogleAuth gauth, MongoDatabase subscriptionDatabase, MongoDatabase machineDatabase){
     this.studentRequestHandler = studentRequestHandler;
     this.gauth = gauth;
     this.subscriptionCollection = subscriptionDatabase.getCollection("subscriptions");
@@ -138,6 +138,7 @@ public class GmailQuickstart {
 
   //Controller setup
   public void checkMachines() throws IOException, MessagingException, GeneralSecurityException{
+    //Gmail service
     final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
       .setApplicationName(APPLICATION_NAME)
@@ -155,22 +156,25 @@ public class GmailQuickstart {
         System.out.printf("- %s\n", label.getName());
       }
     }
-    Document check = new Document();
-    check.append("type", "machine");
-    FindIterable<Document> subscriptionsForMachines = subscriptionCollection.find().filter(check);
+
+    //checking for vacant machine
+    FindIterable<Document> subscriptionsForMachines = subscriptionCollection.find();
+
     for (Document s : subscriptionsForMachines) {
-      check = new Document();
-      check.append("id", s.get("id"));
-    }
+      Document check = new Document();
+      check.append("room_id", s.get("room_id"));
+      check.append("status", "normal");
+      check.append("running", false);
+      Document vacantMachines = machineCollection.find(check).first();
 
-    Document vacantMachines = machineCollection.find(check).first();
-    if(vacantMachines != null && !vacantMachines.getBoolean("running") && vacantMachines.getString("status").equals("normal")){
-      String machineName = transformId(vacantMachines.getString("name"));
-      String roomName = transformId(vacantMachines.getString("room_id"));
-      String type = vacantMachines.getString("type");
-      subscriptionCollection.deleteOne(check);
+      if (vacantMachines != null && !vacantMachines.getBoolean("running") && vacantMachines.getString("status").equals("normal")) {
+        String roomName = transformId(vacantMachines.getString("room_id"));
+        String type = vacantMachines.getString("type");
+        sendMessage(service, "rowla070@morris.umn.edu", createEmail(check.toString(), "trow016@gmail.com", "Laundry Notification", ("There is a" + " " + type + " Available in" + roomName + "!")));
+        subscriptionCollection.deleteOne(s);
 
-      sendMessage(service,"rowla070@morris.umn.edu",createEmail(check.toString(),"trow016@gmail.com", "Laundry Notification", ("There is a"+ " "+ type+" open in" + roomName+ "!"  )));
+
+      }
     }
   }
 

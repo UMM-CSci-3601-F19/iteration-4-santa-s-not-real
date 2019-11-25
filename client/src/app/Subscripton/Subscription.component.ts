@@ -138,7 +138,7 @@ export class SubscriptionComponent implements OnInit {
 
 
   @Component({
-    templateUrl: 'Subscription.html',
+    templateUrl: 'Subscription.dialog.html',
   })
   export class SubscriptionDialog{
 
