@@ -5,18 +5,14 @@ import {Machine} from './machine';
 import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
 import {AuthService} from '../auth.service';
+import {NotiService} from "../noti.service";
 
 import * as Chart from 'chart.js';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
-import {CookieService} from 'ngx-cookie-service';
-
-import {MatSnackBar} from '@angular/material';
-
-declare let gapi: any;
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+  declare let gapi: any;
 
 @Component({
-  selector: "your-dialog",
   templateUrl: 'home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -32,6 +28,7 @@ export class HomeComponent implements OnInit {
    */
   private autoRefresh = true;
   public auth: AuthService;
+  public noti: NotiService;
 
   public machineListTitle: string;
   public brokenMachineListTitle: string;
@@ -47,7 +44,7 @@ export class HomeComponent implements OnInit {
   public roomBroken: number;
 
   public roomId = '';
-  public roomName = 'All Rooms';
+  public roomName = 'All rooms';
   public selectorState: number;
   public numOfVacant: number;
   public numOfAll: number;
@@ -83,16 +80,15 @@ export class HomeComponent implements OnInit {
   public pineHistory: History;
   public theApartmentsHistory: History;
 */
-
   constructor(public homeService: HomeService, public dialog: MatDialog,
-              private authService: AuthService, private cookieService: CookieService, public _snackBar: MatSnackBar) {
-
+              private authService: AuthService, private notiService: NotiService) {
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
     this.auth = authService;
+    this.noti = notiService;
   }
 
-  openMachineDialog(theMachine: Machine) {
+  openDialog(theMachine: Machine) {
     const thisMachine: Machine = {
       id: theMachine.id,
       name: this.translateMachineName(theMachine.name),
@@ -104,10 +100,10 @@ export class HomeComponent implements OnInit {
       remainingTime: theMachine.remainingTime,
       vacantTime: theMachine.vacantTime
     };
-    const dialogRef = this.dialog.open(HomeMachineDialog, {
+    const dialogRef = this.dialog.open(HomeDialog, {
       width: '330px',
       data: {machine: thisMachine},
-      autoFocus: false,
+      autoFocus: false
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -115,30 +111,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
-  openRoomDialog() {
-    const dialogRef = this.dialog.open(RoomDialogPage, {
-      data: this.rooms,
-      autoFocus: false,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: ${result}');
-    });
-  }
-
   setSelector(state: number) {
     this.selectorState = state;
-  }
-
-  public updateCookies(newId: string, newName: string): void{
-    this.cookieService.set('room_id', newId);
-    this.cookieService.set('room_name', newName);
-  }
-
-  public updateGraphType(type: string): void{
-    this.cookieService.set('graph_type', type);
-    this.buildChart(type);
   }
 
   public updateRoom(newId: string, newName: string): void {
@@ -157,15 +131,12 @@ export class HomeComponent implements OnInit {
     this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
     this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
     this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
-    if(this.cookieService.check('graph_type') === false){
-      this.buildChart('bar');
-    }else{
-      this.buildChart(this.cookieService.get('graph_type'));
-    }
+    this.buildChart();
     this.fakePositions();
     this.setSelector(1);
     // document.getElementById('allMachineList').style.display = 'unset';
     document.getElementById('all-rooms').style.bottom = '2%';
+    this.scroll('mainBody');
   }
 
   private updateMachines(): void {
@@ -201,26 +172,19 @@ export class HomeComponent implements OnInit {
   //   }
   // }
 
-  openSnackBar(room: string){
-    this._snackBar.open(room + ' has been set as your default!', '',{
-      duration: 2000,
-      horizontalPosition: 'center'
-    });
-  }
-
 
   updateDayByButton(num: number) {
     this.inputDay = (+this.inputDay + +num) % 7;
     if (this.inputDay === 0) {
       this.inputDay = 7;
     }
-    this.buildChart(this.cookieService.get('graph_type'));
+    this.buildChart();
   }
 
 
   updateDayBySelector(num: number) {
     this.inputDay = +num;
-    this.buildChart(this.cookieService.get('graph_type'));
+    this.buildChart();
   }
 
   getWeekDayByRoom(room, wekd, addition?): number[] {
@@ -299,12 +263,9 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  buildChart(gType: string) {
+  buildChart() {
     if (this.myChart != null) {
       this.myChart.destroy();
-    }
-    if(this.cookieService.check('graph_type') === false){
-      gType = 'bar'
     }
     if (this.history !== undefined) {
       this.canvas = document.getElementById(this.chart);
@@ -321,15 +282,12 @@ export class HomeComponent implements OnInit {
 
       if (this.inputRoom !== 'all') {
         this.myChart = new Chart(this.ctx, {
-          type: gType,
+          type: 'bar',
           data: {
             labels: xlabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              borderColor: 'rgb(176, 94, 193)',
-              backgroundColor: 'rgb(176,94,193)',
-              fill: false,
-              lineTension: .2
+              backgroundColor: 'rgb(176,94,193)'
             }]
           },
           options: {
@@ -346,11 +304,6 @@ export class HomeComponent implements OnInit {
               //     return tooltipItem.yLabel;
               //   }
               // }
-            },
-            elements: {
-              point: {
-                radius: 0
-              }
             },
             scales: {
               xAxes: [{
@@ -378,7 +331,7 @@ export class HomeComponent implements OnInit {
         });
       } else {
         this.myChart = new Chart(this.ctx, {
-          type: gType,
+          type: 'line',
           data: {
             labels: xlabel2,
             datasets: [
@@ -482,10 +435,9 @@ export class HomeComponent implements OnInit {
               labels: {
                 fontSize: 12,
                 fontColor: 'rgb(150, 150, 150)',
-                boxWidth: 2,
               },
               position: 'right',
-              display: true,
+              display: window.innerWidth > 500,
             }
           },
         });
@@ -503,11 +455,6 @@ export class HomeComponent implements OnInit {
       await this.delay(500); // wait 0.5s for loading data
 
       // this.myChart.destroy();
-      if (this.cookieService.check('room_id') === false) {
-        this.updateCookies('', 'All Rooms');
-      }
-      this.updateRoom(this.cookieService.get('room_id'), this.cookieService.get('room_name'));
-
       this.updateMachines();
       this.homeService.updateAvailableMachineNumber(this.rooms, this.machines);
       this.updateCounter();
@@ -518,11 +465,8 @@ export class HomeComponent implements OnInit {
         console.log('Retry');
         this.ngOnInit();
       } else {
-        if (this.cookieService.check('graph_type') === false){
-          this.buildChart('bar')
-        }
         document.getElementById('loadCover').style.display = 'none';
-        this.buildChart(this.cookieService.get('graph_type'));
+        this.buildChart();
       }
     })();
   }
@@ -639,14 +583,15 @@ export class HomeComponent implements OnInit {
 }
 
 
+
 @Component({
   templateUrl: 'home.dialog.html',
 })
 // tslint:disable-next-line:component-class-suffix
-export class HomeMachineDialog {
+export class HomeDialog {
 
   constructor(
-    public dialogRef: MatDialogRef<HomeMachineDialog>,
+    public dialogRef: MatDialogRef<HomeDialog>,
     @Inject(MAT_DIALOG_DATA) public data: { machine: Machine }) {
   }
 
@@ -680,22 +625,5 @@ export class HomeMachineDialog {
       // tslint:disable-next-line:max-line-length
       return 'https://docs.google.com/forms/d/e/1FAIpQLSdU04E9Kt5LVv6fVSzgcNQj1YzWtWu8bXGtn7jhEQIsqMyqIg/viewform?entry.1000005=Laundry room&entry.1000010=Resident&entry.1000006=Other&entry.1000007=issue with ' + machineType + ' ' + machineID + ': ';
     }
-  }
-}
-
-@Component({
-  templateUrl: 'home.room.dialog.html',
-})
-
-export class RoomDialogPage {
-
-  constructor(
-    public dialogRef: MatDialogRef<RoomDialogPage>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }

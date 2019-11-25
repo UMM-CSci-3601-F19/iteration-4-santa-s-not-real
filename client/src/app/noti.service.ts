@@ -1,10 +1,7 @@
-import {Injectable, NgZone, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-import {environment} from '../environments/environment';
-import {CanActivate, Router} from '@angular/router';
-
-// Declare pulls the variable from the html/js environment, so our gapi we declared in index gets pulled here.
+import {Injectable, OnInit} from "@angular/core";
+import {CanActivate, Router} from "@angular/router";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../environments/environment";
 
 declare let gapi: any;
 
@@ -18,14 +15,16 @@ declare let gapi: any;
 // Documentation written by students in a hopefully easier to apply form can be found in the documentation folder.
 
 @Injectable()
-export class AuthService implements CanActivate, OnInit {
+export class NotiService implements CanActivate, OnInit {
   private http: HttpClient;
   private signedInFlag: boolean;
+  private fullRoom: boolean;
 
 
   constructor(private client: HttpClient, public router: Router) {
     this.http = client;
     this.signedInFlag = false;
+    this.fullRoom = true;
   }
 
   getStudentName(): string {
@@ -63,6 +62,12 @@ export class AuthService implements CanActivate, OnInit {
         this.signedInFlag = true;
       });
   }
+  notification(){
+    if(this.fullRoom == true){
+
+    }
+  }
+
 
 
   signOut() {
