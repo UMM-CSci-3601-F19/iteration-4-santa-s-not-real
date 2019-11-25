@@ -26,7 +26,7 @@ import umm3601.laundry.LaundryRequestHandler;
 import umm3601.user.UserController;
 import umm3601.user.UserRequestHandler;
 import umm3601.notification.GmailQuickstart;
-
+import umm3601.notification.NotificationRequestHandler;
 import javax.mail.MessagingException;
 
 import static spark.Spark.*;
@@ -53,7 +53,7 @@ public class Server {
   private static final String APPLICATION_NAME = "Gmail API Java Quickstart";
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
 
-  public static void main(String[] args)throws MessagingException, GeneralSecurityException, IOException {
+  public static void main(String[] args) {
 
     MongoClient mongoClient = new MongoClient();
 
@@ -87,16 +87,13 @@ public class Server {
     executorService.scheduleAtFixedRate(historyController::updateHistory,      0,30, TimeUnit.MINUTES);
 
 
-
-    /*final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-    Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
-      .setApplicationName(APPLICATION_NAME)
-      .build();
-    try {
-      GmailQuickstart.sendMessage(service,"rowla070@morris.umn.edu",GmailQuickstart.createEmail("trow016@gmail.com","trow016@gmail.com", "Laundry Notification", ("There is a machine open in" )));
-    }catch(IOException e){
-      System.out.println(e.toString());
-    }*/
+    executorService.scheduleAtFixedRate(() -> {
+        try {
+          GmailQuickstart.checkMachines();
+        } catch (IOException e) {
+          System.out.println(e.toString());
+        }
+      },  0, 5, TimeUnit.MINUTES);
 
     //Configure Spark
     port(serverPort);

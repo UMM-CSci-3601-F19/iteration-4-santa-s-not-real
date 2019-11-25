@@ -38,6 +38,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import org.bson.types.ObjectId;
 
 public class GmailQuickstart {
 
@@ -55,12 +56,16 @@ public class GmailQuickstart {
   private static final List<String> SCOPES = Arrays.asList(GmailScopes.MAIL_GOOGLE_COM);
   private static final String CREDENTIALS_FILE_PATH = "./../../../resources/credentials.json";
 
+  public final MongoCollection<Document> subscriptionCollection;
+  public final MongoCollection<Document> machineCollection;
+
   /**
    * Creates an authorized Credential object.
    * @param HTTP_TRANSPORT The network HTTP Transport.
    * @return An authorized Credential object.
    * @throws IOException If the credentials.json file cannot be found.
    */
+
 
   private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
     // Load client secrets.
@@ -79,10 +84,13 @@ public class GmailQuickstart {
     LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
-  public GmailQuickstart(StudentRequestHandler studentRequestHandler, GoogleAuth gauth){
+  public GmailQuickstart(StudentRequestHandler studentRequestHandler, GoogleAuth gauth, MongoDatabase subscriptionDatabase, MongoDatabase machineDatabase){
     this.studentRequestHandler = studentRequestHandler;
     this.gauth = gauth;
+    this.subscriptionCollection = subscriptionDatabase.getCollection("subscriptions");
+    this.machineCollection = machineDatabase.getCollection("machines");
   }
+  //Gmail Setup
   //create email content
   public static MimeMessage createEmail(String to,
                                         String from,
@@ -128,8 +136,8 @@ public class GmailQuickstart {
     return message;
   }
 
-  public static void main(String... args) throws IOException, GeneralSecurityException, MessagingException, GoogleJsonResponseException {
-    // Build a new authorized API client service.
+  //Controller setup
+  public void checkMachines() throws IOException, MessagingException, GeneralSecurityException{
     final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
     Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
       .setApplicationName(APPLICATION_NAME)
@@ -147,6 +155,50 @@ public class GmailQuickstart {
         System.out.printf("- %s\n", label.getName());
       }
     }
-    sendMessage(service,"rowla070@morris.umn.edu",createEmail("trow016@gmail.com","trow016@gmail.com", "Laundry Notification", ("There is a machine open in"  )));
+    Document check = new Document();
+    check.append("type", "machine");
+    FindIterable<Document> subscriptionsForMachines = subscriptionCollection.find().filter(check);
+    for (Document s : subscriptionsForMachines) {
+      check = new Document();
+      check.append("id", s.get("id"));
+    }
+
+    Document vacantMachines = machineCollection.find(check).first();
+    if(vacantMachines != null && !vacantMachines.getBoolean("running") && vacantMachines.getString("status").equals("normal")){
+      String machineName = transformId(vacantMachines.getString("name"));
+      String roomName = transformId(vacantMachines.getString("room_id"));
+      String type = vacantMachines.getString("type");
+      subscriptionCollection.deleteOne(check);
+
+      sendMessage(service,"rowla070@morris.umn.edu",createEmail(check.toString(),"trow016@gmail.com", "Laundry Notification", ("There is a"+ " "+ type+" open in" + roomName+ "!"  )));
+    }
   }
+
+  private String transformId(String str) {
+    String transformed = "";
+    for (int i = 0; i < str.length(); ++i) {
+      if (str.charAt(i) != '-' && str.charAt(i) != '_') {
+        transformed += str.charAt(i);
+      } else {
+        transformed += ' ';
+      }
+    }
+    return transformed;
+  }
+  public String addNewSubscription(String email, String type, String id) {
+    Document newSubscription = new Document();
+    newSubscription.append("email", email);
+    newSubscription.append("type", type);
+    newSubscription.append("id", id);
+    try {
+      subscriptionCollection.insertOne(newSubscription);
+      ObjectId _id = newSubscription.getObjectId("_id");
+      System.err.println("[subscribe] INFO mailing.MailingController - Successfully added new subscription [email=" + email + ", type=" + type + ", id=" + id + ']');
+      return _id.toHexString();
+    } catch (MongoException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
 }
