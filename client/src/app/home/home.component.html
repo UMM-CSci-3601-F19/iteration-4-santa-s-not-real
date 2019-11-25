@@ -28,7 +28,7 @@
     </mat-card>
 
     <div class="topMenu">
-      <mat-expansion-panel class="roomSelector" [expanded]="selectorState === 0" (opened)="setSelector(0); hideSelector()" style=" margin-top: 35px ">
+      <mat-expansion-panel class="roomSelector" [expanded]="selectorState === 0" (opened)="setSelector(0); hideSelector()" style=" margin-top: 30px; margin-bottom: 15px ">
 
       <mat-expansion-panel-header >
         <mat-panel-title id="home-rooms-card" style="font-size: 120%">Please select a laundry room here</mat-panel-title>
@@ -74,7 +74,7 @@
             <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="165px">
               <mat-accordion *ngFor="let machine of this.filteredMachines">
                 <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==false">
-                  <mat-card class="washer" [id]="machine.id" style="width: 100%; height: 70%">
+                  <mat-card class="washer" [id]="machine.id" style=" width: 100%; height: 70%">
                     <div class="machineInfo">
                       <mat-icon class="vacant" style="position: absolute; top: 15px; left: 12px; font-size: 275%">local_laundry_service</mat-icon>
                       <a class="machineIdentity" style="display: block">

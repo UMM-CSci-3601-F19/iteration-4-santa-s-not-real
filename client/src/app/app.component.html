@@ -19,8 +19,7 @@
         <span class="spacer"></span>
         <div id="signIn" class="g-signin2" data-onsuccess="onSignIn" *ngIf="!auth.isSignedIn()" (click)="auth.signIn()"></div>
         <button mat-raised-button id="signOut" *ngIf="auth.isSignedIn()" (click)="auth.signOut()">Sign out</button>
-        <button mat-button class="toolButtons">About</button>
-        <button mat-button class="toolButtons">Contact</button>
+
       </mat-toolbar-row>
 <!--      <button-->
 <!--        type="button"-->
