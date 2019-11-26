@@ -9,6 +9,7 @@ import {Room} from "../home/room";
 import {Machine} from "../home/machine";
 import {HomeService} from "../home/home.service";
 import {HomeComponent} from "../home/home.component";
+import {MatSnackBar} from '@angular/material';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class SubscriptionComponent implements OnInit {
   data: any;
 
 
-  constructor(public dialog: MatDialog, public subscription: MatDialog, public subscriptionService: SubscriptionService, public homeService: HomeService) {
+  constructor(public dialog: MatDialog, public subscription: MatDialog, public subscriptionService: SubscriptionService, public homeService: HomeService, public _snackBar: MatSnackBar) {
     this.subscriptionDisabled = false;
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
@@ -57,6 +58,13 @@ export class SubscriptionComponent implements OnInit {
     const room = this.rooms.filter(r => r.id === roomId)[0];
     return room.name;
   }
+
+  // confirmEmail(room: string){
+  //   this._snackBar.open('Success! You will be notified when a ' + 'MACHINE TYPE' + ' is available within ' + room, '',{
+  //     duration: 2000,
+  //     horizontalPosition: 'center'
+  //   });
+  // }
 
 
   openSubscription(room_id: string) {

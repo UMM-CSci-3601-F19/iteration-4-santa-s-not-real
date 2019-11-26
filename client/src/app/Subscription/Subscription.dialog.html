@@ -28,7 +28,7 @@
 
       <!-- [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. -->
       <button mat-raised-button id="confirmAddSubButton" [mat-dialog-close]="data.subscription" type="button" color="warn"
-              [disabled]="!addSubForm.valid || data.subscription.type === '' ">Subscribe
+              [disabled]="!addSubForm.valid || data.subscription.type === '' " >Subscribe
       </button>
       <!-- [mat-dialog-close]="null" causes null to be returned when the dialog is closed. -->
       <button mat-raised-button id="exitWithoutAddingButton" [mat-dialog-close]="null" type="button">Cancel</button>
