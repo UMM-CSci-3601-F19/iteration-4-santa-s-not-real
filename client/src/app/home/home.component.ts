@@ -326,8 +326,8 @@ export class HomeComponent implements OnInit {
             labels: xlabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              borderColor: 'rgb(176, 94, 193)',
-              backgroundColor: 'rgb(176,94,193)',
+              borderColor: 'rgb(255,183 ,30 )',
+              backgroundColor: 'rgb(255,183 ,30 )',
               fill: false,
               lineTension: .2
             }]
