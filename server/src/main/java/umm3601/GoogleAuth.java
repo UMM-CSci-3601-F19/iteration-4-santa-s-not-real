@@ -10,25 +10,27 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import spark.Request;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
 public class GoogleAuth {
-  private static final String CLIENT_ID = "824632109956-7oc5g0ereu6rqhqoikqsg2nu92g48v4e.apps.googleadmincontent.com";
+  private static final String CLIENT_ID_1 = "824632109956-7oc5g0ereu6rqhqoikqsg2nu92g48v4e.apps.googleadmincontent.com";
+  private static final String CLIENT_ID_2 = "646997870845-cqjbmpgorru612mqkjh15t6bjla53r62.apps.googleusercontent.com";
 
   private static final NetHttpTransport transport = new NetHttpTransport();
 
   private static final GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, JacksonFactory.getDefaultInstance())
     // Specify the CLIENT_ID of the app that accesses the backend:
-    .setAudience(Collections.singletonList(CLIENT_ID))
+    //.setAudience(Collections.singletonList(CLIENT_ID))
     // Or, if multiple clients access the backend:
-    //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
+    .setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2))
     .build();
 
   private final MongoCollection<Document> adminCollection;
 
   public GoogleAuth(MongoDatabase database) {
-    this.adminCollection = database.getCollection("Admins");
+    this.adminCollection = database.getCollection("Students");
   }
 
   public GoogleIdToken auth(Request req){
@@ -61,21 +63,21 @@ public class GoogleAuth {
     return (String) auth(token).getPayload().get("name");
   }
 
-  public String getAdminId(String token){
+  public String getStudentId(String token){
     return (String) auth(token).getPayload().getSubject();
   }
   public String getPicture(String token){
     return (String) auth(token).getPayload().get("picture");
   }
 
-  public String getAdminMongoId(GoogleIdToken token){
-    return getAdminMongoId(token.getPayload().getSubject());
+  public String getStudentMongoId(GoogleIdToken token){
+    return getStudentMongoId(token.getPayload().getSubject());
   }
 
-  public String getAdminMongoId(String googleSubjectId) {
+  public String getStudentMongoId(String googleSubjectId) {
     Document filterDoc = new Document("adminId", googleSubjectId);
-    FindIterable<Document> matchingAdmin = adminCollection.find(filterDoc);
-    Iterator<Document> iterator = matchingAdmin.iterator();
+    FindIterable<Document> matchingStudent = adminCollection.find(filterDoc);
+    Iterator<Document> iterator = matchingStudent.iterator();
     if (iterator.hasNext()) {
       Document admin = iterator.next();
       String adminMongoId = admin.getObjectId("_id").toHexString();

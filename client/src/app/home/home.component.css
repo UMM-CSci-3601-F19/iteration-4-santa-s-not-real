@@ -29,7 +29,7 @@
   transition: bottom 1s;
 }
 
-.mat-expansion-panel, .mat-card, .defaultRoomButton {
+.mat-expansion-panel, .mat-card, .defaultRoomButton, .notificationBell {
   border-radius: 20px;
 }
 

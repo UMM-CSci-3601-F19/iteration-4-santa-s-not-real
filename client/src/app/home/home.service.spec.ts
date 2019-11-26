@@ -57,12 +57,16 @@ describe('Home list Service', () => {
       id: 'room_a',
       name: 'A',
 
+      isSubscribed: true,
+
       numberOfAllMachines: null,
       numberOfAvailableMachines: null,
     },
     {
       id: 'room_b',
       name: 'B',
+
+      isSubscribed: true,
 
       numberOfAllMachines: null,
       numberOfAvailableMachines: null,
