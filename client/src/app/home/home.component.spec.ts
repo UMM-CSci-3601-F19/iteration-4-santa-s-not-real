@@ -692,7 +692,7 @@ describe('Home page', () => {
     component.loadAllRooms();
     component.loadAllMachines();
     component.updateRoom('gay', 'A');
-    component.buildChart();
+    component.buildChart('bar');
     component.modifyArray([], 2);
     expect(component.filteredMachines.length).toEqual(1);
   });
