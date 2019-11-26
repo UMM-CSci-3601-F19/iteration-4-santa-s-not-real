@@ -10,7 +10,7 @@ import {APP_BASE_HREF} from '@angular/common';
 
 import {CustomModule} from './custom.module';
 
-import {HomeDialog} from './home/home.component';
+import {HomeMachineDialog} from './home/home.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -19,6 +19,9 @@ import {AuthService} from './auth.service';
 import {SubscriptionComponent} from "./Subscription/Subscription.component";
 import {SubscriptionDialog} from "./Subscription/Subscription.component";
 
+import {CookieService} from "ngx-cookie-service";
+import {MatSnackBar} from "@angular/material";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 // import {MDCRipple} from '@material/ripple';
 
@@ -38,6 +41,7 @@ import {SubscriptionDialog} from "./Subscription/Subscription.component";
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatRadioModule,
+    MatSnackBarModule,
     // MDCRipple,
     // ScrollDispatchModule,
     // CdkStepperModule,
@@ -45,7 +49,7 @@ import {SubscriptionDialog} from "./Subscription/Subscription.component";
   declarations: [
     AppComponent,
     HomeComponent,
-    HomeDialog,
+    HomeMachineDialog,
     SubscriptionComponent,
     SubscriptionDialog
 
@@ -54,10 +58,11 @@ import {SubscriptionDialog} from "./Subscription/Subscription.component";
     HttpClient,
     HomeService,
     AuthService,
+    CookieService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],
   entryComponents: [
-    HomeDialog,
+    HomeMachineDialog,
     SubscriptionDialog
   ],
   bootstrap: [AppComponent]
