@@ -1,5 +1,3 @@
-
-
 <div class="add-sub">
   <form [formGroup]="addSubForm">
     <h2 mat-dialog-title>New Subscription to {{this.name}}</h2>
@@ -28,13 +26,12 @@
     </mat-dialog-content>
     <mat-dialog-actions layout="row">
 
-      &lt;!&ndash; [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. &ndash;&gt;
+      <!-- [mat-dialog-close]="data.user" causes the data.user object to be returned when the dialog is closed. -->
       <button mat-raised-button id="confirmAddSubButton" [mat-dialog-close]="data.subscription" type="button" color="warn"
               [disabled]="!addSubForm.valid || data.subscription.type === '' ">Subscribe
       </button>
-      &lt;!&ndash; [mat-dialog-close]="null" causes null to be returned when the dialog is closed. &ndash;&gt;
+      <!-- [mat-dialog-close]="null" causes null to be returned when the dialog is closed. -->
       <button mat-raised-button id="exitWithoutAddingButton" [mat-dialog-close]="null" type="button">Cancel</button>
     </mat-dialog-actions>
   </form>
 </div>
-

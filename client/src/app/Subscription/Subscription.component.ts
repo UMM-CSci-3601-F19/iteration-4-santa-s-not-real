@@ -1,4 +1,3 @@
-
 import {Component, OnInit, Inject} from '@angular/core';
 
 import {SubscriptionService} from "./Subscription.service";
@@ -12,7 +11,7 @@ import {HomeService} from "../home/home.service";
 
 
 @Component({
-  templateUrl: 'Subscription.html',
+  templateUrl: 'Subscription.dialog.html',
   styleUrls: ['./Subscription.component.css']
 })
 export class SubscriptionComponent implements OnInit {
@@ -40,6 +39,13 @@ export class SubscriptionComponent implements OnInit {
 
   public mapWidth: number;
   public mapHeight: number;
+  addSubForm: any;
+  options: any;
+  name:  string;
+  data: any;
+  outOfWashers: boolean;
+  outOfDryers: boolean;
+  add_sub_validation_messages: any;
 
   constructor(public dialog: MatDialog, public subscription: MatDialog, public subscriptionService: SubscriptionService, public homeService: HomeService) {
     this.subscriptionDisabled = false;
@@ -137,10 +143,10 @@ export class SubscriptionComponent implements OnInit {
 
 
 
-  @Component({
-    templateUrl: 'Subscription.dialog.html',
-  })
-  export class SubscriptionDialog{
+@Component({
+  templateUrl: 'Subscription.dialog.html',
+})
+export class SubscriptionDialog{
 
   options: FormGroup;
   addSubForm: FormGroup;
@@ -196,5 +202,3 @@ export class SubscriptionComponent implements OnInit {
     this.createForms();
   }
 }
-
-

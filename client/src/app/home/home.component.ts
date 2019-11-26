@@ -5,7 +5,6 @@ import {Machine} from './machine';
 import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
 import {AuthService} from '../auth.service';
-import {NotiService} from "../noti.service";
 
 import * as Chart from 'chart.js';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
@@ -28,7 +27,6 @@ export class HomeComponent implements OnInit {
    */
   private autoRefresh = true;
   public auth: AuthService;
-  public noti: NotiService;
 
   public machineListTitle: string;
   public brokenMachineListTitle: string;
@@ -81,11 +79,10 @@ export class HomeComponent implements OnInit {
   public theApartmentsHistory: History;
 */
   constructor(public homeService: HomeService, public dialog: MatDialog,
-              private authService: AuthService, private notiService: NotiService) {
+              private authService: AuthService) {
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
     this.auth = authService;
-    this.noti = notiService;
   }
 
   openDialog(theMachine: Machine) {
