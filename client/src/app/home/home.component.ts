@@ -5,8 +5,11 @@ import {Machine} from './machine';
 import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
 import {AuthService} from '../auth.service';
+import {SubscriptionComponent} from "../Subscription/Subscription.component";
 
 import * as Chart from 'chart.js';
+import {Subscription} from "../Subscription/Subscription";
+import {SubscriptionDialog} from "../Subscription/Subscription.component";
 
 import {CookieService} from 'ngx-cookie-service';
 
@@ -56,6 +59,8 @@ export class HomeComponent implements OnInit {
   public mapHeight: number;
 
   public history: History[];
+  public subscriptionDisabled: boolean;
+
   // public filteredHistory: History[];
   canvas: any;
   ctx: any;
@@ -85,11 +90,39 @@ export class HomeComponent implements OnInit {
 */
 
   constructor(public homeService: HomeService, public dialog: MatDialog,
-              private authService: AuthService, private cookieService: CookieService, public _snackBar: MatSnackBar) {
+              private authService: AuthService, public subscription: MatDialog, private cookieService: CookieService, public _snackBar: MatSnackBar) {
 
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
     this.auth = authService;
+  }
+  openSubscription(room_id: string) {
+    // tslint:disable-next-line:max-line-length
+    const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
+    // tslint:disable-next-line:max-line-length
+    const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
+    const newSub: Subscription = {email: '', type: '', room_id: room_id};
+    const dialogRef = this.subscription.open(SubscriptionDialog, {
+      width: '500px',
+      data: {subscription: newSub, noWasher: outOfWashers, noDryer: outOfDryers, roomName: this.translateRoomId(this.roomId)},
+    });
+    dialogRef.afterClosed().subscribe(newSub => {
+      if (newSub != null) {
+        console.log(newSub);
+        this.homeService.addNewSubscription(newSub).subscribe(
+          () => {
+            this.rooms.filter(m => m.id === this.roomId)[0].isSubscribed = true;
+            this.updateRoom(this.roomId, this.roomName);
+          },
+          err => {
+            // This should probably be turned into some sort of meaningful response.
+            console.log('There was an error adding the subscription.');
+            console.log('The newSub or dialogResult was ' + newSub);
+            console.log('The error was ' + JSON.stringify(err));
+          }
+        );
+      }
+    });
   }
 
   openMachineDialog(theMachine: Machine) {

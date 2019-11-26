@@ -9,6 +9,7 @@ import {Room} from './room';
 import {History} from './history';
 import {Observable} from 'rxjs';
 import {AuthService} from "../auth.service";
+import "rxjs-compat/add/observable/of";
 
 
 describe('Home page', () => {
@@ -74,11 +75,15 @@ describe('Home page', () => {
           id: 'gay',
           name: 'A',
 
+          isSubscribed: true,
+
           numberOfAllMachines: 1,
           numberOfAvailableMachines: 1,
         }, {
           id: 'room_b',
           name: 'B',
+
+          isSubscribed: true,
 
           numberOfAllMachines: 1,
           numberOfAvailableMachines: 0,
@@ -683,4 +688,12 @@ describe('Home page', () => {
     expect(component.filteredMachines.length).toEqual(2);
   });
 
+  it('should modify array', () => {
+    component.loadAllRooms();
+    component.loadAllMachines();
+    component.updateRoom('gay', 'A');
+    component.buildChart();
+    component.modifyArray([], 2);
+    expect(component.filteredMachines.length).toEqual(1);
+  });
 });
