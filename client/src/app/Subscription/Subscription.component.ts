@@ -8,10 +8,11 @@ import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
 import {Room} from "../home/room";
 import {Machine} from "../home/machine";
 import {HomeService} from "../home/home.service";
+import {HomeComponent} from "../home/home.component";
 
 
 @Component({
-  templateUrl: 'Subscription.dialog.html',
+  templateUrl: 'Subscription.html',
   styleUrls: ['./Subscription.component.css']
 })
 export class SubscriptionComponent implements OnInit {
@@ -39,13 +40,10 @@ export class SubscriptionComponent implements OnInit {
 
   public mapWidth: number;
   public mapHeight: number;
-  addSubForm: any;
   options: any;
   name:  string;
   data: any;
-  outOfWashers: boolean;
-  outOfDryers: boolean;
-  add_sub_validation_messages: any;
+
 
   constructor(public dialog: MatDialog, public subscription: MatDialog, public subscriptionService: SubscriptionService, public homeService: HomeService) {
     this.subscriptionDisabled = false;

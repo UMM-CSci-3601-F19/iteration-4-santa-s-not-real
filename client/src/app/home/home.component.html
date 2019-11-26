@@ -6,6 +6,9 @@
     <button mat-raised-button id="signOut" *ngIf="auth.isSignedIn()" (click)="auth.signOut()">Sign out</button>
 
 
+    <button class="subscribeButton" mat-flat-button color="primary" [disabled]="subscriptionDisabled" (click)="openSubscription(this.roomId)">Subscribe</button>
+
+
     <button mat-raised-button color="warn" id="all-rooms" (click)="hideSelector(); scroll('scrollBox'); setSelector(0);">
       <i class="material-icons" style="margin-right: 10px !important;">store_mall_directory</i>Select Rooms
     </button>
