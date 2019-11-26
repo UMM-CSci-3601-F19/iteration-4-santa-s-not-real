@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
-import {HomeComponent, RoomDialogPage} from './home/home.component';
+import {HomeComponent, HomeSubscriptionDialog, RoomDialogPage} from './home/home.component';
 import {HomeService} from './home/home.service';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
@@ -16,8 +16,6 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule, MatRadioModule} from '@angular/material';
 import {AuthService} from './auth.service';
-import {SubscriptionComponent} from "./Subscription/Subscription.component";
-import {SubscriptionDialog} from "./Subscription/Subscription.component";
 
 import {CookieService} from "ngx-cookie-service";
 import {MatSnackBar} from "@angular/material";
@@ -50,9 +48,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     AppComponent,
     HomeComponent,
     HomeMachineDialog,
-    SubscriptionComponent,
-    SubscriptionDialog,
-    RoomDialogPage
+    RoomDialogPage,
+    HomeSubscriptionDialog
 
   ],
   providers: [
@@ -64,7 +61,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
   ],
   entryComponents: [
     HomeMachineDialog,
-    SubscriptionDialog
+    HomeSubscriptionDialog
   ],
   bootstrap: [AppComponent]
 })

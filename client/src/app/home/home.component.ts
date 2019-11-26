@@ -5,25 +5,42 @@ import {Machine} from './machine';
 import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
 import {AuthService} from '../auth.service';
-import {SubscriptionComponent} from "../Subscription/Subscription.component";
 
 import * as Chart from 'chart.js';
-import {Subscription} from "../Subscription/Subscription";
-import {SubscriptionDialog} from "../Subscription/Subscription.component";
-
 import {CookieService} from 'ngx-cookie-service';
 
 import {MatSnackBar} from '@angular/material';
 
+import {Subscription} from './subscription';
+
 declare let gapi: any;
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
-  selector: "your-dialog",
+  selector: 'your-dialog',
   templateUrl: 'home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+
+  /*
+  public gayHistory: History[];
+  public independenceHistory: History;
+  public blakelyHistory: History;
+  public spoonerHistory: History;
+  public greenPrairieHistory: History;
+  public pineHistory: History;
+  public theApartmentsHistory: History;
+*/
+
+  // tslint:disable-next-line:max-line-length
+  constructor(public homeService: HomeService, public dialog: MatDialog, private authService: AuthService, public subscription: MatDialog, private cookieService: CookieService, public _snackBar: MatSnackBar) {
+
+    this.machineListTitle = 'available within all rooms';
+    this.brokenMachineListTitle = 'Unavailable machines within all rooms';
+    this.auth = authService;
+  }
 
   /*
    * This is a switch for the E2E test
@@ -78,31 +95,18 @@ export class HomeComponent implements OnInit {
     {value: 6, name: 'Friday'},
     {value: 7, name: 'Saturday'},
   ];
-
-  /*
-  public gayHistory: History[];
-  public independenceHistory: History;
-  public blakelyHistory: History;
-  public spoonerHistory: History;
-  public greenPrairieHistory: History;
-  public pineHistory: History;
-  public theApartmentsHistory: History;
-*/
-
-  constructor(public homeService: HomeService, public dialog: MatDialog,
-              private authService: AuthService, public subscription: MatDialog, private cookieService: CookieService, public _snackBar: MatSnackBar) {
-
-    this.machineListTitle = 'available within all rooms';
-    this.brokenMachineListTitle = 'Unavailable machines within all rooms';
-    this.auth = authService;
-  }
-  openSubscription(room_id: string) {
+  add_sub_validation_messages = {
+    'email': [
+      {type: 'email', message: 'Email must be formatted properly'}
+    ]
+  };
+  openSubscriptionDialog(room_id: string) {
     // tslint:disable-next-line:max-line-length
     const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
     // tslint:disable-next-line:max-line-length
     const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
     const newSub: Subscription = {email: '', type: '', room_id: room_id};
-    const dialogRef = this.subscription.open(SubscriptionDialog, {
+    const dialogRef = this.subscription.open(HomeSubscriptionDialog, {
       width: '500px',
       data: {subscription: newSub, noWasher: outOfWashers, noDryer: outOfDryers, roomName: this.translateRoomId(this.roomId)},
     });
@@ -164,12 +168,12 @@ export class HomeComponent implements OnInit {
     this.selectorState = state;
   }
 
-  public updateCookies(newId: string, newName: string): void{
+  public updateCookies(newId: string, newName: string): void {
     this.cookieService.set('room_id', newId);
     this.cookieService.set('room_name', newName);
   }
 
-  public updateGraphType(type: string): void{
+  public updateGraphType(type: string): void {
     this.cookieService.set('graph_type', type);
     this.buildChart(type);
   }
@@ -190,9 +194,9 @@ export class HomeComponent implements OnInit {
     this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
     this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
     this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
-    if(this.cookieService.check('graph_type') === false){
+    if (this.cookieService.check('graph_type') === false) {
       this.buildChart('bar');
-    }else{
+    } else {
       this.buildChart(this.cookieService.get('graph_type'));
     }
     this.fakePositions();
@@ -234,8 +238,8 @@ export class HomeComponent implements OnInit {
   //   }
   // }
 
-  openSnackBar(room: string){
-    this._snackBar.open(room + ' has been set as your default!', '',{
+  openSnackBar(room: string) {
+    this._snackBar.open(room + ' has been set as your default!', '', {
       duration: 2000,
       horizontalPosition: 'center'
     });
@@ -336,8 +340,8 @@ export class HomeComponent implements OnInit {
     if (this.myChart != null) {
       this.myChart.destroy();
     }
-    if(this.cookieService.check('graph_type') === false){
-      gType = 'bar'
+    if (this.cookieService.check('graph_type') === false) {
+      gType = 'bar';
     }
     if (this.history !== undefined) {
       this.canvas = document.getElementById(this.chart);
@@ -551,8 +555,8 @@ export class HomeComponent implements OnInit {
         console.log('Retry');
         this.ngOnInit();
       } else {
-        if (this.cookieService.check('graph_type') === false){
-          this.buildChart('bar')
+        if (this.cookieService.check('graph_type') === false) {
+          this.buildChart('bar');
         }
         document.getElementById('loadCover').style.display = 'none';
         this.buildChart(this.cookieService.get('graph_type'));
@@ -732,3 +736,64 @@ export class RoomDialogPage {
     this.dialogRef.close();
   }
 }
+@Component({
+  templateUrl: 'home.subscription.dialog.html',
+})
+
+export class HomeSubscriptionDialog {
+
+  options: FormGroup;
+  addSubForm: FormGroup;
+  name: string;
+  outOfWashers: boolean;
+  outOfDryers: boolean;
+
+  constructor(
+    public dialogRef: MatDialogRef<HomeSubscriptionDialog>,
+    // tslint:disable-next-line:max-line-length
+    @Inject(MAT_DIALOG_DATA) public data: { subscription: Subscription, noWasher: boolean, noDryer: boolean, roomName: string }, private fb: FormBuilder) {
+
+    // @ts-ignore
+    this.outOfWashers = data.noWasher;
+    // @ts-ignore
+    this.outOfDryers = data.noDryer;
+    // @ts-ignore
+    this.name = data.roomName;
+
+    if (this.outOfWashers) {
+      data.subscription.type = 'washer';
+    } else {
+      data.subscription.type = 'dryer';
+    }
+    // data.subscription.type = 'dryer';
+
+    this.options = fb.group({
+      type: data.subscription.type,
+    });
+
+    this.ngOnInit();
+  }
+
+  add_sub_validation_messages = {
+    'email': [
+      {type: 'email', message: 'Email must be formatted properly'}
+    ]
+  };
+
+  createForms() {
+
+    // add user form validations
+    this.addSubForm = this.fb.group({
+      // We don't need a special validator just for our app here, but there is a default one for email.
+      email: new FormControl('email', Validators.email)
+    });
+
+    console.log(this.addSubForm);
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnInit() {
+    this.createForms();
+  }
+}
+
