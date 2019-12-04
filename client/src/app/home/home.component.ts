@@ -152,18 +152,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
-  openRoomDialog() {
-    const dialogRef = this.dialog.open(RoomDialogPage, {
-      data: this.rooms,
-      autoFocus: false,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: ${result}');
-    });
-  }
-
   setSelector(state: number) {
     this.selectorState = state;
   }
@@ -202,7 +190,7 @@ export class HomeComponent implements OnInit {
     this.fakePositions();
     this.setSelector(1);
     // document.getElementById('allMachineList').style.display = 'unset';
-    document.getElementById('all-rooms').style.bottom = '2%';
+    // document.getElementById('all-rooms').style.bottom = '2%';
   }
 
   private updateMachines(): void {
@@ -601,9 +589,9 @@ export class HomeComponent implements OnInit {
     this.delay(150).then(() => document.getElementById(id).scrollIntoView());
   }
 
-  hideSelector() {
-    document.getElementById('all-rooms').style.bottom = '-50px';
-  }
+  // hideSelector() {
+  //   document.getElementById('all-rooms').style.bottom = '-50px';
+  // }
 
   fakePositions() {
     const w = 5;
@@ -720,22 +708,6 @@ export class HomeMachineDialog {
   }
 }
 
-@Component({
-  templateUrl: 'home.room.dialog.html',
-})
-
-export class RoomDialogPage {
-
-  constructor(
-    public dialogRef: MatDialogRef<RoomDialogPage>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
 @Component({
   templateUrl: 'home.subscription.dialog.html',
 })
