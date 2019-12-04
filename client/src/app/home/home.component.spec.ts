@@ -8,8 +8,9 @@ import {Machine} from './machine';
 import {Room} from './room';
 import {History} from './history';
 import {Observable} from 'rxjs';
-import {AuthService} from "../auth.service";
-import "rxjs-compat/add/observable/of";
+import {AuthService} from '../auth.service';
+import 'rxjs-compat/add/observable/of';
+import {CookieService} from 'ngx-cookie-service';
 
 
 describe('Home page', () => {
@@ -31,15 +32,22 @@ describe('Home page', () => {
     getAllHistory: () => Observable<History[]>;
     updateRunningStatus;
   };
-  let authServiceStub = {
-    getAdminId: () => 'MI6007',
-    getAdminName: () => 'James Bond',
-    isSignedIn: () => true,
-    loadClient: () => null,
+  let authServiceStub: {
+    getAdminId: () => 'MI6007';
+    getAdminName: () => 'James Bond';
+    isSignedIn: () => true;
+    loadClient: () => null;
+  };
+  // Create mock cookie service w needed methods
+  let cookieServiceStub: {
+    set: (id: String, name: String) => null,
+    check: (name: String) => false;
+    get: (name: String) => 'gay';
   };
 
   // @ts-ignore
   beforeEach(() => {
+
     homeServiceStub = {
       getMachines: () => Observable.of([
         {
@@ -447,6 +455,7 @@ describe('Home page', () => {
       ]),
       updateRunningStatus: () => null,
     };
+
     authServiceStub = {
       getAdminId: () => 'MI6007',
       getAdminName: () => 'James Bond',
@@ -454,11 +463,19 @@ describe('Home page', () => {
       loadClient: () => null,
     };
 
+    cookieServiceStub = {
+      set: (id: String, name: String) => null,
+      check: (name: String) => false,
+      get: (name: String) => 'gay',
+    };
+
     TestBed.configureTestingModule({
       imports: [CustomModule],
       declarations: [HomeComponent], // declare the test component
-      providers: [{provide: HomeService, useValue: homeServiceStub},
-        {provide: AuthService, useValue: authServiceStub}
+      providers: [
+        {provide: HomeService, useValue: homeServiceStub},
+        {provide: AuthService, useValue: authServiceStub},
+        {provide: CookieService, useValue: cookieServiceStub}
       ]});
 
     fixture = TestBed.createComponent(HomeComponent);
