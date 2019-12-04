@@ -1,6 +1,6 @@
 # The Web App
 ### CSCI 3601 F19 Iteration 3
-##### Authors: Robert Beane, Michael Fairbanks, Kedrick Hill, Tyler Rowland, Christian Thielke, and Matthew Spilman
+##### Authors: Kedrick Hill, Tyler Rowland, Matthew Spilman, David Escudero, Hoomz Damte, and Emma Oswood
 
 [![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
 
