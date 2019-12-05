@@ -1,6 +1,5 @@
 package umm3601.notification;
 
-import umm3601.GoogleAuth;
 import umm3601.student.*;
 
 
@@ -11,7 +10,6 @@ import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -30,7 +28,6 @@ import javax.mail.internet.MimeMessage;
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import org.bson.Document;
@@ -46,7 +43,6 @@ public class GmailQuickstart {
   private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
   private static final String TOKENS_DIRECTORY_PATH = "tokens";
   private static StudentRequestHandler studentRequestHandler;
-  private static GoogleAuth gauth;
 
   /**
    * Global instance of the scopes required by this quickstart.
@@ -84,9 +80,8 @@ public class GmailQuickstart {
     LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
     return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
   }
-  public GmailQuickstart(GoogleAuth gauth, MongoDatabase subscriptionDatabase, MongoDatabase machineDatabase){
+  public GmailQuickstart(MongoDatabase subscriptionDatabase, MongoDatabase machineDatabase){
     this.studentRequestHandler = studentRequestHandler;
-    this.gauth = gauth;
     this.subscriptionCollection = subscriptionDatabase.getCollection("subscriptions");
     this.machineCollection = machineDatabase.getCollection("machines");
   }
