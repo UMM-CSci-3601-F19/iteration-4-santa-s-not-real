@@ -18,7 +18,6 @@ import {MatProgressBarModule, MatRadioModule} from '@angular/material';
 import {AuthService} from './auth.service';
 
 import {CookieService} from "ngx-cookie-service";
-import {MatSnackBar} from "@angular/material";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 // import {MDCRipple} from '@material/ripple';

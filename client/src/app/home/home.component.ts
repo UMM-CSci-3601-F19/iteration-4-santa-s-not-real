@@ -9,7 +9,7 @@ import {AuthService} from '../auth.service';
 import * as Chart from 'chart.js';
 import {CookieService} from 'ngx-cookie-service';
 
-import {MatSnackBar} from '@angular/material';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material';
 
 import {Subscription} from './subscription';
 
