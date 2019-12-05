@@ -20,8 +20,18 @@
 mat-dialog-container {
   width: auto;
 }
-.mat-expansion-panel, .mat-card, .defaultRoomButton, .notificationBell {
-  border-radius: 20px;
+
+div.machineButtonDialog {
+  padding-bottom: 20px;
+  padding-top: -10px;
+}
+
+.dryerButton {
+  margin-left: 15px;
+}
+
+.exitWithoutAddingButton {
+  margin-left: 10px;
 }
 
 

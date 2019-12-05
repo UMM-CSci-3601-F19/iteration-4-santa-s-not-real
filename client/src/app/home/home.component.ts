@@ -686,7 +686,7 @@ export class HomeSubscriptionDialog {
     this.outOfWashers = data.noWasher;
     // @ts-ignore
     this.outOfDryers = data.noDryer;
-    // @ts-ignore
+    // @ts-ignore  border-radius: 10px !important;
     this.name = data.roomName;
 
     if (this.outOfWashers) {

@@ -19,10 +19,10 @@
 <!--  <mat-dialog-actions layout="row">-->
 <!--  </mat-dialog-actions>-->
 
-      <div>
+      <div class="machineButtonDialog">
         <mat-radio-group #input class="typeField" [(ngModel)]="data.subscription.type" formControlName="type" required>
-          <mat-radio-button tabIndex="-1" [value]="'washer'" >Washer</mat-radio-button>
-          <mat-radio-button tabIndex="-1" [value]="'dryer'">Dryer</mat-radio-button>
+          <mat-radio-button class="washerButton" tabIndex="-1" [value]="'washer'" >Washer</mat-radio-button>
+          <mat-radio-button class="dryerButton" tabIndex="-1" [value]="'dryer'">Dryer</mat-radio-button>
         </mat-radio-group>
       </div>
     </form>
@@ -30,11 +30,11 @@
 
 
 
-      <button mat-raised-button class="confirmAddSubButton" [mat-dialog-close]="data.subscription" type="button" color="warn"
+      <button mat-raised-button class="confirmAddSubButton" [mat-dialog-close]="data.subscription" type="button"
               [disabled]="!addSubForm.valid || data.subscription.type === '' ">Subscribe
       </button>
 
-      <button mat-raised-button id="exitWithoutAddingButton" [mat-dialog-close]="null" type="button">Cancel</button>
+      <button mat-raised-button class="exitWithoutAddingButton" [mat-dialog-close]="null" type="button">Cancel</button>
 
   </form>
 </div>
