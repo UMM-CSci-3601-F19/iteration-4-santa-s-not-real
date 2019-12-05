@@ -17,9 +17,13 @@
   left: 0;
 }
 
+mat-dialog-container {
+  width: auto;
+}
 .mat-expansion-panel, .mat-card, .defaultRoomButton, .notificationBell {
   border-radius: 20px;
 }
+
 
 @media screen and (min-width: 320px) {
 
