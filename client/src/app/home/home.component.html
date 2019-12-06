@@ -66,10 +66,10 @@
         </mat-expansion-panel-header>
         <mat-panel-description style="padding: 0 !important;">
           <mat-accordion *ngIf="machines && numOfWashers > 0; else machinesError" style="width: 100%">
-            <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="165px">
+            <mat-grid-list cols="{{this.getGridCols()}}" rowHeight="150px" rowWidth="150px">
               <mat-accordion *ngFor="let machine of this.filteredMachines">
                 <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='washer' && machine.running==false">
-                  <mat-card class="washer" [id]="machine.id" style=" width: 100%; height: 70%">
+                  <mat-card class="washer" [id]="machine.id" style=" width: 65%; height: 70%">
                     <div class="machineInfo">
                       <mat-icon class="vacant" style="position: absolute; top: 15px; left: 12px; font-size: 275%">local_laundry_service</mat-icon>
                       <a class="machineIdentity" style="display: block">
@@ -78,12 +78,7 @@
                         <a class="cardType" style="margin-left: 45px; font-size: 90%">Washer</a>
                       </a>
                     </div>
-                    <div style="position: relative; top: 15px; width: 100%">
-                      <p style="bottom: 20px; top: auto; text-align: right">
-                        Last used <a class="time" style="font-size: 300%; font-weight: lighter">{{machine.vacantTime}}</a> min
-                      </p>
-                    </div>
-                    <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
+                    <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}" mat-button href style = "position: absolute; bottom: 5px; right: 5px">Report an issue</a>
                     <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
                   </mat-card>
                 </mat-grid-tile>
@@ -148,7 +143,7 @@
 
               <mat-accordion *ngFor="let machine of this.filteredMachines">
                 <mat-grid-tile *ngIf="machine.status==='normal' && machine.type==='dryer' && machine.running==false">
-                  <mat-card class="dryer" [id]="machine.id" style="width: 100%; height: 70%">
+                  <mat-card class="dryer" [id]="machine.id" style="width: 65%; height: 70%">
                     <div class="machineInfo">
                       <mat-icon class="vacant" style="position: absolute; top: 15px; left: 12px; font-size: 275%">fireplace</mat-icon>
                       <a class="machineIdentity" style="display: block">
@@ -157,12 +152,7 @@
                         <a class="cardType" style="margin-left: 45px; font-size: 90%">Dryer</a>
                       </a>
                     </div>
-                    <div style="position: relative; top: 15px; width: 100%">
-                      <p style="bottom: 20px; top: auto; text-align: right">
-                        Last used <a class="time" style="font-size: 300%; font-weight: lighter">{{machine.vacantTime}}</a> min
-                      </p>
-                    </div>
-                    <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
+                    <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}" mat-button href style = "position: absolute; bottom: 5px; right: 5px">Report an issue</a>
                     <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
                   </mat-card>
                 </mat-grid-tile>
