@@ -51,7 +51,7 @@
     color: mat-color($accent);
   }
 
-  .mat-icon.inUse {
+  .mat-icon.inUse, .notifBell, .favButton {
     color: mat-color($warn)
   }
   .sidenav-list {
@@ -69,7 +69,6 @@
     padding-top: 5px !important;
     margin: 0px 0px 10px 0px !important;
     font-style: italic;
-    border-radius: 10px !important;
     top: 0px;
     box-shadow: none !important;
   }
@@ -201,7 +200,7 @@ mat-icon {
   padding: 0;
 }
 
-.roomSelector.mat-expansion-panel {
+.roomSelector.mat-expansion-panel, .notifBell, .favButton {
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -218,7 +217,6 @@ mat-grid-tile mat-card {
   left: 0;
   height: 36px;
   bottom: 28px;
-  border-radius: 18px !important;
 }
 
 .reportButton:hover {
@@ -268,21 +266,6 @@ mat-grid-tile mat-card {
   font-size: 15px;
   margin-right: 12px;
   display: inline-block;
-}
-
-mat-dialog-container {
-  border-radius: 15px !important;
-  padding: 20px !important;
-  height: 120%;
-}
-
-mat-dialog-container .mat-card-content {
-  width: 90%;
-}
-
-mat-dialog-container .machineName {
-  white-space: normal;
-  display: block;
 }
 
 mat-dialog-container .reportButton {
