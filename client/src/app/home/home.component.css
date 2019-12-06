@@ -33,7 +33,12 @@
   border-radius: 20px;
 }
 
-@media screen and (min-width: 320px) {
+mat-grid-tile mat-card {
+  margin: 10px;
+}
+
+
+@media screen and (max-width: 320px) {
   #all-rooms {
     font-size: 110%;
     height: 50px;
@@ -45,6 +50,7 @@
   .mat-card.roomHeading {
     padding-bottom: 50px;
   }
+
 }
 
 
