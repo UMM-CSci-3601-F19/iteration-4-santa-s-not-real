@@ -54,7 +54,7 @@ public class GmailQuickstart {
    */
   //private static final List<String> SCOPES = Collections.singletonList(GmailScopes.GMAIL_LABELS);
   private static final List<String> SCOPES = Arrays.asList(GmailScopes.MAIL_GOOGLE_COM);
-  private static final String CREDENTIALS_FILE_PATH = "./../../../resources/credentials.json";
+  private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
 
   public final MongoCollection<Document> subscriptionCollection;
   public final MongoCollection<Document> machineCollection;
@@ -204,5 +204,6 @@ public class GmailQuickstart {
       return null;
     }
   }
+
 
 }

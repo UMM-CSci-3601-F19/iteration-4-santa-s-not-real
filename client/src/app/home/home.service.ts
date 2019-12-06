@@ -7,7 +7,7 @@ import {Room} from './room';
 import {Machine} from './machine';
 import {History} from './history';
 import {environment} from '../../environments/environment';
-import {Subscription} from "../Subscription/Subscription";
+import {Subscription} from './subscription';
 
 @Injectable()
 export class HomeService {
@@ -23,22 +23,10 @@ export class HomeService {
   getRooms(): Observable<Room[]> {
     return this.http.get<Room[]>(this.roomURL);
   }
-
-  // getMachinesAtRoom(roomId?: string): Observable<Machine[]> {
-  //   return this.http.get<Machine[]>(this.roomURL + '/' + roomId + '/machines');
-  // }
-
   getMachines(): Observable<Machine[]> {
     return this.http.get<Machine[]>(this.machineURL);
   }
 
-  // getMachine(machineId: string): Observable<Machine> {
-  //   return this.http.get<Machine>(this.machineURL + '/' + machineId);
-  // }
-
-  // getHistoryByRooms(room: string): Observable<History[]>{
-  //   return this.http.get<History[]>(this.historyURL + '/' + room);
-  // }
 
   getAllHistory(): Observable<History[]>{
     return this.http.get<History[]>(this.baseUrl + '/all_history');
@@ -63,10 +51,10 @@ export class HomeService {
       });
     }
   }
+
   addNewSubscription(newSub: Subscription): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        // We're sending JSON
         'Content-Type': 'application/json'
       }),
       responseType: 'text' as 'json'
@@ -76,3 +64,4 @@ export class HomeService {
     return this.http.post<string>(this.subURL + '/new', newSub, httpOptions);
   }
 }
+
