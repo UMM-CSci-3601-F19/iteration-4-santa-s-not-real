@@ -51,7 +51,7 @@
     color: mat-color($accent);
   }
 
-  .mat-icon.inUse {
+  .mat-icon.inUse, .notifBell, .favButton {
     color: mat-color($warn)
   }
   .sidenav-list {
@@ -200,7 +200,7 @@ mat-icon {
   padding: 0;
 }
 
-.roomSelector.mat-expansion-panel {
+.roomSelector.mat-expansion-panel, .notifBell, .favButton {
   margin-left: 10px;
   margin-right: 10px;
 }

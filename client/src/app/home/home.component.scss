@@ -35,10 +35,14 @@ div.machineButtonDialog {
 }
 
 
-@media screen and (min-width: 320px) {
+@media screen and (max-width: 320px) {
 
-  .mat-card.roomHeading {
-    padding-bottom: 50px;
+  .notifBell, .favButton {
+    margin-left: 11px;
+  }
+
+  mat-grid-tile mat-card {
+    margin: 0px;
   }
 }
 
