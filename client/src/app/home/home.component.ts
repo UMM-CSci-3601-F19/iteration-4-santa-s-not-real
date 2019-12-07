@@ -75,26 +75,26 @@ export class HomeComponent implements OnInit {
   public mapWidth: number;
   public mapHeight: number;
 
-  public history: History[];
+  // public history: History[];
   public subscriptionDisabled: boolean;
 
   // public filteredHistory: History[];
-  canvas: any;
-  ctx: any;
-  myChart: any;
-  chart = 'myChart';
-  public inputRoom = 'all';
-  public today = new Date();
-  public inputDay: number = this.today.getDay() + 1;
-  Days = [
-    {value: 1, name: 'Sunday'},
-    {value: 2, name: 'Monday'},
-    {value: 3, name: 'Tuesday'},
-    {value: 4, name: 'Wednesday'},
-    {value: 5, name: 'Thursday'},
-    {value: 6, name: 'Friday'},
-    {value: 7, name: 'Saturday'},
-  ];
+  // canvas: any;
+  // ctx: any;
+  // myChart: any;
+  // chart = 'myChart';
+  // public inputRoom = 'all';
+  // public today = new Date();
+  // public inputDay: number = this.today.getDay() + 1;
+  // Days = [
+  //   {value: 1, name: 'Sunday'},
+  //   {value: 2, name: 'Monday'},
+  //   {value: 3, name: 'Tuesday'},
+  //   {value: 4, name: 'Wednesday'},
+  //   {value: 5, name: 'Thursday'},
+  //   {value: 6, name: 'Friday'},
+  //   {value: 7, name: 'Saturday'},
+  // ];
   add_sub_validation_messages = {
     'email': [
       {type: 'email', message: 'Email must be formatted properly'}
@@ -173,32 +173,32 @@ export class HomeComponent implements OnInit {
     this.cookieService.set('room_name', newName);
   }
 
-  public updateGraphType(type: string): void {
-    this.cookieService.set('graph_type', type);
-    this.buildChart(type);
-  }
+  // public updateGraphType(type: string): void {
+  //   this.cookieService.set('graph_type', type);
+  //   this.buildChart(type);
+  // }
 
   public updateRoom(newId: string, newName: string): void {
     this.roomId = newId;
     this.roomName = newName;
     this.machineListTitle = 'available within ' + this.roomName;
     this.brokenMachineListTitle = 'Unavailable machines within ' + this.roomName;
-    if (newId === '') {
-      this.inputRoom = 'all';
-    } else {
-      this.inputRoom = newId;
-    }
-    this.inputDay = this.today.getDay() + 1;
+    // if (newId === '') {
+    //   this.inputRoom = 'all';
+    // } else {
+    //   this.inputRoom = newId;
+    // }
+    // this.inputDay = this.today.getDay() + 1;
     this.updateMachines();
     this.delay(100);
     this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
     this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
     this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
-    if (this.cookieService.check('graph_type') === false) {
-      this.buildChart('bar');
-    } else {
-      this.buildChart(this.cookieService.get('graph_type'));
-    }
+    // if (this.cookieService.check('graph_type') === false) {
+    //    this.buildChart('bar');
+    // } else {
+    //   this.buildChart(this.cookieService.get('graph_type'));
+    // }
     this.fakePositions();
     this.setSelector(1);
     // document.getElementById('allMachineList').style.display = 'unset';
@@ -246,60 +246,60 @@ export class HomeComponent implements OnInit {
   }
 
 
-  updateDayByButton(num: number) {
-    this.inputDay = (+this.inputDay + +num) % 7;
-    if (this.inputDay === 0) {
-      this.inputDay = 7;
-    }
-    this.buildChart(this.cookieService.get('graph_type'));
-  }
+  // updateDayByButton(num: number) {
+  //   this.inputDay = (+this.inputDay + +num) % 7;
+  //   if (this.inputDay === 0) {
+  //     this.inputDay = 7;
+  //   }
+  //   this.buildChart(this.cookieService.get('graph_type'));
+  // }
+  //
+  //
+  // updateDayBySelector(num: number) {
+  //   this.inputDay = +num;
+  //   this.buildChart(this.cookieService.get('graph_type'));
+  // }
 
+  // getWeekDayByRoom(room, wekd, addition?): number[] {
+  //   const tempWekd: Array<number> = [];
+  //   if (this.history !== undefined) {
+  //     for (let i = 0; i < 48; i++) {
+  //       tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+  //     }
+  //     if (addition !== undefined && addition === true) {
+  //       ++wekd;
+  //       if (wekd === 8) {
+  //         wekd = 1;
+  //       }
+  //       for (let i = 0; i < 6; i++) {
+  //         tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+  //       }
+  //     }
+  //   }
+  //   return tempWekd;
+  // }
 
-  updateDayBySelector(num: number) {
-    this.inputDay = +num;
-    this.buildChart(this.cookieService.get('graph_type'));
-  }
-
-  getWeekDayByRoom(room, wekd, addition?): number[] {
-    const tempWekd: Array<number> = [];
-    if (this.history !== undefined) {
-      for (let i = 0; i < 48; i++) {
-        tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
-      }
-      if (addition !== undefined && addition === true) {
-        ++wekd;
-        if (wekd === 8) {
-          wekd = 1;
-        }
-        for (let i = 0; i < 6; i++) {
-          tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
-        }
-      }
-    }
-    return tempWekd;
-  }
-
-  modifyArray(arr, num, addition?): number[] {
-    const temp: Array<number> = [];
-    let i = 0;
-    for (; i < 48; i = i + num) {
-      let sum = 0;
-      for (let j = 0; j < num; j++) {
-        sum = sum + arr[j + i];
-      }
-      temp.push(sum / num);
-    }
-    if (addition !== undefined && addition === true) {
-      for (; i < 54; i = i + num) {
-        let sum = 0;
-        for (let j = 0; j < num; j++) {
-          sum = sum + arr[j + i];
-        }
-        temp.push(sum / num);
-      }
-    }
-    return temp;
-  }
+  // modifyArray(arr, num, addition?): number[] {
+  //   const temp: Array<number> = [];
+  //   let i = 0;
+  //   for (; i < 48; i = i + num) {
+  //     let sum = 0;
+  //     for (let j = 0; j < num; j++) {
+  //       sum = sum + arr[j + i];
+  //     }
+  //     temp.push(sum / num);
+  //   }
+  //   if (addition !== undefined && addition === true) {
+  //     for (; i < 54; i = i + num) {
+  //       let sum = 0;
+  //       for (let j = 0; j < num; j++) {
+  //         sum = sum + arr[j + i];
+  //       }
+  //       temp.push(sum / num);
+  //     }
+  //   }
+  //   return temp;
+  // }
 
   loadAllMachines(): void {
     const machines: Observable<Machine[]> = this.homeService.getMachines();
@@ -325,217 +325,217 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  loadAllHistory(): void {
-    const histories: Observable<History[]> = this.homeService.getAllHistory();
-    histories.subscribe(
-      history => {
-        this.history = history;
-      },
-      err => {
-        console.log(err);
-      });
-  }
+  // loadAllHistory(): void {
+  //   const histories: Observable<History[]> = this.homeService.getAllHistory();
+  //   histories.subscribe(
+  //     history => {
+  //       this.history = history;
+  //     },
+  //     err => {
+  //       console.log(err);
+  //     });
+  // }
 
-  buildChart(gType: string) {
-    if (this.myChart != null) {
-      this.myChart.destroy();
-    }
-    if (this.cookieService.check('graph_type') === false) {
-      gType = 'bar';
-    }
-    if (this.history !== undefined) {
-      this.canvas = document.getElementById(this.chart);
-      this.ctx = this.canvas;
-
-      let xlabel;
-      let xlabel2;
-      // this.filterGraphData();
-
-      xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
-        '6p', '7p', '8p', '9p', '10p', '11p'];
-
-      xlabel2 = ['0a', '3a', '6a', '9a', '12p', '3p', '6p', '9p', '12a'];
-
-      if (this.inputRoom !== 'all') {
-        this.myChart = new Chart(this.ctx, {
-          type: gType,
-          data: {
-            labels: xlabel,
-            datasets: [{
-              data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              borderColor: 'rgb(255,183 ,30 )',
-              backgroundColor: 'rgb(255,183 ,30 )',
-              fill: false,
-              lineTension: .2
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-              display: false,
-            },
-            tooltips: {
-              enabled: false,
-              // callbacks: {
-              //   label: function(tooltipItem) {
-              //     console.log(tooltipItem);
-              //     return tooltipItem.yLabel;
-              //   }
-              // }
-            },
-            elements: {
-              point: {
-                radius: 0
-              }
-            },
-            scales: {
-              xAxes: [{
-                gridLines: {
-                  display: false
-                },
-                ticks: {
-                  autoSkip: true,
-                  maxTicksLimit: 8,
-                  fontSize: 15,
-                  fontColor: 'rgb(150, 150, 150)'
-                }
-              }],
-              yAxes: [{
-                gridLines: {
-                  display: false,
-                },
-                ticks: {
-                  display: false,
-                  beginAtZero: true
-                }
-              }]
-            }
-          }
-        });
-      } else {
-        this.myChart = new Chart(this.ctx, {
-          type: gType,
-          data: {
-            labels: xlabel2,
-            datasets: [
-              {
-                label: 'Gay',
-                data: this.modifyArray(this.getWeekDayByRoom('gay', this.inputDay, true), 6, true),
-                hidden: false,
-                fill: false,
-                lineTension: 0.2,
-                borderColor: 'rgb(255,99,132)',
-                backgroundColor: 'rgb(255,99,132)'
-              },
-              {
-                label: 'Independence',
-                data: this.modifyArray(this.getWeekDayByRoom('independence', this.inputDay, true), 6, true),
-                hidden: false,
-                fill: false,
-                lineTension: 0.2,
-                borderColor: 'rgb(54, 162, 235)',
-                backgroundColor: 'rgb(54, 162, 235)'
-              },
-              {
-                label: 'Blakely',
-                data: this.modifyArray(this.getWeekDayByRoom('blakely', this.inputDay, true), 6, true),
-                hidden: false,
-                fill: false,
-                lineTension: 0.2,
-                borderColor: 'rgb(255, 206, 86)',
-                backgroundColor: 'rgb(255, 206, 86)'
-              },
-              {
-                label: 'Spooner',
-                data: this.modifyArray(this.getWeekDayByRoom('spooner', this.inputDay, true), 6, true),
-                hidden: false,
-                fill: false,
-                lineTension: 0.2,
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgb(75, 192, 192)'
-              },
-              {
-                label: 'Green Prairie',
-                data: this.modifyArray(this.getWeekDayByRoom('green_prairie', this.inputDay, true), 6, true),
-                hidden: false,
-                fill: false,
-                lineTension: 0.2,
-                borderColor: 'rgb(153, 102, 255)',
-                backgroundColor: 'rgb(153, 102, 255)'
-              },
-              {
-                label: 'Pine',
-                data: this.modifyArray(this.getWeekDayByRoom('pine', this.inputDay, true), 6, true),
-                hidden: false,
-                fill: false,
-                lineTension: 0.2,
-                borderColor: 'rgb(255, 159, 64)',
-                backgroundColor: 'rgb(255, 159, 64)'
-              },
-              {
-                label: 'Apartments',
-                data: this.modifyArray(this.getWeekDayByRoom('the_apartments', this.inputDay, true), 6, true),
-                hidden: false,
-                fill: false,
-                lineTension: 0.2,
-                borderColor: 'rgb(100,100,100)',
-                backgroundColor: 'rgb(100,100,100)'
-              },
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            tooltips: {
-              enabled: false,
-            },
-            elements: {
-              point: {
-                radius: 0
-              }
-            },
-            scales: {
-              xAxes: [{
-                gridLines: {
-                  display: false
-                },
-                ticks: {
-                  fontSize: 15,
-                  fontColor: 'rgb(150, 150, 150)'
-                }
-              }],
-              yAxes: [{
-                gridLines: {
-                  display: false,
-                },
-                ticks: {
-                  display: false,
-                  beginAtZero: true
-                }
-              }]
-            },
-            legend: {
-              labels: {
-                fontSize: 12,
-                fontColor: 'rgb(150, 150, 150)',
-                boxWidth: 2,
-              },
-              position: 'right',
-              display: true,
-            }
-          },
-        });
-      }
-    }
-  }
+  // buildChart(gType: string) {
+  //   if (this.myChart != null) {
+  //     this.myChart.destroy();
+  //   }
+  //   if (this.cookieService.check('graph_type') === false) {
+  //     gType = 'bar';
+  //   }
+  //   if (this.history !== undefined) {
+  //     this.canvas = document.getElementById(this.chart);
+  //     this.ctx = this.canvas;
+  //
+  //     let xlabel;
+  //     let xlabel2;
+  //     // this.filterGraphData();
+  //
+  //     xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
+  //       '6p', '7p', '8p', '9p', '10p', '11p'];
+  //
+  //     xlabel2 = ['0a', '3a', '6a', '9a', '12p', '3p', '6p', '9p', '12a'];
+  //
+  //     if (this.inputRoom !== 'all') {
+  //       this.myChart = new Chart(this.ctx, {
+  //         type: gType,
+  //         data: {
+  //           labels: xlabel,
+  //           datasets: [{
+  //             data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
+  //             borderColor: 'rgb(255,183 ,30 )',
+  //             backgroundColor: 'rgb(255,183 ,30 )',
+  //             fill: false,
+  //             lineTension: .2
+  //           }]
+  //         },
+  //         options: {
+  //           responsive: true,
+  //           maintainAspectRatio: false,
+  //           legend: {
+  //             display: false,
+  //           },
+  //           tooltips: {
+  //             enabled: false,
+  //             // callbacks: {
+  //             //   label: function(tooltipItem) {
+  //             //     console.log(tooltipItem);
+  //             //     return tooltipItem.yLabel;
+  //             //   }
+  //             // }
+  //           },
+  //           elements: {
+  //             point: {
+  //               radius: 0
+  //             }
+  //           },
+  //           scales: {
+  //             xAxes: [{
+  //               gridLines: {
+  //                 display: false
+  //               },
+  //               ticks: {
+  //                 autoSkip: true,
+  //                 maxTicksLimit: 8,
+  //                 fontSize: 15,
+  //                 fontColor: 'rgb(150, 150, 150)'
+  //               }
+  //             }],
+  //             yAxes: [{
+  //               gridLines: {
+  //                 display: false,
+  //               },
+  //               ticks: {
+  //                 display: false,
+  //                 beginAtZero: true
+  //               }
+  //             }]
+  //           }
+  //         }
+  //       });
+  //     } else {
+  //       this.myChart = new Chart(this.ctx, {
+  //         type: gType,
+  //         data: {
+  //           labels: xlabel2,
+  //           datasets: [
+  //             {
+  //               label: 'Gay',
+  //               data: this.modifyArray(this.getWeekDayByRoom('gay', this.inputDay, true), 6, true),
+  //               hidden: false,
+  //               fill: false,
+  //               lineTension: 0.2,
+  //               borderColor: 'rgb(255,99,132)',
+  //               backgroundColor: 'rgb(255,99,132)'
+  //             },
+  //             {
+  //               label: 'Independence',
+  //               data: this.modifyArray(this.getWeekDayByRoom('independence', this.inputDay, true), 6, true),
+  //               hidden: false,
+  //               fill: false,
+  //               lineTension: 0.2,
+  //               borderColor: 'rgb(54, 162, 235)',
+  //               backgroundColor: 'rgb(54, 162, 235)'
+  //             },
+  //             {
+  //               label: 'Blakely',
+  //               data: this.modifyArray(this.getWeekDayByRoom('blakely', this.inputDay, true), 6, true),
+  //               hidden: false,
+  //               fill: false,
+  //               lineTension: 0.2,
+  //               borderColor: 'rgb(255, 206, 86)',
+  //               backgroundColor: 'rgb(255, 206, 86)'
+  //             },
+  //             {
+  //               label: 'Spooner',
+  //               data: this.modifyArray(this.getWeekDayByRoom('spooner', this.inputDay, true), 6, true),
+  //               hidden: false,
+  //               fill: false,
+  //               lineTension: 0.2,
+  //               borderColor: 'rgb(75, 192, 192)',
+  //               backgroundColor: 'rgb(75, 192, 192)'
+  //             },
+  //             {
+  //               label: 'Green Prairie',
+  //               data: this.modifyArray(this.getWeekDayByRoom('green_prairie', this.inputDay, true), 6, true),
+  //               hidden: false,
+  //               fill: false,
+  //               lineTension: 0.2,
+  //               borderColor: 'rgb(153, 102, 255)',
+  //               backgroundColor: 'rgb(153, 102, 255)'
+  //             },
+  //             {
+  //               label: 'Pine',
+  //               data: this.modifyArray(this.getWeekDayByRoom('pine', this.inputDay, true), 6, true),
+  //               hidden: false,
+  //               fill: false,
+  //               lineTension: 0.2,
+  //               borderColor: 'rgb(255, 159, 64)',
+  //               backgroundColor: 'rgb(255, 159, 64)'
+  //             },
+  //             {
+  //               label: 'Apartments',
+  //               data: this.modifyArray(this.getWeekDayByRoom('the_apartments', this.inputDay, true), 6, true),
+  //               hidden: false,
+  //               fill: false,
+  //               lineTension: 0.2,
+  //               borderColor: 'rgb(100,100,100)',
+  //               backgroundColor: 'rgb(100,100,100)'
+  //             },
+  //           ]
+  //         },
+  //         options: {
+  //           responsive: true,
+  //           maintainAspectRatio: false,
+  //           tooltips: {
+  //             enabled: false,
+  //           },
+  //           elements: {
+  //             point: {
+  //               radius: 0
+  //             }
+  //           },
+  //           scales: {
+  //             xAxes: [{
+  //               gridLines: {
+  //                 display: false
+  //               },
+  //               ticks: {
+  //                 fontSize: 15,
+  //                 fontColor: 'rgb(150, 150, 150)'
+  //               }
+  //             }],
+  //             yAxes: [{
+  //               gridLines: {
+  //                 display: false,
+  //               },
+  //               ticks: {
+  //                 display: false,
+  //                 beginAtZero: true
+  //               }
+  //             }]
+  //           },
+  //           legend: {
+  //             labels: {
+  //               fontSize: 12,
+  //               fontColor: 'rgb(150, 150, 150)',
+  //               boxWidth: 2,
+  //             },
+  //             position: 'right',
+  //             display: true,
+  //           }
+  //         },
+  //       });
+  //     }
+  //   }
+  // }
 
   ngOnInit(): void {
     (async () => {
       this.setSelector(0);
       this.loadAllRooms();
       this.loadAllMachines();
-      this.loadAllHistory();
+      // this.loadAllHistory();
 
       await this.delay(500); // wait 0.5s for loading data
 
@@ -550,16 +550,17 @@ export class HomeComponent implements OnInit {
       this.updateCounter();
       this.updateTime();
       await this.delay(500); // wait 0.5s for loading data
-      if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
+      // if (this.rooms === undefined || this.machines === undefined || this.history === undefined) {
+      if (this.rooms === undefined || this.machines === undefined) {
         await this.delay(5000); // loading error retry every 5s
         console.log('Retry');
         this.ngOnInit();
       } else {
         if (this.cookieService.check('graph_type') === false) {
-          this.buildChart('bar');
+          // this.buildChart('bar');
         }
         document.getElementById('loadCover').style.display = 'none';
-        this.buildChart(this.cookieService.get('graph_type'));
+        // this.buildChart(this.cookieService.get('graph_type'));
       }
     })();
   }
@@ -663,6 +664,7 @@ export class HomeComponent implements OnInit {
   //   const y = machine.position.y * 20;
   //   return y + 'px';
   // }
+
   getGridCols() {
     return Math.min(window.innerWidth / 400, 4);
   }
@@ -670,6 +672,7 @@ export class HomeComponent implements OnInit {
   getGraphCols() {
     return Math.min(window.innerWidth / 680, 2);
   }
+
   initGapi(): void {
     this.authService.loadClient();
   }
