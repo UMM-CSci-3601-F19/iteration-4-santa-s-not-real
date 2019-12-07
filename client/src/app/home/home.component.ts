@@ -348,7 +348,7 @@ export class HomeComponent implements OnInit {
               }
             },
             scales: {
-              xAxes: [{
+              xAxis: [{
                 gridLines: {
                   display: false
                 },
@@ -359,7 +359,7 @@ export class HomeComponent implements OnInit {
                   fontColor: 'rgb(150, 150, 150)'
                 }
               }],
-              yAxes: [{
+              yAxis: [{
                 gridLines: {
                   display: false,
                 },
@@ -454,7 +454,7 @@ export class HomeComponent implements OnInit {
               }
             },
             scales: {
-              xAxes: [{
+              xAxis: [{
                 gridLines: {
                   display: false
                 },
@@ -463,7 +463,7 @@ export class HomeComponent implements OnInit {
                   fontColor: 'rgb(150, 150, 150)'
                 }
               }],
-              yAxes: [{
+              yAxis: [{
                 gridLines: {
                   display: false,
                 },
