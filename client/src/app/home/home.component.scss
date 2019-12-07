@@ -2,6 +2,10 @@
   margin-top: 10px;
 }
 
+mat-expansion-panel.roomSelector, mat-card.roomHeading{
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
 .home {
   scroll-behavior: smooth;
 }
@@ -34,7 +38,6 @@ div.machineButtonDialog {
   margin-left: 10px;
 }
 
-
 @media screen and (max-width: 320px) {
 
   .notifBell, .favButton {
@@ -42,7 +45,7 @@ div.machineButtonDialog {
   }
 
   mat-grid-tile mat-card {
-    margin: 0px;
+    margin: 0;
   }
 }
 
