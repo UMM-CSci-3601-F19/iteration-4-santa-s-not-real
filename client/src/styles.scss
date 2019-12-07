@@ -38,6 +38,10 @@
       background: mat-color($background, app-bar);
       color: mat-color($foreground, text);
     }
+
+    i.material-icons {
+      color: black;
+    }
   }
   .drawer-list-item-active {
     background-color: mat-color($background, hover) !important;
@@ -98,7 +102,7 @@
   }
 
   .graphBut{
-    background-color: mat-color($warn);
+    background-color: mat-color($primary);
   }
 }
 
@@ -113,8 +117,13 @@
   margin-left: auto !important;
   margin-right: auto !important;
 }
+
+i.material-icons {
+  color: white;
+}
+
 html, body { height: 100%; scroll-behavior: smooth}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0;}
 
 
 // This media query detects if the user has dark-mode turned on on their OS or browser
@@ -218,11 +227,13 @@ mat-grid-tile mat-card {
   height: 36px;
   bottom: 28px;
 }
+.washerPanel:hover, .dryerPanel:hover {
 
+}
 .reportButton:hover {
   text-decoration-line: underline;
 }
-.cardType {
+.roomID {
   font-style: italic;
 
 }
