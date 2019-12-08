@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
-import {HomeComponent, HomeSubscriptionDialog, RoomDialogPage} from './home/home.component';
+import {HomeComponent, HomeSubscriptionDialog} from './home/home.component';
 import {HomeService} from './home/home.service';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
@@ -48,7 +48,6 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     AppComponent,
     HomeComponent,
     HomeMachineDialog,
-    RoomDialogPage,
     HomeSubscriptionDialog
 
   ],

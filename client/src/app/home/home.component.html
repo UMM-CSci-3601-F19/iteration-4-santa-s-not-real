@@ -1,10 +1,6 @@
 <div layout-gt-sm="row" class="home" xmlns="http://www.w3.org/1999/html">
   <div flex-gt-sm="80" flex-offset-gt-sm="10"  id="mainBody" style="margin-bottom: 70px">
 
-    <button mat-raised-button color="primary" id="all-rooms" (click)="openRoomDialog()">
-      <i class="material-icons" style="margin-right: 10px !important;">store_mall_directory</i>Select Rooms
-    </button>
-
     <div id="scrollBox" style="display: block; position: relative; top: -1000px"></div>
 
     <mat-card *ngIf="this.roomId == ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
@@ -15,20 +11,15 @@
     </mat-card>
 
     <mat-card *ngIf="this.roomId != ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
-      <mat-card-title style="font-weight: 100; font-size: 30px; margin-bottom: 10px;  line-height: 1.15">{{this.roomName}}</mat-card-title>
-      <mat-card-content style="height: 20px; ">
-        <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.roomVacant}} vacant</a>
-        <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.roomRunning}} running</a>
-        <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.roomBroken}} broken</a>
-        <button mat-raised-button color='primary' class="defaultRoomButton"
-                (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)">
-          Set Default Room
-        </button>
-        <button mat-raised-button color='primary' style="padding-left: 10px; margin-left: 10px" class="notificationBell"
-                [disabled]="subscriptionDisabled" (click)="openSubscriptionDialog(this.roomId)">
-          <i class="material-icons" style="margin-right: 5px">notifications</i>
-          Notify Me!</button>
-      </mat-card-content>
+      <mat-card-title style="font-weight: 100; font-size: 30px;  line-height: 1.15">{{this.roomName}}
+
+        <a class="defaultRoomButton" (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)"><mat-icon class="favButton">favorite_border</mat-icon></a>
+        <a class="notificationBell" (click)="openSubscriptionDialog(this.roomId)"><mat-icon class="notifBell">notifications_none</mat-icon></a>
+      </mat-card-title>
+<!--        <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.roomVacant}} vacant</a>-->
+<!--        <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.roomRunning}} running</a>-->
+<!--        <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.roomBroken}} broken</a>-->
+
     </mat-card>
 
     <div class="topMenu">
@@ -248,8 +239,6 @@
             </mat-accordion>
           </mat-card>
         </mat-grid-tile>
-
-
       </mat-grid-list>
 
 
