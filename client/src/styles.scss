@@ -47,11 +47,11 @@
     }
   }
 
-  .mat-icon.vacant {
+  .mat-icon.vacant, a.availabletime {
     color: mat-color($accent);
   }
 
-  .mat-icon.inUse {
+  .mat-icon.inUse, a.time {
     color: mat-color($warn)
   }
   .sidenav-list {
@@ -204,10 +204,6 @@ mat-icon {
 .roomSelector.mat-expansion-panel {
   margin-left: 10px;
   margin-right: 10px;
-}
-
-mat-grid-tile mat-card {
-  margin: 10px;
 }
 
 .reportButton {

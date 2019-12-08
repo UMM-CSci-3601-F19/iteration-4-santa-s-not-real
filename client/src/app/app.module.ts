@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {AppComponent} from './app.component';
-import {HomeComponent, HomeSubscriptionDialog, RoomDialogPage} from './home/home.component';
+import {HomeComponent, HomeSubscriptionDialog} from './home/home.component';
 import {HomeService} from './home/home.service';
 import {Routing} from './app.routes';
 import {APP_BASE_HREF} from '@angular/common';
@@ -15,7 +15,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule, MatRadioModule} from '@angular/material';
-import {AuthService} from './auth.service';
+
 
 import {CookieService} from "ngx-cookie-service";
 import {MatSnackBar} from "@angular/material";
@@ -48,14 +48,12 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     AppComponent,
     HomeComponent,
     HomeMachineDialog,
-    RoomDialogPage,
     HomeSubscriptionDialog
 
   ],
   providers: [
     HttpClient,
     HomeService,
-    AuthService,
     CookieService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],

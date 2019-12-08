@@ -60,7 +60,7 @@ public class Server {
     MongoDatabase studentDatabase = mongoClient.getDatabase(studentDatabaseName);
     MongoDatabase notificationDatabase = mongoClient.getDatabase(notificationDatabaseName);
 
-    GoogleAuth gauth = new GoogleAuth(userDatabase);
+
 
     UserController userController = new UserController(userDatabase);
     UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
@@ -69,8 +69,8 @@ public class Server {
     HistoryController historyController = new HistoryController(roomDatabase, machineDatabase, roomsHistoryDatabase);
     HistoryRequestHandler historyRequestHandler = new HistoryRequestHandler(historyController);
     StudentController studentController = new StudentController(studentDatabase);
-    StudentRequestHandler studentRequestHandler = new StudentRequestHandler(studentController, gauth);
-    GmailQuickstart gmailquickstart = new GmailQuickstart(gauth, notificationDatabase, roomDatabase);
+    StudentRequestHandler studentRequestHandler = new StudentRequestHandler(studentController);
+    GmailQuickstart gmailquickstart = new GmailQuickstart(notificationDatabase, roomDatabase);
     NotificationRequestHandler notificationRequestHandler = new NotificationRequestHandler(gmailquickstart);
 
 
@@ -154,8 +154,6 @@ public class Server {
     get("api/student", studentRequestHandler::getStudents);
     get("api/student/:id", studentRequestHandler::getStudentJSON);
 
-    get("api/student/:email", studentRequestHandler ::getEmailAddress);
-
     post("api/subscribe/new", notificationRequestHandler::subscribe);
 
     // An example of throwing an unhandled exception so you can see how the
@@ -163,7 +161,6 @@ public class Server {
     get("api/error", (req, res) -> {
       throw new RuntimeException("A demonstration error");
     });
-    post("api/login", studentRequestHandler::login);
 
     // Called after each request to insert the GZIP header into the response.
     // This causes the response to be compressed _if_ the client specified

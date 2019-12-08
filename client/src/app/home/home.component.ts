@@ -4,7 +4,6 @@ import {History} from './history';
 import {Machine} from './machine';
 import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
-import {AuthService} from '../auth.service';
 
 import * as Chart from 'chart.js';
 import {CookieService} from 'ngx-cookie-service';
@@ -20,7 +19,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'your-dialog',
   templateUrl: 'home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
 
@@ -35,11 +34,10 @@ export class HomeComponent implements OnInit {
 */
 
   // tslint:disable-next-line:max-line-length
-  constructor(public homeService: HomeService, public dialog: MatDialog, private authService: AuthService, public subscription: MatDialog, private cookieService: CookieService, public _snackBar: MatSnackBar) {
+  constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog, private cookieService: CookieService, public _snackBar: MatSnackBar) {
 
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
-    this.auth = authService;
   }
 
   /*
@@ -51,7 +49,6 @@ export class HomeComponent implements OnInit {
    * the functionality works.
    */
   private autoRefresh = true;
-  public auth: AuthService;
 
   public machineListTitle: string;
   public brokenMachineListTitle: string;
@@ -101,9 +98,7 @@ export class HomeComponent implements OnInit {
     ]
   };
   openSubscriptionDialog(room_id: string) {
-    // tslint:disable-next-line:max-line-length
     const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
-    // tslint:disable-next-line:max-line-length
     const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
     const newSub: Subscription = {email: '', type: '', room_id: room_id};
     const dialogRef = this.subscription.open(HomeSubscriptionDialog, {
@@ -152,18 +147,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
-  openRoomDialog() {
-    const dialogRef = this.dialog.open(RoomDialogPage, {
-      data: this.rooms,
-      autoFocus: false,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result: ${result}');
-    });
-  }
-
   setSelector(state: number) {
     this.selectorState = state;
   }
@@ -199,14 +182,10 @@ export class HomeComponent implements OnInit {
     } else {
       this.buildChart(this.cookieService.get('graph_type'));
     }
-    this.fakePositions();
     this.setSelector(1);
-    // document.getElementById('allMachineList').style.display = 'unset';
-    document.getElementById('all-rooms').style.bottom = '2%';
   }
 
   private updateMachines(): void {
-    // console.log(this.inputRoom);
     if (this.roomId == null || this.roomId === '') {
       this.filteredMachines = this.machines;
     } else {
@@ -222,29 +201,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // filterGraphData() {
-  //   if (this.inputRoom !== 'all') {
-  //     this.filteredHistory = this.history.filter(history => history.room_id === this.inputRoom);
-  //
-  //   } else {
-  //
-  //     this.gayHistory = this.history.filter(history => history.room_id === 'gay');
-  //     this.independenceHistory = this.history.filter(history => history.room_id === 'independence');
-  //     this.blakelyHistory = this.history.filter(history => history.room_id === 'blakely');
-  //     this.spoonerHistory = this.history.filter(history => history.room_id === 'spooner');
-  //     this.greenPrairieHistory = this.history.filter(history => history.room_id === 'green_prairie');
-  //     this.pineHistory = this.history.filter(history => history.room_id === 'pine');
-  //     this.theApartmentsHistory = this.history.filter(history => history.room_id === 'the_apartments');
-  //   }
-  // }
-
   openSnackBar(room: string) {
     this._snackBar.open(room + ' has been set as your default!', '', {
       duration: 2000,
       horizontalPosition: 'center'
     });
   }
-
 
   updateDayByButton(num: number) {
     this.inputDay = (+this.inputDay + +num) % 7;
@@ -253,7 +215,6 @@ export class HomeComponent implements OnInit {
     }
     this.buildChart(this.cookieService.get('graph_type'));
   }
-
 
   updateDayBySelector(num: number) {
     this.inputDay = +num;
@@ -377,12 +338,6 @@ export class HomeComponent implements OnInit {
             },
             tooltips: {
               enabled: false,
-              // callbacks: {
-              //   label: function(tooltipItem) {
-              //     console.log(tooltipItem);
-              //     return tooltipItem.yLabel;
-              //   }
-              // }
             },
             elements: {
               point: {
@@ -576,7 +531,6 @@ export class HomeComponent implements OnInit {
         this.updateTime();
       }
     })();
-    this.initGapi();
   }
 
   updateCounter(): void {
@@ -597,21 +551,8 @@ export class HomeComponent implements OnInit {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  scroll(id: string) {
-    this.delay(150).then(() => document.getElementById(id).scrollIntoView());
-  }
-
   hideSelector() {
     document.getElementById('all-rooms').style.bottom = '-50px';
-  }
-
-  fakePositions() {
-    const w = 5;
-    const machines = this.filteredMachines;
-    for (let i = 0; i < machines.length; ++i) {
-      machines[i].position.x = i % w * 50;
-      machines[i].position.y = Math.floor(i / w) * 50;
-    }
   }
 
   translateRoomId(roomId: string): string {
@@ -664,14 +605,11 @@ export class HomeComponent implements OnInit {
   //   return y + 'px';
   // }
   getGridCols() {
-    return Math.min(window.innerWidth / 400, 4);
+    return Math.min(window.innerWidth / 300, 4);
   }
 
   getGraphCols() {
     return Math.min(window.innerWidth / 680, 2);
-  }
-  initGapi(): void {
-    this.authService.loadClient();
   }
 }
 
@@ -721,23 +659,8 @@ export class HomeMachineDialog {
 }
 
 @Component({
-  templateUrl: 'home.room.dialog.html',
-})
-
-export class RoomDialogPage {
-
-  constructor(
-    public dialogRef: MatDialogRef<RoomDialogPage>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-@Component({
   templateUrl: 'home.subscription.dialog.html',
+  styleUrls: ['./home.component.scss'],
 })
 
 export class HomeSubscriptionDialog {
@@ -750,14 +673,13 @@ export class HomeSubscriptionDialog {
 
   constructor(
     public dialogRef: MatDialogRef<HomeSubscriptionDialog>,
-    // tslint:disable-next-line:max-line-length
     @Inject(MAT_DIALOG_DATA) public data: { subscription: Subscription, noWasher: boolean, noDryer: boolean, roomName: string }, private fb: FormBuilder) {
 
     // @ts-ignore
     this.outOfWashers = data.noWasher;
     // @ts-ignore
     this.outOfDryers = data.noDryer;
-    // @ts-ignore
+    // @ts-ignore  border-radius: 10px !important;
     this.name = data.roomName;
 
     if (this.outOfWashers) {
@@ -765,7 +687,6 @@ export class HomeSubscriptionDialog {
     } else {
       data.subscription.type = 'dryer';
     }
-    // data.subscription.type = 'dryer';
 
     this.options = fb.group({
       type: data.subscription.type,

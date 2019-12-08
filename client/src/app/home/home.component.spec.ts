@@ -8,7 +8,7 @@ import {Machine} from './machine';
 import {Room} from './room';
 import {History} from './history';
 import {Observable} from 'rxjs';
-import {AuthService} from "../auth.service";
+
 import "rxjs-compat/add/observable/of";
 
 
@@ -31,12 +31,7 @@ describe('Home page', () => {
     getAllHistory: () => Observable<History[]>;
     updateRunningStatus;
   };
-  let authServiceStub = {
-    getAdminId: () => 'MI6007',
-    getAdminName: () => 'James Bond',
-    isSignedIn: () => true,
-    loadClient: () => null,
-  };
+
 
   // @ts-ignore
   beforeEach(() => {
