@@ -605,7 +605,7 @@ export class HomeComponent implements OnInit {
   //   return y + 'px';
   // }
   getGridCols() {
-    return Math.min(window.innerWidth / 400, 4);
+    return Math.min(window.innerWidth / 300, 4);
   }
 
   getGraphCols() {
