@@ -324,8 +324,8 @@ export class HomeComponent implements OnInit {
             labels: xlabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              borderColor: 'rgb(255,183 ,30 )',
-              backgroundColor: 'rgb(255,183 ,30 )',
+              borderColor: 'rgb(255,0,255)',
+              backgroundColor: 'rgb(255,0,255)',
               fill: false,
               lineTension: .2
             }]
@@ -345,7 +345,7 @@ export class HomeComponent implements OnInit {
               }
             },
             scales: {
-              xAxes: [{
+              xAxis: [{
                 gridLines: {
                   display: false
                 },
@@ -356,7 +356,7 @@ export class HomeComponent implements OnInit {
                   fontColor: 'rgb(150, 150, 150)'
                 }
               }],
-              yAxes: [{
+              yAxis: [{
                 gridLines: {
                   display: false,
                 },
@@ -451,7 +451,7 @@ export class HomeComponent implements OnInit {
               }
             },
             scales: {
-              xAxes: [{
+              xAxis: [{
                 gridLines: {
                   display: false
                 },
@@ -460,7 +460,7 @@ export class HomeComponent implements OnInit {
                   fontColor: 'rgb(150, 150, 150)'
                 }
               }],
-              yAxes: [{
+              yAxis: [{
                 gridLines: {
                   display: false,
                 },
