@@ -5,7 +5,7 @@
 
     <mat-card *ngIf="this.roomId == ''" class="roomHeading">
       <mat-card-title style="font-weight: 100; font-size: 35px; margin-bottom: 10px; line-height: 1.15">Greetings!</mat-card-title>
-      <mat-card-content style="height: 20px; font-size: 18px;">
+      <mat-card-content>
         Welcome to Morris Laundry Facilities!
       </mat-card-content>
     </mat-card>
@@ -26,7 +26,7 @@
       <mat-expansion-panel class="roomSelector" [expanded]="selectorState === 0" (opened)="setSelector(0); hideSelector()" style=" margin-top: 30px; margin-bottom: 15px ">
 
         <mat-expansion-panel-header >
-          <mat-panel-title id="home-rooms-card" style="font-size: 120%">Please select a laundry room here</mat-panel-title>
+          <mat-panel-title class="home-rooms-card">Please select a laundry room here</mat-panel-title>
         </mat-expansion-panel-header>
 
         <mat-panel-description style="font-weight: 400;">
@@ -60,7 +60,10 @@
 
       <mat-expansion-panel class="washerPanel" style="background: none; padding: 0" [expanded]="true">
         <mat-expansion-panel-header style="background: initial">
-          <mat-panel-title id="washer-grid"  style="font-size: 20px; line-height: 1">Washers</mat-panel-title>
+          <mat-panel-title class="washer-grid">Washers</mat-panel-title>
+                  <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.vacantRoomWashers}} vacant</a>
+                  <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.runningRoomWashers}} running</a>
+                  <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.brokenRoomWashers}} broken</a>
         </mat-expansion-panel-header>
         <mat-panel-description style="padding: 0 !important;">
           <mat-accordion *ngIf="machines && numOfWashers > 0; else machinesError" style="width: 100%">
@@ -138,7 +141,10 @@
 
       <mat-expansion-panel class="dryerPanel" style="background: none; padding: 0" [expanded]="true">
         <mat-expansion-panel-header style="background: initial">
-          <mat-panel-title id="dryer-grid"  style="font-size: 20px; line-height: 1">Dryers</mat-panel-title>
+          <mat-panel-title class="dryer-grid">Dryers</mat-panel-title>
+                  <a class="roomStatus"><mat-icon class="vacant">check_circle_outline</mat-icon>{{this.vacantRoomDryers}} vacant</a>
+                  <a class="roomStatus"><mat-icon class="inUse">schedule</mat-icon>{{this.runningRoomDryers}} running</a>
+                  <a class="roomStatus"><mat-icon class="unavailable">highlight_off</mat-icon>{{this.brokenRoomDryers}} broken</a>
         </mat-expansion-panel-header>
         <mat-panel-description style="padding: 0 !important;">
           <mat-accordion *ngIf="machines && numOfDryers > 0; else machinesError" style="width: 100%">
