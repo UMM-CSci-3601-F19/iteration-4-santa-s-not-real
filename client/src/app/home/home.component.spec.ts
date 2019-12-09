@@ -484,9 +484,9 @@ describe('Home page', () => {
 
   beforeEach(async(() => {
     TestBed.compileComponents().then(() => {
+      fixture.detectChanges();
       fixture = TestBed.createComponent(HomeComponent);
       component = fixture.componentInstance;
-      fixture.detectChanges();
 
       // query for the link (<a> tag) by CSS element selector
       de = fixture.debugElement.query(By.css('#home-rooms-card'));
@@ -497,12 +497,10 @@ describe('Home page', () => {
   }));
 
   it('displays a text of rooms', () => {
-    fixture.detectChanges();
     expect(el.textContent).toContain('Please select a laundry room here');
   });
 
   it('displays a text of busy time\'s title', () => {
-    fixture.detectChanges();
     expect(fl.textContent).toContain('Busy Time on ');
   });
 

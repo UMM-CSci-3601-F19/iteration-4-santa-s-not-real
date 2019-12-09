@@ -655,16 +655,6 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // getX(machine: Machine) {
-  //   const x = machine.position.x * 20;
-  //   return x + 'px';
-  // }
-
-  // getY(machine: Machine) {
-  //   const y = machine.position.y * 20;
-  //   return y + 'px';
-  // }
-
   getGridCols() {
     return Math.min(window.innerWidth / 400, 4);
   }
