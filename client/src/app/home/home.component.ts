@@ -156,6 +156,10 @@ export class HomeComponent implements OnInit {
     this.cookieService.set('room_name', newName);
   }
 
+  public checkRoom(current: string): boolean {
+    return this.cookieService.get('room_name') === current;
+  }
+
   public updateGraphType(type: string): void {
     this.cookieService.set('graph_type', type);
     this.buildChart(type);
