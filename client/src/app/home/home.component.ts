@@ -313,6 +313,7 @@ export class HomeComponent implements OnInit {
 
       let xlabel;
       let xlabel2;
+      let ylabel;
       // this.filterGraphData();
 
       xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
@@ -320,11 +321,13 @@ export class HomeComponent implements OnInit {
 
       xlabel2 = ['0a', '3a', '6a', '9a', '12p', '3p', '6p', '9p', '12a'];
 
+      ylabel = ['o%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
+
       if (this.inputRoom !== 'all') {
         this.myChart = new Chart(this.ctx, {
           type: gType,
           data: {
-            labels: xlabel,
+            labels: xlabel, ylabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
               borderColor: 'rgb(255,0,255)',
@@ -335,6 +338,8 @@ export class HomeComponent implements OnInit {
           },
           options: {
             responsive: true,
+            scaleOverride: true,
+            scaleSteps: 10,
             maintainAspectRatio: false,
             legend: {
               display: false,
@@ -362,6 +367,9 @@ export class HomeComponent implements OnInit {
               yAxis: [{
                 gridLines: {
                   display: false,
+                  scaleOverride: true,
+                  scaleSteps: 10,
+
                 },
                 ticks: {
                   display: false,
