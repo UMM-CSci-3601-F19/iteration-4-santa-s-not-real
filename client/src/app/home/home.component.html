@@ -100,7 +100,7 @@
                     </div>
                     <div style="position: relative; top: 15px; width: 100%">
                       <p style="bottom: 20px; top: auto; text-align: right">
-                        Time remaining <a class="time" style="font-size: 150%; font-weight: normal; ">{{machine.remainingTime}}</a> min
+                         <a class="time" style="font-size: 150%; font-weight: normal; ">{{machine.remainingTime}}</a> min(s) left
                       </p>
                       <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                     </div>
@@ -175,9 +175,9 @@
                     </div>
                     <div style="position: relative; top: 15px; width: 100%">
                       <p style="bottom: 20px; top: auto; text-align: right">
-                        Time remaining <a class="time" style="font-size: 150%; font-weight: normal">{{machine.remainingTime}}</a> min
+                         <a class="time" style="font-size: 150%; font-weight: normal">{{machine.remainingTime}}</a> min(s) left
                       </p>
-                      <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
+                      <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.60}}"></mat-progress-bar>
                     </div>
 
                     <a class="detailButton" mat-button style="position: absolute; bottom: 14px; left: 0px;" (click)="openMachineDialog(machine)">More Detail</a>
