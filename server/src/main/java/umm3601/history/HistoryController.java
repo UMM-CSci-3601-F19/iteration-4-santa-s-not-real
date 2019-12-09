@@ -71,7 +71,7 @@ public class HistoryController {
     System.out.println("[update] INFO history.HistoryController - Updated availability history to window D" + today + "T" + now);
   }
 
-  public String getHistory(String room) {
+  String getHistory(String room) {
     Document filterDoc = new Document();
     filterDoc = filterDoc.append("room_id", room);
     return serializeIterable(roomHistoryCollection.find(filterDoc));
