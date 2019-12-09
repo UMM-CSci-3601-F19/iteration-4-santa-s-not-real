@@ -51,7 +51,7 @@
     }
   }
 
-  .mat-icon.vacant, a.availabletime {
+  .mat-icon.vacant, a.availabletime, p.available {
     color: mat-color($accent);
   }
 
@@ -295,4 +295,8 @@ mat-dialog-container .machineName {
 mat-dialog-container .reportButton {
   position: sticky;
     bottom: -25px;
+}
+
+mat-grid-tile mat-card {
+  margin: 1px;
 }

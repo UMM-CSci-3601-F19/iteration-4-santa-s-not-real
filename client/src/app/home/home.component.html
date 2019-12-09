@@ -76,11 +76,10 @@
                         <a class="cardType" style="margin-left: 45px; font-size: 90%">Washer</a>
                       </a>
                     </div>
-                    <p class="availableIndicator" style="position: absolute; bottom: 3px; right:15px; color:green; font-size: 125%; font-weight: normal">
+                    <p class="available" style="position: absolute; bottom: 3px; right:15px; font-size: 125%; font-weight: normal">
                       Available
                     </p>
-                    <button mat-button class="detailButton" style="position: absolute; bottom: 5px; left: 15px;" (click)="openMachineDialog(machine)">More Detail</button>
-
+                    <a class="detailButton" mat-button style="position: absolute; bottom: 7px; left: 0px;" (click)="openMachineDialog(machine)">More Detail</a
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
@@ -103,7 +102,7 @@
                       <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                     </div>
 
-                    <a class="detailButton" mat-icon-button style="position: absolute; bottom: 12px; left: 15px;" (click)="openMachineDialog(machine)">More Detail</a>
+                    <a class="detailButton" mat-button style="position: absolute; bottom: 14px; left: 0px;" (click)="openMachineDialog(machine)">More Detail</a>
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
@@ -124,8 +123,6 @@
                         <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
                       </p>
                     </div>
-                    <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
-                    <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
@@ -153,10 +150,10 @@
                         <a class="cardType" style="margin-left: 45px; font-size: 90%">Dryer</a>
                       </a>
                     </div>
-                    <p style="position: absolute; bottom: 3px; right:15px; color:green; font-size: 125%; font-weight: normal">
+                    <p class="available" style="position: absolute; bottom: 3px; right:15px; font-size: 125%; font-weight: normal">
                       Available
                     </p>
-                    <a class="detailButton" mat-icon-button style="position: absolute; bottom: 5px; left: 15px;" (click)="openMachineDialog(machine)">More Detail</a>
+                    <a class="detailButton" mat-button style="position: absolute; bottom: 7px; left: 0px;" (click)="openMachineDialog(machine)">More Detail</a>
 
                   </mat-card>
                 </mat-grid-tile>
@@ -180,7 +177,7 @@
                       <mat-progress-bar color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                     </div>
 
-                    <a class="detailButton" mat-icon-button style="position: absolute; bottom: 12px; left: 15px;" (click)="openMachineDialog(machine)">More Detail</a>
+                    <a class="detailButton" mat-button style="position: absolute; bottom: 14px; left: 0px;" (click)="openMachineDialog(machine)">More Detail</a>
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
@@ -198,11 +195,9 @@
                     </div>
                     <div style="position: relative; top: 15px; width: 100%">
                       <p style="bottom: 20px; top: auto; text-align: right">
-                        <a class="time" style="font-size: 200%; font-weight: lighter">Broken</a>
+                        <a class="brokentime" style="font-size: 200%; font-weight: lighter">Broken</a>
                       </p>
                     </div>
-                    <a class="reportButton" mat-button href="{{generateCustomLink(machine.room_id, machine.type, machine.name)}}">Report an issue</a>
-                    <a class="detailButton" mat-icon-button style="position: absolute; top: 5px; right: 5px" (click)="openMachineDialog(machine)"><mat-icon style="margin: 0">more_vert</mat-icon></a>
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
