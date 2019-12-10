@@ -1,0 +1,56 @@
+#home-page-card {
+  margin-top: 10px;
+}
+
+.home {
+  scroll-behavior: smooth;
+}
+
+.mat-expansion-panel-header-description {
+  margin-right: 0;
+}
+
+.visualBox {
+  position: absolute;
+  height: 40px;
+  width: 100%;
+  left: 0;
+}
+
+#all-rooms {
+  height: 40px;
+  top: auto;
+  right: 15px;
+  bottom: -50px;
+  left: auto;
+  position: fixed;
+  border-radius: 20px;
+  z-index: 1;
+  transition: bottom 1s;
+}
+
+.mat-expansion-panel, .mat-card, .defaultRoomButton, .notificationBell {
+  border-radius: 20px;
+}
+
+mat-grid-tile mat-card {
+  margin: 10px;
+}
+
+
+@media screen and (max-width: 320px) {
+  #all-rooms {
+    font-size: 110%;
+    height: 50px;
+    border-radius: 25px;
+    right: 40px;
+    bottom: 25px;
+  }
+
+  .mat-card.roomHeading {
+    padding-bottom: 50px;
+  }
+
+}
+
+

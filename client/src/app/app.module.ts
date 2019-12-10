@@ -15,7 +15,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule, MatRadioModule} from '@angular/material';
-import {AuthService} from './auth.service';
+
 
 import {CookieService} from "ngx-cookie-service";
 import {MatSnackBar} from "@angular/material";
@@ -54,7 +54,6 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
   providers: [
     HttpClient,
     HomeService,
-    AuthService,
     CookieService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],

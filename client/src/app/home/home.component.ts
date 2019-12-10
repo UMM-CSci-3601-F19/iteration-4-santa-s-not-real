@@ -4,7 +4,6 @@ import {History} from './history';
 import {Machine} from './machine';
 import {Observable} from 'rxjs';
 import {HomeService} from './home.service';
-import {AuthService} from '../auth.service';
 
 import * as Chart from 'chart.js';
 import {CookieService} from 'ngx-cookie-service';
@@ -35,11 +34,10 @@ export class HomeComponent implements OnInit {
 */
 
   // tslint:disable-next-line:max-line-length
-  constructor(public homeService: HomeService, public dialog: MatDialog, private authService: AuthService, public subscription: MatDialog, private cookieService: CookieService, public _snackBar: MatSnackBar) {
+  constructor(public homeService: HomeService, public dialog: MatDialog, public subscription: MatDialog, private cookieService: CookieService, public _snackBar: MatSnackBar) {
 
     this.machineListTitle = 'available within all rooms';
     this.brokenMachineListTitle = 'Unavailable machines within all rooms';
-    this.auth = authService;
   }
 
   /*
@@ -51,7 +49,6 @@ export class HomeComponent implements OnInit {
    * the functionality works.
    */
   private autoRefresh = true;
-  public auth: AuthService;
 
   public machineListTitle: string;
   public brokenMachineListTitle: string;
@@ -548,7 +545,6 @@ export class HomeComponent implements OnInit {
         this.updateTime();
       }
     })();
-    this.initGapi();
   }
 
   updateCounter(): void {
@@ -623,14 +619,11 @@ export class HomeComponent implements OnInit {
   //   return y + 'px';
   // }
   getGridCols() {
-    return Math.min(window.innerWidth / 400, 4);
+    return Math.min(window.innerWidth / 300, 4);
   }
 
   getGraphCols() {
     return Math.min(window.innerWidth / 680, 2);
-  }
-  initGapi(): void {
-    this.authService.loadClient();
   }
 }
 
