@@ -10,7 +10,7 @@
       </mat-card-content>
     </mat-card>
 
-    <mat-card *ngIf="this.roomId != ''"class="roomHeading">
+    <mat-card *ngIf="this.roomId != ''" class="roomHeading">
       <mat-card-title style="font-weight: 100; font-size: 30px;  line-height: 1.15">{{this.roomName}}
 
         <a class="defaultRoomButton" *ngIf="!checkRoom(roomName)" (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)"><mat-icon class="favButton">favorite_border</mat-icon></a>
