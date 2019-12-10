@@ -270,28 +270,6 @@ mat-icon {
   margin-right: 0;
 }
 
-.roomStatus {
-  font-style: italic;
-  font-size: 15px;
-  margin-right: 12px;
-  display: inline-block;
-}
-
-mat-dialog-container {
-  border-radius: 15px !important;
-  padding: 20px !important;
-  height: 120%;
-}
-
-mat-dialog-container .mat-card-content {
-  width: 90%;
-}
-
-mat-dialog-container .machineName {
-  white-space: normal;
-  display: block;
-}
-
 mat-dialog-container .reportButton {
   position: sticky;
     bottom: -25px;

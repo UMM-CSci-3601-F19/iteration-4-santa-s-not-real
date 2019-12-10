@@ -59,9 +59,12 @@ export class HomeComponent implements OnInit {
   public numOfWashers: number;
   public numOfDryers: number;
 
-  public roomVacant: number;
-  public roomRunning: number;
-  public roomBroken: number;
+  public vacantRoomWashers: number;
+  public runningRoomWashers: number;
+  public brokenRoomWashers: number;
+  public vacantRoomDryers: number;
+  public runningRoomDryers: number;
+  public brokenRoomDryers: number;
 
   public roomId = '';
   public roomName = 'All Rooms';
@@ -174,9 +177,12 @@ export class HomeComponent implements OnInit {
     this.inputDay = this.today.getDay() + 1;
     this.updateMachines();
     this.delay(100);
-    this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
-    this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
-    this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
+    this.vacantRoomWashers = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'washer').length;
+    this.runningRoomWashers = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'washer').length;
+    this.brokenRoomWashers = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'washer').length;
+    this.vacantRoomDryers = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'dryer').length;
+    this.runningRoomDryers = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'dryer').length;
+    this.brokenRoomDryers = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'dryer').length;
     if (this.cookieService.check('graph_type') === false) {
       this.buildChart('bar');
     } else {
@@ -310,6 +316,7 @@ export class HomeComponent implements OnInit {
 
       let xlabel;
       let xlabel2;
+      let ylabel;
       // this.filterGraphData();
 
       xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
@@ -317,11 +324,13 @@ export class HomeComponent implements OnInit {
 
       xlabel2 = ['0a', '3a', '6a', '9a', '12p', '3p', '6p', '9p', '12a'];
 
+      ylabel = ['o%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
+
       if (this.inputRoom !== 'all') {
         this.myChart = new Chart(this.ctx, {
           type: gType,
           data: {
-            labels: xlabel,
+            labels: xlabel, ylabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
               borderColor: 'rgb(255,0,255)',
@@ -332,6 +341,8 @@ export class HomeComponent implements OnInit {
           },
           options: {
             responsive: true,
+            scaleOverride: true,
+            scaleSteps: 10,
             maintainAspectRatio: false,
             legend: {
               display: false,
@@ -359,6 +370,9 @@ export class HomeComponent implements OnInit {
               yAxis: [{
                 gridLines: {
                   display: false,
+                  scaleOverride: true,
+                  scaleSteps: 10,
+
                 },
                 ticks: {
                   display: false,
