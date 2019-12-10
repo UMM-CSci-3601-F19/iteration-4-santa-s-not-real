@@ -1,4 +1,4 @@
-import {TestBed, ComponentFixture} from '@angular/core/testing';
+import {TestBed, ComponentFixture, async} from '@angular/core/testing';
 import {HomeComponent} from './home.component';
 import {DebugElement} from '@angular/core';
 import {By} from '@angular/platform-browser';
@@ -8,8 +8,9 @@ import {Machine} from './machine';
 import {Room} from './room';
 import {History} from './history';
 import {Observable} from 'rxjs';
-
-import "rxjs-compat/add/observable/of";
+import {CookieService} from 'ngx-cookie-service';
+import 'rxjs-compat/add/observable/of';
+import {MatSnackBarModule, MatRadioModule} from '@angular/material';
 
 
 describe('Home page', () => {
@@ -18,11 +19,9 @@ describe('Home page', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let de: DebugElement;
   let df: DebugElement;
-  let dg: DebugElement;
   let dh: DebugElement;
   let el: HTMLElement;
   let fl: HTMLElement;
-  let gl: HTMLElement;
   let hl: HTMLElement;
 
   let homeServiceStub: {
@@ -31,7 +30,12 @@ describe('Home page', () => {
     getAllHistory: () => Observable<History[]>;
     updateRunningStatus;
   };
-
+  // Create mock cookie service w needed methods
+  let cookieServiceStub: {
+    set: (id: String, name: String) => null,
+    check: (name: String) => false;
+    get: (name: String) => String;
+  };
 
   // @ts-ignore
   beforeEach(() => {
@@ -442,34 +446,52 @@ describe('Home page', () => {
       ]),
       updateRunningStatus: () => null,
     };
-    authServiceStub = {
-      getAdminId: () => 'MI6007',
-      getAdminName: () => 'James Bond',
-      isSignedIn: () => true,
-      loadClient: () => null,
+
+    cookieServiceStub = {
+      set: (id: String, name: String) => null,
+      check: (name: String) => false,
+      get: (name: String) => {
+        if (name === 'graph_type') {
+          return 'bar';
+        } else {
+          return 'gay';
+        }
+      },
     };
 
     TestBed.configureTestingModule({
-      imports: [CustomModule],
+      imports: [CustomModule, MatSnackBarModule, MatRadioModule],
       declarations: [HomeComponent], // declare the test component
-      providers: [{provide: HomeService, useValue: homeServiceStub},
-        {provide: AuthService, useValue: authServiceStub}
+      providers: [
+        {provide: HomeService, useValue: homeServiceStub},
+        {provide: CookieService, useValue: cookieServiceStub}
       ]});
 
-    fixture = TestBed.createComponent(HomeComponent);
-
-    component = fixture.componentInstance; // BannerComponent test instance
-
-    // query for the link (<a> tag) by CSS element selector
-    de = fixture.debugElement.query(By.css('#home-rooms-card'));
-    df = fixture.debugElement.query(By.css('#predictionGraphTitle'));
-    dg = fixture.debugElement.query(By.css('#roomMap'));
-    dh = fixture.debugElement.query(By.css('#machines-grid'));
-    el = de.nativeElement;
-    fl = df.nativeElement;
-    gl = dg.nativeElement;
-    hl = dh.nativeElement;
+    // fixture = TestBed.createComponent(HomeComponent);
+    //
+    // component = fixture.componentInstance; // BannerComponent test instance
+    // // query for the link (<a> tag) by CSS element selector
+    // de = fixture.debugElement.query(By.css('#home-rooms-card'));
+    // df = fixture.debugElement.query(By.css('#predictionGraphTitle'));
+    // dh = fixture.debugElement.query(By.css('#machines-grid'));
+    // el = de.nativeElement;
+    // fl = df.nativeElement;
+    // hl = dh.nativeElement;
   });
+
+  beforeEach(async(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(HomeComponent);
+      component = fixture.componentInstance;
+      fixture.autoDetectChanges();
+
+      // query for the link (<a> tag) by CSS element selector
+      de = fixture.debugElement.query(By.css('#home-rooms-card'));
+      df = fixture.debugElement.query(By.css('#predictionGraphTitle'));
+      el = de.nativeElement;
+      fl = df.nativeElement;
+    });
+  }));
 
   it('displays a text of rooms', () => {
     fixture.detectChanges();
@@ -479,11 +501,6 @@ describe('Home page', () => {
   it('displays a text of busy time\'s title', () => {
     fixture.detectChanges();
     expect(fl.textContent).toContain('Busy Time on ');
-  });
-
-  it('displays a text of the room\'s map', () => {
-    fixture.detectChanges();
-    expect(gl.textContent).toContain('Laundry room map');
   });
 
   it('displays a text of broken machines', () => {
