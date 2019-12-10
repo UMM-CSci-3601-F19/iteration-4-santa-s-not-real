@@ -1,22 +1,11 @@
 package umm3601.student;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import org.bson.Document;
 import spark.Request;
 import spark.Response;
-import umm3601.GoogleAuth;
-import umm3601.Server;
-import umm3601.student.StudentController;
-
-import java.util.Collections;
-import java.util.List;
 
 public class StudentRequestHandler {
   private final StudentController studentController;
-  private final GoogleAuth gauth;
 
 
   private static final String CLIENT_ID = "375549452265-kpv6ds6lpfc0ibasgeqcgq1r6t6t6sth.apps.googlestudentcontent.com";
@@ -25,9 +14,8 @@ public class StudentRequestHandler {
 
   private static NetHttpTransport transport = new NetHttpTransport();
 
-  public StudentRequestHandler(StudentController studentController, GoogleAuth gauth) {
+  public StudentRequestHandler(StudentController studentController) {
     this.studentController = studentController;
-    this.gauth = gauth;
   }
 
   public String getStudentJSON(Request req, Response res) {
@@ -59,54 +47,4 @@ public class StudentRequestHandler {
     return studentController.getStudents(req.queryMap().toMap());
   }
 
-
-
-  public String login(Request req, Response res) {
-    res.type("application/json");
-
-    Document body = Document.parse(req.body());
-    String token = body.getString("idtoken"); //key formerly 'code'
-    GoogleIdToken idToken = gauth.auth(token);
-    if (idToken != null) {
-      GoogleIdToken.Payload payload = idToken.getPayload();
-      String studentId = payload.getSubject();
-      String email = payload.getEmail();
-      String name = (String) payload.get("name");
-      return studentController.login(studentId, email, name);
-    } else {
-      return null;
-    }
-  }
-  public String signUp(Request req, Response res) {
-    res.type("application/json");
-
-    Document body = Document.parse(req.body());
-    GoogleIdToken idToken = gauth.auth(body);
-    if (idToken != null) {
-      GoogleIdToken.Payload payload = idToken.getPayload();
-      String studentId = payload.getSubject();
-      String email = payload.getEmail();
-      String name = (String) payload.get("name");
-      String pictureUrl = (String) payload.get("picture");
-      return studentController.signup(studentId, email, name, pictureUrl);
-    }else{
-      return null;
-    }
-  }
-
-  public String getEmailAddress(Request req, Response res){
-    res.type("application/json");
-
-    Document body = Document.parse(req.body());
-    GoogleIdToken idToken = gauth.auth(body);
-
-    if(idToken != null){
-      GoogleIdToken.Payload payload = idToken.getPayload();
-      String email = payload.getEmail();
-      return studentController.getEmailAddress(email);
-    }
-    else{
-      return null;
-    }
-  }
 }

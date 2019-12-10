@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthService} from './auth.service';
+
 
 @Component({
   selector: 'app-root',
@@ -9,12 +9,7 @@ import {AuthService} from './auth.service';
 export class AppComponent {
   title = 'Web App';
   public profileID = localStorage.getItem('userID');
-  public auth: AuthService;
 
-  constructor(private authService: AuthService) {
-    this.auth =authService;
-  }
-  initGapi(): void {
-    this.authService.loadClient();
+  constructor() {
   }
 }
