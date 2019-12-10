@@ -72,7 +72,6 @@
   .roomHeading {
     padding-top: 5px !important;
     margin: 0px 0px 10px 0px !important;
-    font-style: italic;
     border-radius: 10px !important;
     top: 0px;
     box-shadow: none !important;
@@ -276,5 +275,17 @@ mat-dialog-container .reportButton {
 }
 
 mat-grid-tile mat-card {
-  margin: 1px;
+  margin: 2px;
 }
+
+div.machineInfo {
+  position: relative;
+  left: 5px;
+}
+
+a.detailButton {
+  position: relative;
+  left: 10px
+}
+
+

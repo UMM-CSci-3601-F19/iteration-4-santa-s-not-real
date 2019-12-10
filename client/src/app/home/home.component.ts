@@ -623,11 +623,11 @@ export class HomeComponent implements OnInit {
   //   return y + 'px';
   // }
   getGridCols() {
-    return Math.min(window.innerWidth / 300, 4);
+    return Math.min(window.innerWidth / 350, 5);
   }
 
   getGraphCols() {
-    return Math.min(window.innerWidth / 680, 2);
+    return Math.min(window.innerWidth / 680, 1);
   }
 }
 
