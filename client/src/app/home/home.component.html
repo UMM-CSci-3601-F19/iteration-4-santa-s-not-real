@@ -110,7 +110,7 @@
                       <mat-progress-bar class="progress" style color="warn" mode="determinate" value="{{100-machine.remainingTime / 0.35}}"></mat-progress-bar>
                     </div>
 
-                    <a class="detailButton" mat-button style="position: absolute; bottom: 14px;" (click)="openMachineDialog(machine)">More Detail</a>
+                    <a class="detailButton" mat-button style="position: absolute; bottom: 7px;" (click)="openMachineDialog(machine)">More Detail</a>
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
@@ -191,7 +191,7 @@
                       <mat-progress-bar class="progress" color="warn"  mode="determinate" value="{{100-machine.remainingTime / 0.60}}"></mat-progress-bar>
                     </div>
 
-                    <a class="detailButton" mat-button style="position: absolute; bottom: 14px;" (click)="openMachineDialog(machine)">More Detail</a>
+                    <a class="detailButton" mat-button style="position: absolute; bottom: 7px;" (click)="openMachineDialog(machine)">More Detail</a>
                   </mat-card>
                 </mat-grid-tile>
               </mat-accordion>
@@ -203,7 +203,7 @@
                       <mat-icon class="unavailable" style="position: absolute; font-size: 275%">fireplace</mat-icon>
                       <a class="machineIdentity" style="display: block">
                         <a class="machineName" style="margin-left: 45px; font-size: 105%; text-transform: capitalize; font-weight: 500">{{this.translateMachineName(machine.name)}}</a><br>
-                        <a class="roomID" style="margin-left: 45px; font-size: 95%">{{this.translateRoomId(machine.room_id)}}</a><br>
+                        <a style="margin-left: 45px; font-size: 95%">{{this.translateRoomId(machine.room_id)}}</a><br>
                         <a class="cardType" style="margin-left: 45px; font-size: 90%">Dryer</a>
                       </a>
                     </div>
@@ -247,7 +247,7 @@
               <button mat-icon-button id="previous-day" (click)="updateDayByButton(-1)" style="display: unset; position: absolute; left: 0; top: 43%;">
                 <mat-icon style="margin: 5px 0">navigate_before</mat-icon>
               </button>
-              <div style="padding-right: 15px; padding-left: 15px;">
+              <div style="padding: 15px;">
                 <canvas id="myChart" [height]="100" style="display: unset; min-width: 100% !important; max-width: 100% !important ; min-height: 200px !important; max-height: 200px !important"></canvas>
                 <div id="canvasCover" style="position: absolute; width: 100%; height: 200px; display: block; left: 0"></div>
               </div>
