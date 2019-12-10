@@ -379,7 +379,10 @@ export class HomeComponent implements OnInit {
                 },
                 ticks: {
                   display: false,
-                  beginAtZero: true
+                  beginAtZero: true,
+                  steps: 10,
+                  stepValue: 5,
+                  max: 58
                 }
               }]
             }
@@ -483,7 +486,10 @@ export class HomeComponent implements OnInit {
                 },
                 ticks: {
                   display: false,
-                  beginAtZero: true
+                  beginAtZero: true,
+                  steps: 10,
+                  stepValue: 5,
+                  max: 100
                 }
               }]
             },
