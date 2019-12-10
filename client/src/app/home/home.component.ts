@@ -324,13 +324,13 @@ export class HomeComponent implements OnInit {
 
       xlabel2 = ['0a', '3a', '6a', '9a', '12p', '3p', '6p', '9p', '12a'];
 
-      ylabel = ['o%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
+      ylabel = ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
 
       if (this.inputRoom !== 'all') {
         this.myChart = new Chart(this.ctx, {
           type: gType,
           data: {
-            labels: xlabel, ylabel,
+            labels: xlabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
               borderColor: 'rgb(255,0,255)',
