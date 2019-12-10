@@ -1,10 +1,33 @@
 # The Web App
-### CSCI 3601 F19 Iteration 3
+### CSCI 3601 F19 Iteration 4
 ##### Authors: Kedrick Hill, Tyler Rowland, Matthew Spilman, David Escudero, Hoomz Damte, and Emma Oswood
 
 [![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
 
-## Important notes about our iteration 2 project
+<!-- TOC depthFrom:1 depthTo:5 withLinks:1 updateOnSave:1 orderedList:0 -->
+## Table of Contents
+- [Important notes](#important-notes)
+- [Setup](#setup)
+- [Running the project](#running-the-project)
+- [Testing and Continuous Integration](#testing-and-continuous-integration)
+- [Resources](#resources)
+	- [Angular](#angular)
+	- [SparkJava](#sparkjava)
+	- [MongoDB](#mongodb)
+
+<!-- /TOC -->
+
+## Important notes about our iteration 4 project
+
+### Iteration 4 specific notes
+
+When creating the droplet for this iteration, **you must place credentials.json manually or else email will not work!**
+This is due to the fact that the credentials are secure and cannot be stored on GitHub.
+
+*Credentials.json must be stored in the same directory as Server.java*
+
+### Notes from previous iterations
+
 To run the E2E tests, because the E2E tests is based on a fixed data and the auto updating should be turn off, please set the "autoRefresh" false at line 26 of client/src/app/home/home.component.ts, and set the "seedLocalSourse" true at line 31 of server/src/main/java/umm3601/laundry/LaundryController.java to use the local test data. 
 
 At client/src/app/home/home.component.ts:26
@@ -20,19 +43,6 @@ To run other tests, please set the "autoRefresh" true and set the "seedLocalSour
 The MongoDB must be seed to reset the data before running the e2e test.
 
 We did not remove the modules of users' functionalities in the client and the server because they will be helpful as a template for future iterations.
-
-<!-- TOC depthFrom:1 depthTo:5 withLinks:1 updateOnSave:1 orderedList:0 -->
-## Table of Contents
-- [Important notes](#important-notes-about-our-iteration-1-project)
-- [Setup](#setup)
-- [Running the project](#running-the-project)
-- [Testing and Continuous Integration](#testing-and-continuous-integration)
-- [Resources](#resources)
-	- [Angular](#angular)
-	- [SparkJava](#sparkjava)
-	- [MongoDB](#mongodb)
-
-<!-- /TOC -->
 
 ## Setup
 
