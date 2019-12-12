@@ -514,25 +514,6 @@ describe('Home page', () => {
   });
 
   it('load all the rooms', () => {
-    const rooms: Observable<Room[]> = homeServiceStub.getRooms();
-    rooms.subscribe(
-      // tslint:disable-next-line:no-shadowed-variable
-      rooms => {
-        component.rooms = rooms;
-      });
-    expect(component.rooms.length).toBe(2);
-  });
-
-  it('should load and update the time remaining', () => {
-    let spy = spyOn(component, 'ngOnInit');
-    component.ngOnInit();
-    expect(spy).toHaveBeenCalled();
-    spy = spyOn(component, 'updateTime');
-    component.updateTime();
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should the machine counters', () => {
     expect(component.numOfVacant).toBe(undefined);
     expect(component.numOfAll).toBe(undefined);
     component.updateCounter();
@@ -544,9 +525,19 @@ describe('Home page', () => {
       rooms => {
         component.rooms = rooms;
       });
+    expect(component.rooms.length).toBe(2);
     component.updateCounter();
     expect(component.numOfVacant).toBe(1);
     expect(component.numOfAll).toBe(2);
+  });
+
+  it('should load and update the time remaining', () => {
+    let spy = spyOn(component, 'ngOnInit');
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalled();
+    spy = spyOn(component, 'updateTime');
+    component.updateTime();
+    expect(spy).toHaveBeenCalled();
   });
 
   it('should return the corresponding room from its id', () => {

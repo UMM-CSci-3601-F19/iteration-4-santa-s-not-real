@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
    * back to true in order to make
    * the functionality works.
    */
-  private autoRefresh = true;
+  private autoRefresh = false;
 
   public machineListTitle: string;
   public brokenMachineListTitle: string;
@@ -101,7 +101,9 @@ export class HomeComponent implements OnInit {
     ]
   };
   openSubscriptionDialog(room_id: string) {
+    // tslint:disable-next-line:max-line-length
     const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
+    // tslint:disable-next-line:max-line-length
     const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
     const newSub: Subscription = {email: '', type: '', room_id: room_id};
     const dialogRef = this.subscription.open(HomeSubscriptionDialog, {
@@ -246,7 +248,10 @@ export class HomeComponent implements OnInit {
           wekd = 1;
         }
         for (let i = 0; i < 6; i++) {
-          tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+          const temp = this.history.filter(history => history.room_id === room).pop();
+          if (temp !== undefined) {
+            tempWekd.push(temp[wekd][i]);
+          }
         }
       }
     }
@@ -570,10 +575,6 @@ export class HomeComponent implements OnInit {
 
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  hideSelector() {
-    document.getElementById('all-rooms').style.bottom = '-50px';
   }
 
   translateRoomId(roomId: string): string {
