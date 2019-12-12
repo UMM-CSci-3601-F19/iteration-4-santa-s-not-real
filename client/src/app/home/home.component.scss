@@ -2,6 +2,10 @@
   margin-top: 10px;
 }
 
+mat-expansion-panel.roomSelector, mat-card.roomHeading{
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
 .home {
   scroll-behavior: smooth;
 }
@@ -33,17 +37,56 @@ div.machineButtonDialog {
 .exitWithoutAddingButton {
   margin-left: 10px;
 }
+.progress{
+transform: rotate(-90deg);
+  transform-origin: 0% 100%;
+  height: 7px;
+  width: 129px;
+  position: relative;
+  right: 9px;
+  top: -3.5px;
+  border-radius: 4px;
+  }
+
+.roomStatus {
+  font-size: 15px;
+  margin-right: 12px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.washer-grid, .dryer-grid{
+  font-size: 20px;
+}
 
 
-@media screen and (max-width: 320px) {
+
+@media screen and (max-width: 360px) {
 
   .notifBell, .favButton {
-    margin-left: 11px;
+    margin-left: 10px;
+  }
+
+  .roomStatus {
+    font-size: 10px;
+  }
+
+  mat-icon.vacant, mat-icon.inUse, mat-icon.unavailable {
+    transform: scale(.9);
   }
 
   mat-grid-tile mat-card {
-    margin: 0px;
+    margin: 0;
+  }
+
+ .home-rooms-card {
+    font-size: 14px;
+  }
+
+  .washer-grid, .dryer-grid {
+    font-size: 15px;
   }
 }
+
 
 
