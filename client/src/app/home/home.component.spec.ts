@@ -19,16 +19,15 @@ describe('Home page', () => {
   let fixture: ComponentFixture<HomeComponent>;
   let de: DebugElement;
   let df: DebugElement;
-  let dh: DebugElement;
   let el: HTMLElement;
   let fl: HTMLElement;
-  let hl: HTMLElement;
 
   let homeServiceStub: {
     getRooms: () => Observable<Room[]>;
     getMachines: () => Observable<Machine[]>;
     getAllHistory: () => Observable<History[]>;
     updateRunningStatus;
+    updateAvailableMachineNumber: (room: Room, machine: Machine) => null;
   };
   // Create mock cookie service w needed methods
   let cookieServiceStub: {
@@ -445,6 +444,7 @@ describe('Home page', () => {
         },
       ]),
       updateRunningStatus: () => null,
+      updateAvailableMachineNumber: (room: Room, machine: Machine) => null,
     };
 
     cookieServiceStub = {
@@ -486,7 +486,7 @@ describe('Home page', () => {
       fixture.autoDetectChanges();
 
       // query for the link (<a> tag) by CSS element selector
-      de = fixture.debugElement.query(By.css('#home-rooms-card'));
+      de = fixture.debugElement.query(By.css('#home-room-card'));
       df = fixture.debugElement.query(By.css('#predictionGraphTitle'));
       el = de.nativeElement;
       fl = df.nativeElement;
@@ -501,11 +501,6 @@ describe('Home page', () => {
   it('displays a text of busy time\'s title', () => {
     fixture.detectChanges();
     expect(fl.textContent).toContain('Busy Time on ');
-  });
-
-  it('displays a text of broken machines', () => {
-    fixture.detectChanges();
-    expect(hl.textContent).toContain('Machines within All rooms');
   });
 
   it('load all the machines', () => {

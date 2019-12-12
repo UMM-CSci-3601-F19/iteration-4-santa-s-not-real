@@ -26,8 +26,8 @@
     <div class="topMenu">
       <mat-expansion-panel class="roomSelector" [expanded]="selectorState === 0" (opened)="setSelector(0); hideSelector()" style=" margin-top: 30px; margin-bottom: 15px ">
 
-        <mat-expansion-panel-header >
-          <mat-panel-title class="home-rooms-card">Please select a laundry room here</mat-panel-title>
+        <mat-expansion-panel-header>
+          <mat-panel-title id="home-room-card"  class="home-rooms-card">Please select a laundry room here</mat-panel-title>
         </mat-expansion-panel-header>
 
         <mat-panel-description style="font-weight: 400;">
@@ -217,7 +217,7 @@
 
         <mat-grid-tile>
           <mat-card class="graphData">
-            <mat-card-title id="predictionGraphTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px">Busy Time on
+            <mat-card-title id="predictionGraphTitle" class="predictionGraphTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px">Busy Time on
               <p style="display: unset; float: bottom">
                 <mat-select id="day-selector" [(value)]="inputDay" style="width: 130px" (selectionChange)="updateDayBySelector($event.value)">
                   <mat-option *ngFor="let day of Days" [value]="day.value">{{day.name}}</mat-option>

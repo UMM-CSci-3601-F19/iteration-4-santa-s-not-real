@@ -235,7 +235,10 @@ export class HomeComponent implements OnInit {
     const tempWekd: Array<number> = [];
     if (this.history !== undefined) {
       for (let i = 0; i < 48; i++) {
-        tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+        const temp = this.history.filter(history => history.room_id === room).pop();
+        if (temp !== undefined) {
+          tempWekd.push(temp[wekd][i]);
+        }
       }
       if (addition !== undefined && addition === true) {
         ++wekd;
