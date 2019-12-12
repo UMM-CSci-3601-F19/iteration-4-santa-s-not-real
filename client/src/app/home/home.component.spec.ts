@@ -442,19 +442,7 @@ describe('Home page', () => {
       ]),
       updateRunningStatus: () => null,
     };
-    authServiceStub = {
-      getAdminId: () => 'MI6007',
-      getAdminName: () => 'James Bond',
-      isSignedIn: () => true,
-      loadClient: () => null,
-    };
 
-    TestBed.configureTestingModule({
-      imports: [CustomModule],
-      declarations: [HomeComponent], // declare the test component
-      providers: [{provide: HomeService, useValue: homeServiceStub},
-        {provide: AuthService, useValue: authServiceStub}
-      ]});
 
     fixture = TestBed.createComponent(HomeComponent);
 
