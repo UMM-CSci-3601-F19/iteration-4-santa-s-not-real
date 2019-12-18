@@ -2,7 +2,7 @@
 ### CSCI 3601 F19 Iteration 3
 ##### Authors: Kedrick Hill, Tyler Rowland, Matthew Spilman, David Escudero, Hoomz Damte, and Emma Oswood
 
-[![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-3-the-groovy-gravies)
+[![Build Status](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-santa-s-not-real.svg?branch=master)](https://travis-ci.org/UMM-CSci-3601-F19/iteration-4-santa-s-not-real)
 
 ## What is Morris Laundry Facilities?
 
