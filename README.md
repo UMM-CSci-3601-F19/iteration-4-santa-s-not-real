@@ -43,6 +43,9 @@ function is probably the hardest to decipher).
 - Refactor the *.scss files to reduce the overwhelming amount of duplicate code that could be combined.
 - Could refactor theming to better fit typical layout of a traditional theming section.
 
+## Documentation
+  Deployment guide and Google API
+
 ## Technologies Used
 ### Angular
 - [Angular documentation][angular]
