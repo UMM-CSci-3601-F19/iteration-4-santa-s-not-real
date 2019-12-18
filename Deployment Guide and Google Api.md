@@ -1,4 +1,4 @@
-##Deployment
+## Deployment
 When deploying make sure you nano into your build.gradle file and make sure the file that is shown is the same as the one in build.sh
 What happens when this isn't the same is, when you try to build it through terminal it wil break because it is telling the wrong server 
 file to build something that isn't in it.
