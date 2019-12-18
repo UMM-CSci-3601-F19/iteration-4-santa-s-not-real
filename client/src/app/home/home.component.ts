@@ -59,9 +59,12 @@ export class HomeComponent implements OnInit {
   public numOfWashers: number;
   public numOfDryers: number;
 
-  public roomVacant: number;
-  public roomRunning: number;
-  public roomBroken: number;
+  public vacantRoomWashers: number;
+  public runningRoomWashers: number;
+  public brokenRoomWashers: number;
+  public vacantRoomDryers: number;
+  public runningRoomDryers: number;
+  public brokenRoomDryers: number;
 
   public roomId = '';
   public roomName = 'All Rooms';
@@ -156,6 +159,10 @@ export class HomeComponent implements OnInit {
     this.cookieService.set('room_name', newName);
   }
 
+  public checkRoom(current: string): boolean {
+    return this.cookieService.get('room_name') === current;
+  }
+
   public updateGraphType(type: string): void {
     this.cookieService.set('graph_type', type);
     this.buildChart(type);
@@ -174,9 +181,12 @@ export class HomeComponent implements OnInit {
     this.inputDay = this.today.getDay() + 1;
     this.updateMachines();
     this.delay(100);
-    this.roomVacant = this.filteredMachines.filter(m => m.running === false && m.status === 'normal').length;
-    this.roomRunning = this.filteredMachines.filter(m => m.running === true && m.status === 'normal').length;
-    this.roomBroken = this.filteredMachines.filter(m => m.status === 'broken').length;
+    this.vacantRoomWashers = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'washer').length;
+    this.runningRoomWashers = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'washer').length;
+    this.brokenRoomWashers = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'washer').length;
+    this.vacantRoomDryers = this.filteredMachines.filter(m => m.running === false && m.status === 'normal' && m.type === 'dryer').length;
+    this.runningRoomDryers = this.filteredMachines.filter(m => m.running === true && m.status === 'normal' && m.type === 'dryer').length;
+    this.brokenRoomDryers = this.filteredMachines.filter(m => m.status === 'broken' && m.type === 'dryer').length;
     if (this.cookieService.check('graph_type') === false) {
       this.buildChart('bar');
     } else {
@@ -338,6 +348,12 @@ export class HomeComponent implements OnInit {
             },
             tooltips: {
               enabled: false,
+              // callbacks: {
+              //   label: function(tooltipItem) {
+              //     console.log(tooltipItem);
+              //     return tooltipItem.yLabel;
+              //   }
+              // }
             },
             elements: {
               point: {
@@ -605,11 +621,11 @@ export class HomeComponent implements OnInit {
   //   return y + 'px';
   // }
   getGridCols() {
-    return Math.min(window.innerWidth / 300, 4);
+    return Math.min(window.innerWidth / 350, 5);
   }
 
   getGraphCols() {
-    return Math.min(window.innerWidth / 680, 2);
+    return Math.min(window.innerWidth / 680, 1);
   }
 }
 
