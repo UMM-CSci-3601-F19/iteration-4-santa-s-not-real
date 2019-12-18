@@ -24,7 +24,24 @@ Users have the option to see what machines are available, running, or broken for
 Users can also favorite a room if they prefer to by clicking on the heart icon. This saves the room for later when
 the user returns to the page.
 
+##### Promotional Document
+Want to view it? Click [here][document].
 
+## Known Issues/To-Do
+- Separate home component into multiple components, rather than have everything in one component. (machines, graph, dialogs,
+ subscription, notification, various pages (if integrating), cards for machines, report issue, and probably some others )
+- Remove all HTML Styling from all of the *.html files.
+- Create a functional Subscription button.
+- Remove the "please select a laundry room" button and put it somewhere more convenient.
+- Integrate a home page (or more pages for each room).
+- Recreate a proper functioning graph that functions better than the current.
+- Fix issues where graph shows impossible values. (adjust how it handles historical data).
+- Home component contains redundant lines. These can be removed and adjusted to work better with the 
+Angular framework.
+- Comment on the miscellaneous code that is hard to understand (modifyArray 
+function is probably the hardest to decipher).
+- Refactor the *.scss files to reduce the overwhelming amount of duplicate code that could be combined.
+- Could refactor theming to better fit typical layout of a traditional theming section.
 
 ## Technologies Used
 ### Angular
@@ -63,3 +80,4 @@ the user returns to the page.
 [lab2]: https://github.com/UMM-CSci-3601/3601-lab2_client-server/blob/master/README.md#resources
 [mongo-jdbc]: https://docs.mongodb.com/ecosystem/drivers/java/
 [travis]: https://travis-ci.org/
+[document]: https://docs.google.com/document/d/1vh--JKGz4fbuyTmKZdBxoDff3ch_FKk94SfxzFuXPqY/edit?usp=sharing
