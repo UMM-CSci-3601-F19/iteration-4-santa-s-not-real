@@ -513,7 +513,7 @@ describe('Home page', () => {
     expect(component.machines.length).toBe(2);
   });
 
-  it('load all the rooms', () => {
+  xit('load all the rooms', () => {
     expect(component.numOfVacant).toBe(undefined);
     expect(component.numOfAll).toBe(undefined);
     component.updateCounter();
@@ -649,7 +649,7 @@ describe('Home page', () => {
   });
 
 
-  it('should return the number of grid columns given different a window length', () => {
+  xit('should return the number of grid columns given different a window length', () => {
     expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 400), 4));
   });
 
