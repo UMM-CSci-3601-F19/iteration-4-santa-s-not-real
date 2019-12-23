@@ -37,6 +37,7 @@ describe('home', () => {
 
   it('should get and highlight each hall title attribute', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     expect(page.getGayHallTitleInHomePanel()).toEqual('Gay Hall');
     expect(page.getIndependenceHallTitleInHomePanel()).toEqual('Independence Hall');
     expect(page.getBlakelyHallTitleInHomePanel()).toEqual('Blakely Hall');
@@ -48,6 +49,7 @@ describe('home', () => {
 
   it('should get and highlight each hall availability attribute', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     expect(page.getGayHallAvailability()).toEqual('7 / 9 vacant');
     expect(page.getIndependenceHallAvailability()).toEqual('8 / 15 vacant');
     expect(page.getBlakelyHallAvailability()).toEqual('7 / 11 vacant');
@@ -59,18 +61,14 @@ describe('home', () => {
 
   it('should display a graph when a room is selected', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     expect(page.elementExistsWithCss('predictionGraphTitle'));
   });
 
-  it('should display a map when a room is selected', () => {
-    page.navigateTo();
-    page.clickGayHall();
-    expect(page.getEntrance()).toEqual('Entrance of Gay Hall');
-  });
-
   it('should open a dialog for corresponding machine', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     expect(page.elementExistsWithId('dorky-gamboge-dog'));
     page.click('dorky-gamboge-dog');
@@ -79,6 +77,7 @@ describe('home', () => {
 
   it('should get and have correct title for gay\'s washers and dryers panel', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     expect(page.getUniqueRoomTitle()).toEqual('Machines within Gay Hall');
   });
@@ -91,6 +90,7 @@ describe('home', () => {
 
   it('should get and have correct number of gay\'s washers', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     page.getWashers().then((washers) => {
       expect(washers.length).toBe(2);
@@ -99,6 +99,7 @@ describe('home', () => {
 
   it('should get and have correct number of gay\'s dryers', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     page.getDryers().then((dryers) => {
       expect(dryers.length).toBe(7);
@@ -107,6 +108,7 @@ describe('home', () => {
 
   it('should get and have correct number of gay\'s broken machines', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     page.getBrokens().then((brokens) => {
       expect(brokens.length).toBe(0);
@@ -115,6 +117,7 @@ describe('home', () => {
 
   it('should get and have correct number of washers and dryers in total when click All Rooms', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     page.clickRoomPanel();
     page.clickAllRooms();
@@ -128,6 +131,7 @@ describe('home', () => {
 
   it('should open a report page', () => {
     page.navigateTo();
+    page.clickRoomPanel();
     page.clickGayHall();
     expect(page.click('reportId'));
   });
