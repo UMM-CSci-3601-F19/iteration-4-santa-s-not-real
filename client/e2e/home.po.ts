@@ -1,6 +1,6 @@
 import {browser, element, by, promise, ElementFinder} from 'protractor';
 import {Key} from 'selenium-webdriver';
-import {getUrlScheme} from "@angular/compiler";
+import {getUrlScheme} from '@angular/compiler';
 
 export class HomePage {
   navigateTo(): promise.Promise<any> {
@@ -14,7 +14,7 @@ export class HomePage {
       element.setAttribute('style', style);
       setTimeout(() => {
         element.setAttribute('style', previous);
-      });
+      }, 200);
       return 'highlighted';
     }
     return browser.executeScript(setStyle, element(byObject).getWebElement(), 'color: red; background-color: yellow;');
@@ -25,6 +25,7 @@ export class HomePage {
     this.highlightElement(by.id('home-rooms-card'));
     return title;
   }
+
   getUniqueRoomTitle() {
     const title = element(by.id('machines-grid')).getText();
     this.highlightElement(by.id('machines-grid'));
@@ -140,11 +141,10 @@ export class HomePage {
 
   getUniqueMachine(Id: string) {
     this.highlightElement(by.id(Id));
-    const title = element(by.id(Id)).getText();
-    return title;
+    return element(by.id(Id)).getText();
   }
 
-  clickGayHall(){
+  clickGayHall() {
     this.click('gayId');
   }
 
@@ -160,7 +160,7 @@ export class HomePage {
     return title;
   }
 
-  getDyersTitle() {
+  getDryersTitle() {
     const title = element(by.id('home-machines-card-dryer')).getText();
     this.highlightElement(by.id('home-machines-card-dryer'));
     return title;
@@ -178,11 +178,11 @@ export class HomePage {
     return element.all(by.className('broken'));
   }
 
-  clickRoomPanel(){
+  clickRoomPanel() {
     this.click('home-rooms-card');
   }
 
-  clickAllRooms(){
+  clickAllRooms() {
     this.click('allRooms');
   }
 

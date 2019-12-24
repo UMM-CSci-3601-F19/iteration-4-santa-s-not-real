@@ -4,14 +4,14 @@
 
     <div id="scrollBox" style="display: block; position: relative; top: -1000px"></div>
 
-    <mat-card *ngIf="this.roomId == ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
+    <mat-card *ngIf="this.roomId == ''" class="roomHeading">
       <mat-card-title style="font-weight: 100; font-size: 35px; margin-bottom: 10px; line-height: 1.15">Greetings!</mat-card-title>
-      <mat-card-content style="height: 20px; font-size: 18px;">
+      <mat-card-content>
         Welcome to Morris Laundry Facilities!
       </mat-card-content>
     </mat-card>
 
-    <mat-card *ngIf="this.roomId != ''" style="margin-top: -10px; margin-bottom: 10px; max-height: min-content !important;" class="roomHeading">
+    <mat-card *ngIf="this.roomId != ''" class="roomHeading">
       <mat-card-title style="font-weight: 100; font-size: 30px;  line-height: 1.15">{{this.roomName}}
 
         <a class="defaultRoomButton" *ngIf="!checkRoom(roomName)" (click)="updateCookies(roomId, roomName)" (click)="openSnackBar(this.roomName)"><mat-icon class="favButton">favorite_border</mat-icon></a>
@@ -25,10 +25,10 @@
     </mat-card>
 
     <div class="topMenu">
-      <mat-expansion-panel class="roomSelector" [expanded]="selectorState === 0" (opened)="setSelector(0); hideSelector()" style=" margin-top: 30px; margin-bottom: 15px ">
+      <mat-expansion-panel class="roomSelector" [expanded]="selectorState === 0" (opened)="setSelector(0)" style = "margin-top: 30px; margin-bottom: 15px ">
 
-        <mat-expansion-panel-header >
-          <mat-panel-title id="home-rooms-card" style="font-size: 120%">Please select a laundry room here</mat-panel-title>
+        <mat-expansion-panel-header>
+          <mat-panel-title id="home-room-card"  class="home-rooms-card">Please select a laundry room here</mat-panel-title>
         </mat-expansion-panel-header>
 
         <mat-panel-description style="font-weight: 400;">
@@ -59,8 +59,6 @@
         </mat-panel-description>
 
       </mat-expansion-panel>
-
-
 
       <mat-expansion-panel class="washerPanel" style="background: none; padding: 0" [expanded]="true">
         <mat-expansion-panel-header style="background: initial">
@@ -206,7 +204,7 @@
                       <mat-icon class="unavailable" style="position: absolute; font-size: 275%">fireplace</mat-icon>
                       <a class="machineIdentity" style="display: block">
                         <a class="machineName" style="margin-left: 45px; font-size: 105%; text-transform: capitalize; font-weight: 500">{{this.translateMachineName(machine.name)}}</a><br>
-                        <a style="margin-left: 45px; font-size: 95%">{{this.translateRoomId(machine.room_id)}}</a><br>
+                        <a class="roomID" style="margin-left: 45px; font-size: 95%">{{this.translateRoomId(machine.room_id)}}</a><br>
                         <a class="cardType" style="margin-left: 45px; font-size: 90%">Dryer</a>
                       </a>
                     </div>
@@ -231,7 +229,7 @@
 
         <mat-grid-tile>
           <mat-card class="graphData">
-            <mat-card-title id="predictionGraphTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px">Busy Time on
+            <mat-card-title id="predictionGraphTitle" class="predictionGraphTitle" style="font-weight: unset; padding-left: 8px; font-size: 18px">Busy Time on
               <p style="display: unset; float: bottom">
                 <mat-select id="day-selector" [(value)]="inputDay" style="width: 130px" (selectionChange)="updateDayBySelector($event.value)">
                   <mat-option *ngFor="let day of Days" [value]="day.value">{{day.name}}</mat-option>

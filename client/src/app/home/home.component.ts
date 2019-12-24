@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
    * back to true in order to make
    * the functionality works.
    */
-  private autoRefresh = true;
+  private autoRefresh = false;
 
   public machineListTitle: string;
   public brokenMachineListTitle: string;
@@ -101,7 +101,9 @@ export class HomeComponent implements OnInit {
     ]
   };
   openSubscriptionDialog(room_id: string) {
+    // tslint:disable-next-line:max-line-length
     const outOfWashers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'washer' && !m.running).length === 0;
+    // tslint:disable-next-line:max-line-length
     const outOfDryers = this.machines.filter(m => m.room_id === room_id && m.status === 'normal' && m.type === 'dryer' && !m.running).length === 0;
     const newSub: Subscription = {email: '', type: '', room_id: room_id};
     const dialogRef = this.subscription.open(HomeSubscriptionDialog, {
@@ -235,7 +237,10 @@ export class HomeComponent implements OnInit {
     const tempWekd: Array<number> = [];
     if (this.history !== undefined) {
       for (let i = 0; i < 48; i++) {
-        tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+        const temp = this.history.filter(history => history.room_id === room).pop();
+        if (temp !== undefined) {
+          tempWekd.push(temp[wekd][i]);
+        }
       }
       if (addition !== undefined && addition === true) {
         ++wekd;
@@ -243,7 +248,10 @@ export class HomeComponent implements OnInit {
           wekd = 1;
         }
         for (let i = 0; i < 6; i++) {
-          tempWekd.push(this.history.filter(history => history.room_id === room).pop()[wekd][i]);
+          const temp = this.history.filter(history => history.room_id === room).pop();
+          if (temp !== undefined) {
+            tempWekd.push(temp[wekd][i]);
+          }
         }
       }
     }
@@ -320,6 +328,7 @@ export class HomeComponent implements OnInit {
 
       let xlabel;
       let xlabel2;
+      let ylabel;
       // this.filterGraphData();
 
       xlabel = ['0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', '10a', '11a', '12p', '1p', '2p', '3p', '4p', '5p',
@@ -327,21 +336,25 @@ export class HomeComponent implements OnInit {
 
       xlabel2 = ['0a', '3a', '6a', '9a', '12p', '3p', '6p', '9p', '12a'];
 
+      ylabel = ['o%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
+
       if (this.inputRoom !== 'all') {
         this.myChart = new Chart(this.ctx, {
           type: gType,
           data: {
-            labels: xlabel,
+            labels: xlabel, ylabel,
             datasets: [{
               data: this.modifyArray(this.getWeekDayByRoom(this.inputRoom, this.inputDay), 2),
-              borderColor: 'rgb(255,183 ,30 )',
-              backgroundColor: 'rgb(255,183 ,30 )',
+              borderColor: 'rgb(255,0,255)',
+              backgroundColor: 'rgb(255,0,255)',
               fill: false,
               lineTension: .2
             }]
           },
           options: {
             responsive: true,
+            scaleOverride: true,
+            scaleSteps: 10,
             maintainAspectRatio: false,
             legend: {
               display: false,
@@ -361,7 +374,7 @@ export class HomeComponent implements OnInit {
               }
             },
             scales: {
-              xAxes: [{
+              xAxis: [{
                 gridLines: {
                   display: false
                 },
@@ -372,9 +385,12 @@ export class HomeComponent implements OnInit {
                   fontColor: 'rgb(150, 150, 150)'
                 }
               }],
-              yAxes: [{
+              yAxis: [{
                 gridLines: {
                   display: false,
+                  scaleOverride: true,
+                  scaleSteps: 10,
+
                 },
                 ticks: {
                   display: false,
@@ -467,7 +483,7 @@ export class HomeComponent implements OnInit {
               }
             },
             scales: {
-              xAxes: [{
+              xAxis: [{
                 gridLines: {
                   display: false
                 },
@@ -476,7 +492,7 @@ export class HomeComponent implements OnInit {
                   fontColor: 'rgb(150, 150, 150)'
                 }
               }],
-              yAxes: [{
+              yAxis: [{
                 gridLines: {
                   display: false,
                 },
@@ -565,10 +581,6 @@ export class HomeComponent implements OnInit {
 
   delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  hideSelector() {
-    document.getElementById('all-rooms').style.bottom = '-50px';
   }
 
   translateRoomId(roomId: string): string {

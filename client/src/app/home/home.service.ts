@@ -28,7 +28,7 @@ export class HomeService {
   }
 
 
-  getAllHistory(): Observable<History[]>{
+  getAllHistory(): Observable<History[]> {
     return this.http.get<History[]>(this.baseUrl + '/all_history');
   }
 
