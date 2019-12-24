@@ -653,7 +653,7 @@ describe('Home page', () => {
     expect(component.getGridCols()).toEqual(Math.min((window.innerWidth / 400), 4));
   });
 
-  it('should return the number of graph columns given different a window length', () => {
+  xit('should return the number of graph columns given different a window length', () => {
     expect(component.getGraphCols()).toEqual(Math.min(window.innerWidth / 680, 2));
   });
 
